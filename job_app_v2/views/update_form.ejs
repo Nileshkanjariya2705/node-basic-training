@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>job_application_form</title>
+  <style>
+    /* body {
+      background-color: antiquewhite;
+    } */
+
+    fieldset {
+      margin-top: 30px;
+      width: 80vw;
+    }
+
+
+    .references_contect,
+    .preferences {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr;
+
+      grid-template-areas: "left middel right";
+
+    }
+
+    .Eduction,
+    .work_experience,
+    .language_known {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      grid-template-areas: "1 2 3 4";
+
+
+    }
+
+    .container {
+      display: grid;
+      grid-template-areas: "left left" "right right";
+      width: 100%;
+
+      gap: 30px;
+    }
+
+    table,
+    td,
+    tr,
+    th {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    table {
+      width: 90vw;
+    }
+
+    td {
+      height: 50px;
+    }
+
+    label {
+      margin-left: 10px;
+
+    }
+
+
+    .table_container,
+    .eduction_container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .table_container th {
+      width: 200px;
+      border: 1px solid black;
+
+    }
+
+    .eduction_container th {
+      width: 200px;
+      border: 1px solid black;
+    }
+
+
+    .form-group {
+      margin-top: 8px;
+    }
+
+    input::placeholder {
+      color: red;
+    }
+
+    p {
+      color: red;
+    }
+
+    .container {
+      /* display: flex; */
+      /* align-items: center;
+            justify-content: center; */
+    }
+
+    table,
+    th {
+      /* text-align: center;
+            border-collapse: collapse; */
+
+    }
+
+    tr:hover {
+      background-color: rgb(169, 183, 234);
+      color: white;
+    }
+
+    /* th,td{
+            border-bottom: 1px solid black;
+            height: 30px
+        } */
+    table {
+      width: 100%;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 200px;
+      background-color: rgb(169, 183, 234);
+      position: fixed;
+      top: 0;
+      left: 0;
+      text-align: center;
+      padding-top: 100px;
+
+
+    }
+
+    .main {
+      margin-left: 220px;
+      /* border: 1px solid black; */
+      height: 100%;
+
+    }
+
+    a {
+      text-decoration: none;
+      margin-top: 20px;
+    }
+
+    .btn {
+      margin-bottom: 20px;
+      border: 1px solid white;
+      background-color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .footer {
+      position: fixed;
+      width: 100%;
+      bottom: 100px;
+      /* margin-left: auto;
+          margin-right: auto;
+          position: fixed; */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidenav">
+    <div onclick="display('0')" class="btn">
+
+      <a>Basic_detail</a>
+    </div>
+    <div onclick="display('0')" class="btn">
+
+      <a>Address</a>
+    </div>
+    <div onclick="display('1')" class="btn">
+
+      <a>Eduction detail</a>
+    </div>
+
+    <div onclick="display('2')" class="btn">
+
+      <a>Work experience</a>
+    </div>
+    <div onclick="display('3')" class="btn">
+
+      <a>Language</a>
+    </div>
+    <div onclick="display('4')" class="btn">
+
+      <a>Technology</a>
+    </div>
+
+    <div onclick="display('5')" class="btn">
+
+      <a>References</a>
+    </div>
+    <div onclick="display('6')" class="btn">
+
+      <a>Prefernces</a>
+    </div>
+
+    <!-- <div class="btn">
+            
+            <a href="/update/form">update Data</a>
+        </div> -->
+    <!-- <div style="margin-top: 200px; background-color: red; color: white;" >
+            <a style="color: white;" href="/logout">Logout</a>
+        </div> -->
+  </div>
+  <div class="main">
+    <h1 style="text-align: center;">Edit_application_form</h1>
+    <form id="myform" action="/add_data" method="post" onsubmit="return error()">
+      <!-- basic information -->
+      <div id="basic_detail_container" class="container">
+        <fieldset>
+          <legend>Basic detail:</legend>
+          <div class="container">
+            <!-- left -->
+            <div class="left">
+              <div class="form-group">
+                <!-- first name -->
+                <label for="fname">First Name:</label>
+                <input id="fname" name="fname" type="text">
+                <p id="efname"></p>
+                <% if (errors && errors.fname) { %>
+                  <p class="error">
+                    <%=errors.fname%>
+                  </p>
+                  <% } %>
+              </div>
+              <div class="form-group">
+
+                <!-- designation -->
+                <label for="designation">designation:</label>
+                <input id="designation" name="designation" type="text">
+                <p id="edesignation"></p>
+                <% if (errors && errors.lname) { %>
+                  <p class="error">
+                    <%=errors.lname%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div class="form-group">
+                <!-- email -->
+                <label for="email">email:</label>
+                <input id="email" name="email" type="text">
+                <p id="eemail"></p>
+                <% if (errors && errors.email) { %>
+                  <p class="error">
+                    <%=errors.email%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div class="form-group">
+                <!-- phone number -->
+                <label for="phoneNumber">phoneNumber:</label>
+                <input id="phoneNumber" name="phoneNumber" type="text">
+                <p id="ephonenumber"></p>
+                <% if (errors && errors.phoneNumber) { %>
+                  <p class="error">
+                    <%=errors.phoneNumber%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div id="gender" class="form-group">
+                <label for="gender">gender:</label>
+
+
+              </div>
+              <div id="relationship_status" class="form-group">
+                <label for="relationship_status"> relationship_status:</label>
+
+                </select>
+
+              </div>
+              <div class="form-group">
+                <!-- date of birth -->
+                <label for="dob">date of birth:</label>
+                <input id="dob" name="dob" type="date">
+                <p id="edob"></p>
+                <% if (errors && errors.dob) { %>
+                  <p class="error">
+                    <%=errors.dob%>
+                  </p>
+                  <% } %>
+
+              </div>
+
+            </div>
+            <!-- right -->
+            <div class="right">
+              <div class="form-group">
+                <!-- last name -->
+                <label for="lname">Last Name:</label>
+                <input id="lname" name="lname" type="text">
+                <p id="elname"></p>
+                <% if (errors && errors.lname) { %>
+                  <p class="error">
+                    <%=errors.lname%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div class="form-group">
+                <!-- address 1 -->
+                <label for="address1">Adderess 1:</label>
+                <input id="address1" name="address1" type="text">
+                <p id="eaddress1"></p>
+                <% if (errors && errors.address1) { %>
+                  <p class="error">
+                    <%=errors.address1%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div class="form-group">
+                <!-- address 2 -->
+                <label for="address2">Adderess 2:</label>
+                <input id="address2" name="address2" type="text">
+                <p id="eaddress2"></p>
+                <% if (errors && errors.address2) { %>
+                  <p class="error">
+                    <%=errors.address2%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div id="city" class="form-group">
+                <label for="city">city:</label>
+
+              </div>
+              <div id="state" class="form-group">
+                <label for="state">state:</label>
+
+              </div>
+              <div class="form-group">
+                <!-- zip code -->
+                <label for="zip">ZIP code:</label>
+                <input id="zip" name="zip" type="text">
+                <p id="ezipcode"></p>
+                <% if (errors && errors.zip) { %>
+                  <p class="error">
+                    <%=errors.zip%>
+                  </p>
+                  <% } %>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+      </div>
+
+      <!-- Eduction detail -->
+      <div id="eduction_container" class="Eduction">
+        <fieldset>
+          <legend>Eduction detail:</legend>
+
+          <table id="eduction_table">
+            <!-- <tr >
+                <td>
+                    <label for="course_name">course_name:<input id="course_name" name="course_name[]" type="text"></label>
+                    <p class="error"></p>
+                </td>
+                <td>
+                    <label for="passing_year">passing year:<input id="passing_year" name="passing_year[]" type="text"></label>
+                    <p class="error"></p>
+                    
+                </td>
+                <td>
+                    <label for="uni_board">uni_board:<input id="uni_board" name="uni_board[]" type="text"></label>
+                    <p class="error"></p>
+                    
+                </td>
+                <td>
+                    <label for="result">result:<input id="result" name="result[]" type="text"></label>
+                    <p class="error"></p>
+                    
+                </td>
+                <td>
+                    <input onclick="add_eduction()" type="button" value="+">
+                    
+                </td>
+            </tr> -->
+          </table>
+
+        </fieldset>
+      </div>
+      <!-- table for eduction -->
+
+
+
+      <!-- work experience -->
+      <div id="work_experinece_container" class="work_experience">
+        <fieldset>
+          <legend>Work Experience</legend>
+
+          <table id="experience_table">
+            <!-- <tr>
+              <td>
+                <label for="compnay_name">compnay_name:<input name="compnay_name[]" id="compnay_name"
+                    type="text"></label>
+              </td>
+              <td>
+                <label for="work_designation">designation:<input name="work_designation[]" id="work_designation"
+                    type="text"></label>
+              </td>
+              <td>
+                <label for="start_date">start_date:<input name="start_date[]" id="start_date" type="date"></label>
+              </td>
+              <td>
+                <label for="end_date">End date:<input name="end_date[]" id="end_date" type="date"></label>
+              </td>
+              <td>
+                <input type="button" onclick="add_experience()" value="+">
+              </td>
+            </tr> -->
+          </table>
+
+
+        </fieldset>
+      </div>
+      <!-- table for  work experience -->
+      <!-- language know -->
+      <!-- language known -->
+      <div id="language_container">
+        <fieldset id="language_known">
+          <legend>Language Known</legend>
+          <div id="language[]" class="language">
+
+          </div>
+          <p id="e_language"></p>
+        </fieldset>
+      </div>
+
+      <!-- tachnology know -->
+      <div id="technology_container">
+        <fieldset id="technology_know" autocomplete="off">
+          <legend>Technology you Know</legend>
+
+          <div id="tech[]" class="tech">
+
+          </div>
+          <p id="e_tech"></p>
+        </fieldset>
+      </div>
+
+      <!-- references contect -->
+      <div id="reference_container" class="references_contect">
+        <fieldset>
+          <legend>References contect:</legend>
+
+          <div class="left">
+            <!-- left -->
+            <div class="form-group">
+              <label for="rname">Name:</label>
+              <input style="width: 80px;" name="rname" id="rname" type="text">
+              <p id="e_rname"> </p>
+              <% if (errors && errors.rname) { %>
+                <p class="error">
+                  <%=errors.rname%>
+                </p>
+                <% } %>
+
+            </div>
+
+          </div>
+          <div class="middel">
+            <!-- middel -->
+            <div class="form-group">
+              <label for="contect_number">contect number:</label>
+              <input style="width: 80px;" name="contect_number" id="contect_number" type="text">
+              <p id="e_contect_number"> </p>
+              <% if (errors && errors.contact_number) { %>
+                <p class="error">
+                  <%=errors.contact_number%>
+                </p>
+                <% } %>
+
+            </div>
+
+
+          </div>
+          <div class="right">
+            <!-- right -->
+            <div class="form-group">
+              <label for="relation">relation:</label>
+              <input style="width: 80px;" name="relation" id="relation" type="text">
+              <p id="e_relation"></p>
+              <% if (errors && errors.relation) { %>
+                <p class="error">
+                  <%=errors.zip%>
+                </p>
+                <% } %>
+
+            </div>
+
+
+          </div>
+
+        </fieldset>
+      </div>
+      <!-- preferences -->
+
+      <div id="preference_container" class="preferences">
+        <fieldset>
+
+          <legend>
+            Preferences:
+          </legend>
+
+          <div class="left">
+            <div class="form-group">
+              <label for="preferd_location">Preferred Location (Select up to 3):</label>
+              <div style="margin-left: 200px;" id="preferred">
+
+              </div>
+
+            </div>
+            <p id="e_prefered_location"></p>
+
+          </div>
+          <div class="middel">
+            <!-- middel -->
+            <div class="form-group">
+              <label for="notice_period">Notice period:</label>
+              <input style="width: 80px;" name="notice_period" id="notice_period" type="text">
+              <p id="e_notice_period"> </p>
+              <% if (errors && errors.notice_period) { %>
+                <p class="error">
+                  <%=errors.notice_period%>
+                </p>
+                <% } %>
+            </div>
+
+            <div class="form-group">
+              <label for="expected_ctc">Expected CTC:</label>
+              <input style="width: 80px;" name="expected_ctc" id="expected_ctc" type="text">
+              <p id="e_expected_ctc"> </p>
+              <% if (errors && errors.expected_ctc) { %>
+                <p class="error">
+                  <%=errors.expected_ctc%>
+                </p>
+                <% } %>
+
+            </div>
+            <div class="form-group">
+              <label for="current_ctc">Current CTC:</label>
+              <input style="width: 80px;" name="current_ctc" id="current_ctc" type="text">
+              <p id="e_current_ctc"></p>
+              <% if (errors && errors.current_ctc) { %>
+                <p class="error">
+                  <%=errors.current_ctc%>
+                </p>
+                <% } %>
+            </div>
+          </div>
+          <div class="right">
+            <!-- right -->
+            <div id="department" class="form-group">
+              <label for="department">department:</label>
+            </div>
+          </div>
+          <% if (errors && errors.department) { %>
+            <p class="error">
+              <%=errors.department%>
+            </p>
+            <% } %>
+
+        </fieldset>
+      </div>
+
+
+
+
+    </form>
+  </div>
+
+  <div style="text-align: center;  " class="footer">
+    <input onclick="back()" type="button" style="
+        height: 50px;
+        width: 100px;
+       
+        cursor: pointer;
+      " value="back">
+
+
+
+    <input type="button" onclick="next()" style="
+      
+      height: 50px;
+      width: 100px;
+      cursor: pointer;
+      " value="Next">
+    <!-- <input  type="submit">
+      <input type="reset"> -->
+
+  </div>
+  <script src="/js/script.js">
+
+  </script>
+  <script>
+    let gender = '';
+    let relationship_status = '';
+    let state = ''
+    let city = ''
+
+    const url = new URLSearchParams(window.location.search);
+    const user_id = url.get('id');
+
+    const language=new Array();
+    const gujarati=new Array();
+    const hindi=new Array();
+    const english=new Array();
+
+    async function get_user_date() {
+      try {
+        const res = await fetch(`http://localhost:8080/get/alldata/${user_id}`);
+        const data = await res.json();
+        console.log(data.language);
+
+        document.getElementById('fname').value = data.basic_detail[0].first_name
+        document.getElementById('lname').value = data.basic_detail[0].last_name
+        document.getElementById('email').value = data.basic_detail[0].email
+        document.getElementById('designation').value = data.basic_detail[0].designation
+        document.getElementById('phoneNumber').value = data.basic_detail[0].last_name
+        document.getElementById('dob').value = new Date(data.basic_detail[0].dob).toISOString().split('T')[0]
+        document.getElementById('address1').value = data.address[0].address_1;
+        document.getElementById('address2').value = data.address[0].address_2;
+        document.getElementById('zip').value = data.address[0].zip_code;
+
+        gender = data.basic_detail[0].gender;
+        relationship_status = data.basic_detail[0].relationship_status;
+        city = data.address[0].city;
+        state = data.address[0].state;
+
+        document.getElementById('rname').value = data.reference_detail[0].name
+        document.getElementById('contect_number').value = data.reference_detail[0].contact_number
+        document.getElementById('relation').value = data.reference_detail[0].relation
+
+
+        document.getElementById('current_ctc').value = data.preferences[0].current_ctc
+        document.getElementById('expected_ctc').value = data.preferences[0].expected_ctc
+        document.getElementById('notice_period').value = data.preferences[0].notice_period
+
+
+        let experience = document.getElementById('experience_table');
+        for (let i = 0; i < data.work_experience.length; i++) {
+          let row = document.createElement('tr');
+          row.innerHTML = `
+      
+          <td>
+            <label for="compnay_name">compnay_name:<input name="compnay_name[]" id="compnay_name" value=${data.work_experience[i].company_name} type="text"></label>
+          </td>
+            <td>
+            <label for="work_designation">designation:<input name="work_designation[]" id="work_designation" value=${data.work_experience[i].designation} type="text"></label>
+          </td>
+           <td>
+            <label for="start_date">start_date:<input name="start_date[]"  value=${new Date(data.work_experience[i].start_date).toISOString().split('T')[0]} id="start_date" type="date"></label>
+          </td>
+           <td>
+            <label for="end_date">End date:<input name="end_date[]" id="end_date" value=${new Date(data.work_experience[i].end_date).toISOString().split('T')[0]}   type="date"></label>
+          </td>
+          <td>
+            <input type="button" class="remove_eduction" value="-">
+          </td>
+       
+           `
+
+          experience.appendChild(row)
+        }
+
+
+        let eduction_table = document.getElementById('eduction_table');
+
+        for (let j = 0; j < data.eduction_detail.length; j++) {
+          let row = document.createElement("tr");
+
+          row.innerHTML = `
+     
+                <td id="course_name">
+                    <label for="course_name">course_name:<input id="course_name" value=${data.eduction_detail[j].course_name} name="course_name[]" type="text"></label>
+                    
+                </td>
+                <td>
+                    <label for="passing_year">passing year:<input id="passing_year" value=${data.eduction_detail[j].passing_year} name="passing_year[]" type="text"></label>
+                    
+                </td>
+                <td>
+                    <label for="uni_board">uni_board:<input id="uni_board" name="uni_board[]" value=${data.eduction_detail[j].uni_board} type="text"></label>
+                    
+                </td>
+                <td>
+                    <label for="result">result:<input id="result" name="result[]" value=${data.eduction_detail[j].result} type="text"></label>
+                    
+                </td>
+                <td>
+                    <input  type="button" class="remove_eduction" value="-">
+                    
+                </td>
+            
+    `
+          eduction_table.appendChild(row);
+        }
+
+
+        data.language.forEach(lang=>{
+            
+            if(lang.language_name=='gujarati'){
+              document.getElementById('gujarati').setAttribute('checked','')
+              console.log(lang.can_read);
+              
+              if(lang.can_read){
+
+                  console.log("can read true");
+                  
+                
+                }
+              if(lang.can_write){
+                  console.log("can write true");
+      
+                
+              }
+              if(lang.can_speak){
+                  console.log("can can_speak true");
+
+              }
+             
+            }
+             if(lang.language_name=='hindi'){
+              document.getElementById('hindi').setAttribute('checked','')
+
+              //  document.getElementById('hindi_speak').setAttribute('checked','')
+              // document.getElementById('hindi_write').setAttribute('checked','')
+              // document.getElementById('hindi_speak').setAttribute('checked','')
+
+            } if(lang.language_name=='english'){
+              document.getElementById('english').setAttribute('checked','')
+              //  document.getElementById('eng_speak').setAttribute('checked','')
+              // document.getElementById('eng_write').setAttribute('checked','')
+              // document.getElementById('eng_speak').setAttribute('checked','')
+          
+            }
+          
+        })
+        
+
+
+
+      } catch (err) {
+        console.log("errror", err.message);
+
+      }
+    }
+
+    get_user_date();
+    function display(value, id) {
+
+      if (value.checked) {
+        document.getElementById(`${id}`).style.display = 'block'
+      } else {
+        document.getElementById(`${id}`).style.display = 'none'
+
+      }
+
+
+
+    }
+
+    function java_display(checked) {
+      if (checked) {
+        document.getElementById('java_container').style.display = 'block'
+      } else {
+        document.getElementById('java_container').style.display = 'none'
+
+      }
+    }
+    function php_display(checked) {
+      if (checked) {
+        document.getElementById('php_container').style.display = 'block'
+      } else {
+        document.getElementById('php_container').style.display = 'none'
+
+      }
+    }
+    function mysql_display(checked) {
+      if (checked) {
+        document.getElementById('mysql_container').style.display = 'block'
+      } else {
+        document.getElementById('mysql_container').style.display = 'none'
+
+      }
+    }
+    function larava_display(checked) {
+      if (checked) {
+        document.getElementById('larava_container').style.display = 'block'
+      } else {
+        document.getElementById('larava_container').style.display = 'none'
+
+      }
+    }
+
+    function remove_check(id) {
+      if (id && id.wasChecked) {
+        id.checked = false;
+        id.wasChecked = false;
+      } else {
+        id.wasChecked = true;
+
+      }
+
+    }
+
+    // dynamic combo box
+    async function getdata(tech) {
+      let container_top = document.getElementById(`${tech}`);
+      let data = await fetch(`http://localhost:8080/get/select?name=${tech}`);
+      let ans = await data.json();
+      ans.forEach(lan => {
+        let container = document.createElement("div")
+        let input = document.createElement("input");
+        input.setAttribute("id", lan.html_id)
+        input.setAttribute("name", lan.unique_name)
+        input.setAttribute("type", lan.html_type)
+        input.setAttribute("value", lan.html_value)
+
+        let label1 = document.createElement("label")
+        label1.innerHTML = lan.html_name
+        label1.appendChild(input)
+        container.appendChild(label1);
+
+        let option = getoption(lan.select_master_id, tech)
+        option
+          .then(data => {
+            data.forEach(op => {
+
+              let input = document.createElement("input");
+              input.setAttribute("id", op.option_html_id)
+              input.setAttribute("name", op.option_unique_name)
+              input.setAttribute("type", op.option_html_type)
+              input.setAttribute("value", op.option_html_value)
+              let label = document.createElement("label")
+              label.innerHTML = op.option_html_name
+              label.appendChild(input)
+              container.appendChild(label)
+            })
+
+
+          })
+          .catch("data not found")
+        let p = document.createElement("p");
+        p.setAttribute("id", "e_" + lan.html_id);
+        container_top.appendChild(container)
+        container_top.appendChild(p)
+
+
+      })
+    }
+
+    async function getoption(id, tech) {
+      let data = await fetch(`http://localhost:8080/get/option/${id}`)
+      let ans = await data.json();
+      return ans;
+    }
+    getdata("language[]")
+    getdata("tech[]")
+
+    async function getselect(val) {
+      let city = document.getElementById(`${val}`);
+      let data = await fetch(`http://localhost:8080/get/select?name=${val}`);
+      let ans = await data.json();
+
+      // console.log(ans[0]);
+
+
+
+      let select = document.createElement("select");
+      select.setAttribute("id", ans[0].html_id)
+      select.setAttribute("name", ans[0].unique_name)
+
+      if (val == 'preferred') {
+        select.setAttribute('multiple', '')
+      }
+
+      let option = getoption(ans[0].select_master_id, val);
+
+
+
+      option
+        .then(d => {
+          d.forEach(op => {
+            let options = document.createElement("option");
+            options.setAttribute("value", op.option_html_value)
+            options.innerText = op.option_html_name
+
+            if (op.option_html_value === gender) {
+              options.setAttribute('selected', '')
+            } else
+
+              if (op.option_html_value === relationship_status) {
+                options.setAttribute('selected', '')
+              } else
+
+                if (op.option_html_value === state) {
+                  options.setAttribute('selected', '')
+                } else
+
+                  if (op.option_html_value == city) {
+                    options.setAttribute('selected', '')
+                  }
+            select.appendChild(options);
+          })
+        }).catch(() => {
+          console.log("data not found");
+        })
+
+      city.appendChild(select)
+    }
+    getselect("state")
+    getselect("department")
+    getselect("relationship_status")
+    getselect("city")
+    getselect("gender")
+    getselect("preferred")
+
+    // function submit(){
+    // let form=document.querySelector("#myform");
+    // let data=new FormData(form);
+
+    // fetch("http://localhost:8080/add_data",{
+    //   method:post,
+    //   body:data
+    // }).then((response)=>{
+    //   if(!response.ok) throw new Error(`HTTP error! Status:${response.status}`)
+    //   return response.json();
+    // }).then(data=>console.log("success:",data)
+    // ).catch(err=>console.log(err)
+    // );
+
+    // }
+    // -----------------------------------------------------------------     
+
+
+    let basic_detail_container = document.getElementById('basic_detail_container')
+    let eduction_container = document.getElementById('eduction_container')
+    let work_designation_container = document.getElementById('work_experinece_container')
+    let language_container = document.getElementById('language_container')
+    let technology_container = document.getElementById('technology_container')
+    let reference_container = document.getElementById('reference_container')
+    let preference_container = document.getElementById('preference_container')
+
+    eduction_container.style.display='none'
+    work_designation_container.style.display='none'
+    language_container.style.display='none'
+    technology_container.style.display='none'
+    reference_container.style.display='none'
+    preference_container.style.display='none'
+
+
+    let current = "basic_detail_container";
+
+    const arr = ['basic_detail_container', 'eduction_container', 'work_experinece_container', 'language_container', 'technology_container', 'reference_container', 'preference_container']
+    function display(id) {
+
+      console.log(id);
+
+      document.getElementById(`${arr[i]}`).style.display = 'none'
+      document.getElementById(`${arr[id]}`).style.display = 'block'
+      i = id;
+
+
+
+    }
+
+    let i = 0;
+    function next() {
+      if (i < 6) {
+        document.getElementById(`${arr[i]}`).style.display = 'none'
+        i++;
+        document.getElementById(`${arr[i]}`).style.display = 'block'
+      }
+
+
+    }
+
+    function back() {
+      if (i > 0) {
+        document.getElementById(`${arr[i]}`).style.display = 'none'
+        i--;
+        document.getElementById(`${arr[i]}`).style.display = 'block'
+      }
+    }
+
+
+    // -------------------------------------------
+
+
+
+  </script>
+
+</body>
+
+</html>

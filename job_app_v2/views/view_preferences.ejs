@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view user detail</title>
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table,th{
+           text-align: center;
+            border-collapse: collapse;
+           
+        }
+        tr:hover{
+             background-color: rgb(169, 183, 234);
+            color: white;
+        }
+        th,td{
+            border-bottom: 1px solid black;
+            height: 30px
+        }
+        table{
+            width: 100%;
+        }
+       
+        .sidenav{
+            height: 100%;
+            width: 200px;
+            background-color: rgb(169, 183, 234);
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-top: 100px;
+           
+
+        }
+        .main{
+            margin-left: 220px;
+            
+        }
+        a{
+            text-decoration: none;
+         
+            margin-top: 20px;
+        }
+        .btn{
+            margin-bottom: 20px;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 10px;
+        }
+        p{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+  
+    <div class="main">
+          <h1 style="text-align: center;">Prefernces Data</h1>
+          <p id="msg"></p>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>BASIC_DETAIL ID</th>
+                    <th>PREFERED LOCATION</th>
+                    <th>CURRENT CTC</th>
+                    <th>EXPECTED CTC</th>
+                    <th>NOTICE PERIOD</th>
+                    <th>DEPARTMENT</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+                
+            </tbody>
+        </table>
+    </div>
+    </div>
+  
+  <script>
+         async function getdata() {
+        try{
+            const response=await fetch("http://localhost:8080/get/preferences")
+            const data=await response.json();
+            let tbody=document.getElementById("body");
+
+            data.forEach(preferences=>{
+                let tr=document.createElement("tr");
+                tr.innerHTML=`
+                     <td>${preferences.preferences_id}</td>
+                     <td>${preferences.basic_detail_id}</td>
+                     <td>${preferences.prefered_location_1},${preferences.prefered_location_2},${preferences.prefered_location_3}</td>
+                     <td>${preferences.current_ctc}</td>
+                     <td>${preferences.expected_ctc}</td>
+                     <td>${preferences.notice_period}</td>
+                     <td>${preferences.department}</td>
+                     
+                    
+                    
+                        
+                        <td>
+                        <input type="button" onclick="window.location.href='/edit_preferences?id=${preferences.preferences_id}'"  value="edit">
+                        <input type="button" onclick="remove(${preferences.preferences_id})" value="delete">
+                            </td>
+                       
+                `
+                tbody.appendChild(tr);
+            })
+        }catch(err){
+            console.error(err.message);
+            
+        }
+    }
+
+    getdata()
+
+  async function remove(id){
+    let msg=document.getElementById('msg');
+       try{
+            const res=await fetch(`http://localhost:8080/delete/preferences?id=${id}`)
+            if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            const data=await res.json();
+            window.location.reload();
+            console.log(data.msg);
+            
+            
+       }catch(err){
+        console.error("somthing went wrong");
+        if (!msg) {
+            msg.innerHTML = 'Something went wrong, data not deleted';
+        }
+       } 
+    }
+
+    
+    </script>
+</body>
+</html>

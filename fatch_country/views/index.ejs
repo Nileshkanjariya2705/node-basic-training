@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ejs</title>
+    <style>
+        .container{
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            /* background-color: antiquewhite; */
+           
+        }
+        select{
+            margin-right: 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-top: 300px;">task_4</h1>
+    <div class="container">
+        <div class="form_group">
+                    <select name="country" id="country" onchange="getstate(this)">
+            <option value="#">select country</option>
+        </select>
+        </div>
+
+         <div class="form_group">
+                    <select name="state" id="state" onchange="getcity(this)">
+                    <option value="#">select state</option>
+        </select>
+        </div>
+
+         <div class="form_group">
+                    <select name="city" id="city">
+            <option value="#">select city</option>
+        </select>
+        </div>
+    </div>
+    <script>
+     async function getdata(){
+
+        const ans= await fetch("http://localhost:8080/get/country");
+        const data= await ans.json();
+        let country_select=document.getElementById('country');
+        let length=data.length;
+        for(let i=0; i<length; i++){
+            let option=document.createElement('option');
+            option.setAttribute('value',data[i].country_name)
+            option.innerHTML=data[i].country_name;
+            country_select.appendChild(option);
+        }
+        
+      }
+      getdata();
+
+        async  function getstate(ele){
+            document.getElementById('state').options.length = 1;   
+            document.getElementById('city').options.length = 1;   
+        let state=ele.value;
+        let ans=await fetch(`http://localhost:8080/get/state?state=${state}`)
+        let data=await ans.json();
+            // console.log(data);   
+            
+        let state_option=    document.getElementById('state');
+       
+        let length=data.length;
+        for(let i=0; i<length; i++){
+            console.log(data[i].state_name);
+            
+            let option=document.createElement('option');
+            option.setAttribute('value',data[i].state_name)
+            option.innerHTML=data[i].state_name;
+            state_option.appendChild(option);
+        }
+      }
+
+        async  function getcity(ele){
+            document.getElementById('city').options.length = 1;   
+
+        let city=ele.value;
+        let ans=await fetch(`http://localhost:8080/get/city?city=${city}`)
+        let data=await ans.json();
+            // console.log(data);
+            
+        let city_option=    document.getElementById('city');
+        let length=data.length;
+        for(let i=0; i<length; i++){
+            
+            
+            let option=document.createElement('option');
+            option.setAttribute('value',data[i].city_name)
+            option.innerHTML=data[i].city_name;
+            city_option.appendChild(option);
+        }
+
+        
+        
+      }
+
+      
+         
+    </script>
+</body>
+</html>

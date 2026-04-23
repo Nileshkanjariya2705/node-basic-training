@@ -1,0 +1,40 @@
+ <nav class="pagination-nav" aria-label="Pagination">
+        <!-- Previous Arrow -->
+        <a href="/pagination?page=<%= Math.max(1, currentPage - 1) %>" class="nav-arrow nav-left">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="icon">
+            <path d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" fill-rule="evenodd" />
+          </svg>
+        </a>
+
+        <!-- Logic for Page Numbers -->
+        <% 
+          let startPage = Math.max(1, currentPage - 2);
+          let endPage = Math.min(totalPages, startPage + 4);
+          if (endPage - startPage < 4) {
+            startPage = Math.max(1, endPage - 4);
+          }
+        %>
+
+        <% if (startPage > 1) { %>
+          <a href="/pagination_1?page=1" class="nav-link">1</a>
+          <% if (startPage > 2) { %><span class="nav-dots">...</span><% } %>
+        <% } %>
+
+        <% for(let i = startPage; i <= endPage; i++) { %>
+          <a href="/pagination_1?page=<%= i %>" class="nav-link <%= i === currentPage ? 'active' : '' %>">
+            <%= i %>
+          </a>
+        <% } %>
+
+        <% if (endPage < totalPages) { %>
+          <% if (endPage < totalPages - 1) { %><span class="nav-dots">...</span><% } %>
+          <a href="/pagination_1?page=<%= totalPages %>" class="nav-link"><%= totalPages %></a>
+        <% } %>
+
+        <!-- Next Arrow -->
+        <a href="/pagination_1?page=<%= Math.min(totalPages, ++currentPage ) %>" class="nav-arrow nav-right">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="icon">
+            <path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+          </svg>
+        </a>
+      </nav>

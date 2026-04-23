@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update address</title>
+    <style>
+         .container {
+            text-align: center;
+      display: grid;
+      grid-template-areas: "left left" "right right";
+      width: 100%;
+
+      gap: 30px;
+    }
+    p{
+        color: red;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">edite address</h1>
+   <fieldset>
+      <form action="/address/update/<%=data.address_id%>" method="post" onsubmit="return error()">
+      <legend>address:</legend>
+      <div class="container">
+      
+        <!-- left -->
+        <div class="left">
+        <div class="form-group">
+            <!-- address 1 -->
+            <label for="address1">Adderess 1:</label>
+            <input id="address1" value="<%=data.address_1%>" name="address1" type="text">
+            <p id="eaddress1"></p>
+            <% if (errors && errors.address1) { %>
+              <p class="error"><%=errors.address1%></p>
+            <% } %>
+
+          </div>
+            <div class="form-group">
+            <!-- city -->
+            <label for="city">City:</label>
+            <input id="city" value="<%=data.city%>" name="city" type="text">
+            <p id="ecity"></p>
+                   <% if (errors && errors.city) { %>
+              <p class="error"><%=errors.city%></p>
+            <% } %>
+          </div>
+        </div>
+        <!-- right -->
+        <div class="right">
+         
+          
+          <div class="form-group">
+            <!-- address 2 -->
+            <label for="address2">Adderess 2:</label>
+            <input id="address2" value="<%=data.address_2%>" name="address2" type="text">
+            <p id="eaddress2"></p>
+               <% if (errors && errors.address2) { %>
+              <p class="error"><%=errors.address2%></p>
+            <% } %>
+
+          </div>
+        
+          <div class="form-group">
+            <!-- state -->
+            <label for="state">state:</label>
+            <select name="state" id="state">
+              <option  value="gujarat" <%= data.state==='gujarat'?'selected':'' %> >Gujarat</option>
+              <option value="keral" <%= data.state==='keral'?'selected':'' %> >keral</option>
+              <option value="himachal" <%= data.state==='himachal'?'selected':'' %> >himachal</option>
+              <option value="maharastra" <%= data.state==='maharastra'?'selected':'' %> >maharastra</option>
+              <option value="UP" <%= data.state==='UP'?'selected':'' %> >UP</option>
+              <option value="MP" <%= data.state==='MP'?'selected':'' %> >MP</option>
+              <option value="J&K" <%= data.state==='J&K'?'selected':'' %> >J&K</option>
+
+            </select>
+            <p id="estate"></p>
+
+          </div>
+          <div class="form-group">
+            <!-- zip code -->
+            <label for="zip">ZIP code:</label>
+            <input id="zip"value="<%=data.zip_code%>" name="zip" type="text">
+            <p id="ezipcode"></p>
+            <% if (errors && errors.zip) { %>
+              <p class="error"><%=errors.zip%></p>
+            <% } %>
+          </div>
+        </div>
+      
+      </div>
+      <div style="text-align: center;" class="form-group">
+        <input type="submit" value="update">
+      </div>
+      </form>
+    </fieldset>
+
+    <script>
+        function error(){
+                let address1 = document.getElementById('address1').value.trim();
+                    let address2 = document.getElementById('address2').value.trim();
+                    let state = document.getElementById('state').value.trim();
+                    let zip = document.getElementById('zip').value.trim();
+                    let city = document.getElementById('city').value.trim();
+            document.getElementById('eaddress1').innerHTML = '';
+            document.getElementById('ecity').innerHTML = '';
+            document.getElementById('estate').innerHTML = '';
+            document.getElementById('ezipcode').innerHTML = '';
+            document.getElementById('eaddress2').innerHTML = '';
+const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+    const zipRegex = /^[1-9][0-9]{5}$/;
+
+            let invalid=true;
+            if (zip === "") {
+        document.getElementById('ezipcode').innerHTML = 'zip code is required';
+        invalid = false;
+    } else if (!zipRegex.test(zip)) {
+        document.getElementById('ezipcode').innerHTML = 'Enter a valid 6-digit PIN code (cannot start with 0)';
+        invalid = false;
+    }
+             const addressRegex = /^[\w\s\#\-\,\/\.\(\)\&]+$/;
+
+    if (address1 === "") {
+        document.getElementById('eaddress1').innerHTML = 'address is required';
+        invalid = false;
+    } else if (!addressRegex.test(address1)) {
+        document.getElementById('eaddress1').innerHTML = ' please enter valid address ';
+        invalid = false;
+    }
+    if (address2 === "") {
+        document.getElementById('eaddress2').innerHTML = 'address is required';
+        invalid = false;
+    }
+    else if (!addressRegex.test(address2)) {
+        document.getElementById('eaddress2').innerHTML = ' please enter valid address ';
+        invalid = false;
+    }
+        if (city === "") {
+        document.getElementById('ecity').innerHTML = 'Please enter your city';
+        invalid = false;
+    } else if (!nameRegex.test(city)) {
+        document.getElementById('ecity').innerHTML = 'City name should only contain letters';
+        invalid = false;
+    }
+
+    if (zip === "") {
+        document.getElementById('ezipcode').innerHTML = 'zip code is required';
+        invalid = false;
+    } else if (!zipRegex.test(zip)) {
+        document.getElementById('ezipcode').innerHTML = 'Enter a valid 6-digit PIN code (cannot start with 0)';
+        invalid = false;
+    }
+
+    return  invalid;
+        }
+    </script>
+</body>
+</html>

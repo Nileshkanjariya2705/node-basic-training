@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>combo box</title>
+    <style>
+        fieldset{
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .option{
+            margin-top: 10px;
+        }
+        label{
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>Language known</legend>
+        <div id="language[]" class="language">
+          
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Technology known</legend>
+        <div id="tech[]" class="tech">
+          
+        </div>
+    </fieldset>
+
+     <fieldset>
+        <legend>city</legend>
+        <div id="city" class="city">
+      
+        </div>
+    </fieldset>
+       <fieldset>
+        <legend>gender</legend>
+        <div id="gender" class="gender">
+      
+        </div>
+    </fieldset>
+
+    <script>
+        async function getdata(tech){
+            let container_top=document.getElementById(`${tech}`);
+            let data=await fetch(`http://localhost:8080/get/select?name=${tech}`);
+            let ans= await data.json();
+            ans.forEach(lan=>{
+                let container=document.createElement("div")
+                let input=document.createElement("input");
+                input.setAttribute("id",lan.html_id)
+                input.setAttribute("name",lan.unique_name)
+                input.setAttribute("type",lan.html_type)
+                let label1=document.createElement("label")
+                label1.innerHTML=lan.html_name
+                label1.appendChild(input)
+                container.appendChild(label1);
+
+                let option=getoption(lan.select_master_id,tech)
+                 option
+                 .then(data=>{
+                    data.forEach(op=>{
+                        
+                              let input=document.createElement("input");
+                        input.setAttribute("id",op.option_html_id)
+                        input.setAttribute("name",op.option_unique_name)
+                        input.setAttribute("type",op.option_html_type)
+                        let label=document.createElement("label")
+                        label.innerHTML=op.option_html_name
+                        label.appendChild(input)
+                        container.appendChild(label)
+                    })
+                    
+                  
+                 })
+                 .catch("data not found")
+                container_top.appendChild(container)
+                 
+                
+            })
+        }
+
+        async function getoption(id,tech){
+            let data=await fetch(`http://localhost:8080/get/option/${id}`)
+            let ans=await data.json();
+            return ans;
+        }
+
+        
+        getdata("language[]");
+        getdata("tech[]");
+
+        async function getselect(val) {
+            let city=document.getElementById(`${val}`);
+            let data = await fetch(`http://localhost:8080/get/select?name=${val}`);
+            let ans= await data.json();
+
+            // console.log(ans[0]);
+            
+            
+            let select=document.createElement("select");
+            select.setAttribute("id",ans[0].html_id)
+            select.setAttribute("name",ans[0].unique_name)
+
+            let option=getoption(ans[0].select_master_id,val);
+            
+            
+            option
+            .then(d=>{
+                d.forEach(op=>{
+                    let options=document.createElement("option");
+                options.setAttribute("value",op.option_html_value)
+                options.innerText=op.option_html_name
+                select.appendChild(options);
+                })
+            }).catch(()=>{
+                console.log("data not found");    
+            })
+            
+            city.appendChild(select)
+        }
+        getselect("gender");
+        getselect("city");
+    </script>
+</body>
+</html>

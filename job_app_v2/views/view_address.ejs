@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view user detail</title>
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table,th{
+           text-align: center;
+            border-collapse: collapse;
+           
+        }
+        tr:hover{
+             background-color: rgb(169, 183, 234);
+            color: white;
+        }
+        th,td{
+            border-bottom: 1px solid black;
+            height: 30px
+        }
+        table{
+            width: 100%;
+        }
+       
+        
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+   
+    <div class="main">
+          <h1 style="text-align: center;">Address Data</h1>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>BASIC DETAIL ID</th>
+                    <th>CITY</th>
+                    <th>STATE</th>
+                    <th>ZIP_CODE</th>
+                    <th>ADDRESS1</th>
+                    <th>ADDRESS2</th>
+                    
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody  id="body">
+              
+            </tbody>
+        </table>
+    </div>
+    </div>
+  <script>
+            // let tabel_name="address";
+
+    async function getdata() {
+        try{
+            const response=await fetch("http://localhost:8080/get/address")
+            const data=await response.json();
+            let tbody=document.getElementById("body");
+
+            data.forEach(address=>{
+                let tr=document.createElement("tr");
+                tr.innerHTML=`
+                     <td>${address.address_id}</td>
+                        <td>${address.basic_detail_id}</td>
+                        <td>${address.city}</td>
+                        <td>${address.state}</td>
+                        <td>${address.zip_code}</td>
+                        <td>${address.address_1}</td>
+                        <td>${address.address_2}</td>
+                        <td>
+                        <input type="button" onclick="window.location.href='/edit_address?id=${address.address_id}'" value="edit">
+                        <input type="button" onclick="remove(${address.address_id})" value="delete">
+                            </td>
+                       
+                `
+                tbody.appendChild(tr);
+            })
+        }catch(err){
+            console.error(err.message);
+            
+        }
+    }
+
+    getdata()
+
+    async function remove(id){
+    let msg=document.getElementById('msg');
+       try{
+            const res=await fetch(`http://localhost:8080/delete/address?id=${id}`)
+            if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            const data=await res.json();
+            
+            console.log(data.msg);
+            window.location.reload();
+            
+            
+       }catch(err){
+        console.error("somthing went wrong");
+        if (!msg) {
+            msg.innerHTML = 'Something went wrong, data not deleted';
+        }
+       } 
+    }
+  </script>
+  
+</body>
+</html>

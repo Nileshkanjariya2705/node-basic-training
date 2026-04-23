@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pagination_3</title>
+    <style>
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: sans-serif;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .custom-table thead {
+            background-color: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .custom-table th {
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 12px;
+        }
+
+        .custom-table td {
+            padding: 12px 16px;
+            color: #4b5563;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f3f4f6;
+        }
+
+        .font-bold {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Container to push content up so it doesn't hide behind the fixed bar */
+.outer-container {
+    height: 80px; /* Space for the fixed bar */
+    margin-top: 20px;
+}
+
+.pagination-card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb; /* Border on top since it's at the bottom */
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    z-index: 1000; /* Keeps it above the table */
+}
+
+
+        /* Text styling */
+        .results-info {
+            /* position: fixed; */
+            font-size: 14px;
+            color: #4b5563;
+            /* Muted gray text */
+        }
+
+        .text-bold {
+            font-weight: 600;
+            color: #111827;
+            /* Darker black for numbers */
+        }
+
+        /* Button container */
+        .button-group {
+            display: flex;
+            gap: 8px;
+            /* Space between Previous and Next */
+        }
+
+        /* Individual button style */
+        .pag-button {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn{
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Hover effect */
+        .pag-button:hover,btn:hover {
+            background-color: #f9fafb;
+            border-color: #c1c5cb;
+        }
+
+        /* Focus state for accessibility */
+        .pag-button:focus ,btn:focus{
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        h1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+     <div cl style="float: right; margin-right: 50px; margin-top: 35px;" class="sort">
+        <select  name="sort" id="sortselect" onchange="sortby(this.value)">
+            <option value="" selected>--sort by --</option>
+            <option value="student_id">student</a></option>
+            <option value="email">email</option>
+            <option value="first_name">Name</option>
+            <option value="city">city</option>
+            <option value="created_at">created_time</option>
+        </select>
+    </div>      
+    <h1>Student Data</h1>
+   
+     <div class="table-container">
+    <table class="custom-table">
+      <thead>
+        <tr>
+           <th>
+            ID 
+            <a href="/pagination_3?page=1&&sortby=student_id&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_3?page=1&&sortby=student_id&&order=DESC"  class="btn">↓</a>
+            </th>
+
+          <th>
+            Name 
+            <a href="/pagination_3?page=1&&sortby=first_name&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_3?page=1&&sortby=first_name&&order=DESC" class="btn">↓</a>
+            </th>
+
+          <th>
+            email 
+            <a  href="/pagination_3?page=1&&sortby=email&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_3?page=1&&sortby=email&&order=DESC" class="btn">↓</a>
+            </th>
+           <th>
+            contect_number 
+            <a  href="/pagination_3?page=1&&sortby=contect_number&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_3?page=1&&sortby=contect_number&&order=DESC" class="btn">↓</a>
+            </th>
+           <th>
+            city 
+            <a  href="/pagination_3?page=1&&sortby=city&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_3?page=1&&sortby=city &&order=DESC" class="btn">↓</a>
+            </th>
+          <th>
+            gender 
+            
+            </th>
+           <th>
+            date of birth 
+            <a  href="/pagination_3?page=1&&sortby=dob&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_3?page=1&&sortby=dob&&order=DESC" class="btn">↓</a>
+            </th>
+
+        </tr>
+      </thead>
+       <tbody>
+        <% if(students.length>0){%>
+            <% students.forEach(user=>{%>
+                    <tr>
+                        <td><%=user.student_id%></td>
+                        <td><%=user.first_name%> <%=user.last_name%></td>
+                        <td><%=user.email%> </td>
+                        <td><%=user.contect_number%> </td>
+                        <td><%=user.city%> </td>
+                        <td><%=user.gender%> </td>
+                        <td><%= new Date(user.dob).toLocaleDateString() %></td>
+
+                       
+                    </tr>
+                <%});%>
+            <%}else{%>
+                    <td style="text-align: center;" colspan="7">data not found || page not exits</td>
+                <%}%>
+           
+        </tbody>
+    </table>
+  </div>
+   <div class="outer-container">
+    <div class="pagination-card">
+        <!-- Left Side Text (Calculated Dynamically) -->
+        <div class="results-info">
+            <%
+                // Calculate the "Showing X to Y" range
+                const startResult = ((currentPage - 1) * limit) + 1;
+                const endResult = Math.min(currentPage * limit, totalItems);
+            %>
+            Showing <span class="text-bold"><%= startResult %></span> 
+            to <span class="text-bold"><%= endResult %></span> 
+            of <span class="text-bold"><%= totalItems %></span> results
+        </div>
+
+       <p><%=currentPage%></p>
+
+        <!-- Right Side Buttons -->
+        <div class="button-group">
+            <!-- Previous Button -->
+            <%if(currentPage>2){%>
+                <a href="/pagination_3 %>" class="pag-button" style="text-decoration: none;"><<</a>
+                <%}else{%>
+                <button class="pag-button" disabled style="opacity: 0.5; cursor: not-allowed;"><<</button>
+                <%}%>
+
+             <%if(currentPage>1){%>
+                <a href="/pagination_3?page=<%= currentPage - 1 %>" class="pag-button" style="text-decoration: none;">Previous</a>
+              
+                <%}else{%>
+                <button class="pag-button" disabled style="opacity: 0.5; cursor: not-allowed;">Previous</button>
+              
+                    <%}%> 
+                    
+              
+                 
+                <%if(currentPage<totalPages){%>
+                <a href="/pagination_3?page=<%= currentPage + 1%>" class="pag-button" style="text-decoration: none;">Next</a>
+              
+                <%}else{%>
+                <button class="pag-button" disabled style="opacity: 0.5; cursor: not-allowed;">Next</button>
+              
+                    <%}%>   
+  
+                <%if(currentPage+1<totalPages){%>
+                <a href="/pagination_3?page=<%= totalPages%>" class="pag-button" style="text-decoration: none;">>></a>
+              
+                <%}else{%>
+                <button class="pag-button" disabled style="opacity: 0.5; cursor: not-allowed;">>></button>
+              
+                    <%}%>  
+
+        </div>
+    </div>
+</div>
+                <!-- <a href="/pagination_3?page=<%= currentPage - 1 %>" class="pag-button" style="text-decoration: none;">Previous</a>
+                <button class="pag-button" disabled style="opacity: 0.5; cursor: not-allowed;">Previous</button> -->
+
+                <script>
+                    function sortby(sort){
+                        
+                      window.location.href=window.location.pathname+`?page=${1}&&sortby=`+sort;
+
+                    }
+                </script>
+</body>
+
+</html>

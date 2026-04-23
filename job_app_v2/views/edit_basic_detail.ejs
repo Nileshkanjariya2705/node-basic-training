@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>edit basic detail</title>
+  <style>
+    input,
+    select {
+      width: 100%;
+    }
+
+    fieldset {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      width: 80%;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      /* display: flex;
+        justify-content: center;
+        align-items: center; */
+    }
+
+    p {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+    <div class="main">
+      <h1 style="text-align: center;">Edit basic detail</h1>
+      <div class="container">
+        <form id="myform" method="post">
+          <!-- basic information -->
+          <fieldset>
+            <legend>Basic detail:</legend>
+            <div class="container">
+              <!-- left -->
+              <div class="left">
+                <div class="form-group">
+                  <!-- first name -->
+                  <label for="fname">First Name:</label>
+                  <input id="fname" name="fname" type="text">
+                  <p id="efname"></p>
+                  <% if (errors && errors.fname) { %>
+                    <p class="error">
+                      <%=errors.fname%>
+                    </p>
+                    <% } %>
+                </div>
+                <div class="form-group">
+
+                  <!-- designation -->
+                  <label for="designation">designation:</label>
+                  <input id="designation" name="designation" type="text">
+                  <p id="edesignation"></p>
+                  <% if (errors && errors.lname) { %>
+                    <p class="error">
+                      <%=errors.lname%>
+                    </p>
+                    <% } %>
+
+                </div>
+                <div class="form-group">
+                  <!-- email -->
+                  <label for="email">email:</label>
+                  <input id="email" name="email" type="text">
+                  <p id="eemail"></p>
+                  <% if (errors && errors.email) { %>
+                    <p class="error">
+                      <%=errors.email%>
+                    </p>
+                    <% } %>
+
+                </div>
+                <div class="form-group">
+                  <!-- phone number -->
+                  <label for="phoneNumber">phoneNumber:</label>
+                  <input id="phoneNumber" name="phoneNumber" type="text">
+                  <p id="ephonenumber"></p>
+                  <% if (errors && errors.phoneNumber) { %>
+                    <p class="error">
+                      <%=errors.phoneNumber%>
+                    </p>
+                    <% } %>
+
+                </div>
+                <div id="gender" class="form-group">
+                  <label for="gender">gender:</label>
+
+
+                </div>
+                <div id="relationship_status" class="form-group">
+                  <label for="relationship_status"> relationship_status:</label>
+
+                  </select>
+
+                </div>
+                <div class="form-group">
+                  <!-- date of birth -->
+                  <label for="dob">date of birth:</label>
+                  <input id="dob" name="dob" type="date">
+                  <p id="edob"></p>
+                  <% if (errors && errors.dob) { %>
+                    <p class="error">
+                      <%=errors.dob%>
+                    </p>
+                    <% } %>
+
+                </div>
+
+              </div>
+              <!-- right -->
+              <div class="right">
+                <div class="form-group">
+                  <!-- last name -->
+                  <label for="lname">Last Name:</label>
+                  <input id="lname" name="lname" type="text">
+                  <p id="elname"></p>
+                  <% if (errors && errors.lname) { %>
+                    <p class="error">
+                      <%=errors.lname%>
+                    </p>
+                    <% } %>
+
+                </div>
+
+
+              </div>
+            </div>
+            <div>
+              <input onclick="next_page()"  style="width: 100px; float: right;" type="submit" value="NEXT">
+
+              <input style="width: 100px; float: right;" type="submit" value="SAVE">
+              <input style="width: 100px; float: right;" onclick="window.history.back()" type="button" value="back">
+
+            </div>
+
+          </fieldset>
+        </form>
+
+
+      </div>
+    </div>
+    <script>
+
+
+
+      const url = new URLSearchParams(window.location.search);
+      const id = url.get('id');
+      var updateUrl = '';
+      let gender = '';
+      let relationship_status = '';
+
+      let NEXT=false;
+
+      async function getdata() {
+        try {
+          const res = await fetch(`http://localhost:8080/edit_basic_detail/${id}`);
+
+          if (!res.ok) {
+            throw new Error("some thing went wrong")
+          }
+          const data = await res.json();
+          console.log(data);
+
+          document.getElementsByName("fname")[0].value = data[0].first_name
+          document.getElementsByName("lname")[0].value = data[0].last_name
+          document.getElementsByName("designation")[0].value = data[0].designation
+          document.getElementsByName("email")[0].value = data[0].email
+          document.getElementsByName("phoneNumber")[0].value = data[0].phone_number
+          document.getElementsByName("dob")[0].value = new Date(data[0].dob).toISOString().split('T')[0]
+          gender = data[0].gender;
+          relationship_status = data[0].relationship_status;
+
+          updateUrl = `/update_basic_detail/${data[0].basic_detail_id}`
+
+        } catch (err) {
+          throw new Error("data not found")
+        }
+
+      }
+      getdata();
+
+      async function getselect(val) {
+        let city = document.getElementById(`${val}`);
+        let data = await fetch(`http://localhost:8080/get/select?name=${val}`);
+        let ans = await data.json();
+
+        // console.log(ans[0]);
+
+
+        let select = document.createElement("select");
+        select.setAttribute("id", ans[0].html_id)
+        select.setAttribute("name", ans[0].unique_name)
+
+
+        let option = getoption(ans[0].select_master_id, val);
+
+
+        option
+          .then(d => {
+            d.forEach(op => {
+              let options = document.createElement("option");
+              options.setAttribute("value", op.option_html_value)
+              options.innerText = op.option_html_name
+              if (val == 'gender') {
+                if (op.option_html_value == gender) {
+                  options.setAttribute('selected', '')
+                }
+              } else if (val == 'relationship_status') {
+                if (op.option_html_value == relationship_status) {
+                  options.setAttribute('selected', '')
+                }
+              }
+              select.appendChild(options);
+
+            })
+          }).catch(() => {
+            console.log("data not found");
+          })
+
+        city.appendChild(select)
+      }
+
+      async function getoption(id, tech) {
+        let data = await fetch(`http://localhost:8080/get/option/${id}`)
+        let ans = await data.json();
+        return ans;
+      }
+      getselect("gender")
+      getselect("relationship_status")
+
+
+      let form = document.getElementById('myform')
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        if (!error()) {
+          return false;
+        }
+
+        const formdata = new FormData(form);
+
+
+        try {
+          const res = await fetch(updateUrl, {
+            method: 'POST',
+            body: formdata
+          });
+
+          if (!res.ok) {
+            throw new Error(`Server error: ${res.status}`);
+          }
+
+          
+          
+          
+
+          const data = await res.json();
+          console.log('Response:', data);
+
+          // Redirect after success
+          if(NEXT){
+            window.location.href=`/edit_address?id=${id}`
+          }else{
+
+            window.location.href = '/';
+          }
+        } catch (err) {
+          throw new Error("some thing went wrong");
+        }
+      })
+
+      function next_page(){
+        NEXT=true;
+      }
+
+
+      function error() {
+        let invalid = true;
+
+        let fname = document.getElementById('fname').value.trim();
+        let lname = document.getElementById('lname').value.trim();
+        let designation = document.getElementById('designation').value.trim();
+        let email = document.getElementById('email').value.trim();
+        let phonenumber = document.getElementById('phoneNumber').value.trim();
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        const phoneRegex = /^[6-9]\d{9}$/;
+
+        const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+        const zipRegex = /^[1-9][0-9]{5}$/;
+
+        if (!fname) {
+          document.getElementById('efname').innerHTML = 'First name is required';
+          invalid = false;
+
+        }
+        else if (!nameRegex.test(fname)) {
+          document.getElementById('efname').innerHTML = 'please enter valid first name';
+          invalid = false;
+        }
+        if (!lname) {
+          document.getElementById('elname').innerHTML = 'First name is required';
+          invalid = false;
+
+        }
+        else if (!nameRegex.test(lname)) {
+          document.getElementById('elname').innerHTML = 'please enter valid last name ';
+          invalid = false;
+        }
+        if (!email) {
+          document.getElementById('eemail').innerHTML = "email id required";
+          invalid = false;
+
+        }
+        else if (!emailRegex.test(email)) {
+          document.getElementById('eemail').innerHTML = 'Invalid email format (e.g. name@domain.com)';
+          invalid = false;
+        }
+        if (!designation) {
+          document.getElementById("edesignation").innerHTML = "designtion required"
+          invalid = false;
+
+        } else if (!nameRegex.test(designation)) {
+          document.getElementById("edesignation").innerHTML = "please enter valid designtion"
+          invalid = false;
+        }
+
+        if (phonenumber === "") {
+          document.getElementById('ephonenumber').innerHTML = 'phone number is required';
+          invalid = false;
+        } else if (!phoneRegex.test(phonenumber)) {
+          document.getElementById('ephonenumber').innerHTML = 'Enter a valid 10-digit number (starting with 6-9)';
+          invalid = false;
+        }
+
+
+        if (dob == "") {
+          document.getElementById('edob').innerHTML = 'please select your date of birth';
+          invalid = false;
+        }
+        return invalid;
+      }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRACTICE</title>
+    <style>
+        table ,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        table{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="container">
+        
+    </div>
+    <script>
+        async function getdata() {
+            const ans= await fetch("http://localhost:8080/api/users/getall")
+            const data= await ans.json();
+            let container =document.getElementsByClassName("container")[0];
+
+            let table=document.createElement("table");
+
+           let row= data.length;
+           for(let i=0; i<row; i++){
+           let tr= document.createElement("tr");
+           console.log(data[i]);
+           
+                
+                let td1=document.createElement("td");
+                let td2=document.createElement("td");
+                let td3=document.createElement("td");
+                td1.textContent=data[i].id;
+                td2.textContent=data[i].name;
+                td3.textContent=data[i].city;
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+           
+            table.appendChild(tr);
+            
+           }
+           container.appendChild(table);
+
+            
+
+
+        }
+        getdata();
+    </script>
+</body>
+</html>

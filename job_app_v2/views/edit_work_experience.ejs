@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit work experience</title>
+    <style>
+        table{
+            text-align: center;
+        }
+        td{
+            height: 50px;
+        }
+        p{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+<div class="main">
+    <form method="post" id="myform">
+    <h1>edit_work_experiece</h1>
+     <!-- work experience -->
+    <fieldset>
+      <legend>Work Experience</legend>
+      <div class="work_experience">
+       <table id="experience_table">
+        <tr>
+          <td>
+            <label for="compnay_name">compnay_name:<input name="compnay_name[]" id="compnay_name" type="text"></label>
+            <p id="e_company_name"></p>
+          </td>
+            <td>
+            <label for="work_designation">designation:<input name="work_designation[]" id="work_designation" type="text"></label>
+            <p id="e_work_designation"></p>
+
+          </td>
+           <td>
+            <label for="start_date">start_date:<input name="start_date[]" id="start_date" type="date"></label>
+            <p id="e_start_date"></p>
+
+          </td>
+           <td>
+            <label for="end_date">End date:<input name="end_date[]" id="end_date" type="date"></label>
+            <p id="e_end_date"></p>
+
+          </td>
+          
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input style="width: 150px;" type="button" onclick="window.history.back()" value="back" name="" id="">
+            </td>
+            <td colspan="2">
+                <input style="width: 150px;" type="submit" value="save" >
+
+            </td>
+        </tr>
+       </table>
+
+      </div>
+    </fieldset>
+    </form>
+</div>
+    <script>
+
+        const url=new URLSearchParams(window.location.search)
+        const id= url.get('id');
+        var updateUrl='';
+
+        
+        
+         async function getdata() {
+            
+            try{
+                const res=await fetch(`http://localhost:8080/edit/work_experience/${id}`)
+                if(!res.ok){
+                    throw  new Error("some thing went wrong")
+                }
+                const data=await res.json();
+                console.log(data);
+                document.getElementsByName('compnay_name[]')[0].value=data[0].company_name             
+                document.getElementsByName('work_designation[]')[0].value=data[0].designation             
+                document.getElementsByName('start_date[]')[0].value=new Date(data[0].start_date).toISOString().split('T')[0]            
+                document.getElementsByName('end_date[]')[0].value=new Date(data[0].end_date).toISOString().split('T')[0]      
+                updateUrl=`/update_work_experience/${data[0].work_experience_id}`       
+            }catch(err){
+                console.error("connection fail:",err.message);
+                
+            }
+        }
+        getdata();
+
+         let form=document.getElementById('myform')
+        form.addEventListener('submit',async function(e){
+          e.preventDefault();
+            if(!error()){
+                return false;
+            }
+             const formData = new FormData(form);
+
+
+        try {
+            const res = await fetch(updateUrl, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                throw new Error(`Server error: ${res.status}`);
+            }
+
+            const data = await res.json();
+            console.log('Response:', data);
+
+            // Redirect after success
+            window.location.href = '/experience';
+             }catch(err){
+               throw new Error("some thing went wrong");
+             }
+        })
+
+
+        function error(){
+            let invalid=true;
+
+            let compnay_name = document.getElementById("compnay_name")
+            let work_designation = document.getElementById("work_designation")
+            let start_date = document.getElementById("start_date")
+            let end_date = document.getElementById("end_date")
+
+            if (compnay_name.value.trim() === '') {
+                document.getElementById('e_company_name').innerHTML = 'please enter company name'
+                invalid = false;
+            }
+            if (work_designation.value.trim() === '') {
+                document.getElementById('e_work_designation').innerHTML = 'please enter designation'
+                invalid = false;
+            }
+            if (start_date.value.trim() === '') {
+                document.getElementById('e_start_date').innerHTML = 'please enter start data'
+                invalid = false;
+            }
+            if (end_date.value.trim() === '') {
+                document.getElementById('e_end_date').innerHTML = 'please enter end date'
+                invalid = false;
+            }
+            return invalid;
+        }
+        
+    </script>
+</body>
+</html>

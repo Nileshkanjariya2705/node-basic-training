@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show users</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid black; */
+            /* margin-left: auto;
+            margin-right: auto; */
+            /* border: 1px solid rgb(200, 194, 194); */
+            
+            width: 80%;
+            /* height: 100%; */
+        }
+        table{
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+        }
+        td{
+            border: 1px solid bisque;
+            height: 200px;
+
+        }
+        td:hover{
+            transform: 0.5;
+            transition: 0.5;
+        }
+        h2{
+            border: 1px solid black;
+            background-color: red;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .user{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+        .box{
+            border: 1px solid black;
+            width: 400px;
+            height: 2%;
+            /* margin: auto auto auto auto; */
+            margin-right: 10px;
+            display: inline-table;
+            
+            cursor: pointer;
+            border-radius: 10px;
+            text-align: center;
+        }
+        nav{
+            width: 100%;
+            height: 50px;
+            color: white;
+            background-color: rgb(109, 23, 143);
+        }
+
+          .sidenav{
+            height: 100%;
+            width: 200px;
+            background-color: rgb(169, 183, 234);
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-top: 100px;
+           
+
+        }
+        .main{
+            margin-left: 220px;
+            
+        }
+        a{
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .btn{
+            margin-bottom: 20px;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 10px;
+        }
+    </style>
+
+    
+</head>
+<body>
+   <div class="sidenav">
+        <div class="btn">
+            
+            <a href="/Admin">Admin</a>
+        </div>
+        <div class="btn">
+            
+            <a href="/form">apply now</a>
+        </div>
+        <div class="btn">
+            
+            <a href="/users">users</a>
+        </div>
+          
+    </div>
+    <!-- <h2  onclick="window.location.href='/admin'" style="float: right; margin-top: -40px;">admin</h2> -->
+  <div class="main">
+
+
+    <h1 style="text-align: center; margin-top: 50px;">Users</h1>
+    <div class="container" id="mytable">
+        <!-- <h1 onclick="window.location.href='/form'" style="border: 1px solid black;
+            width: 200px;
+            float: right;
+            background-color: rgb(94, 123, 177);
+            color: white;
+            cursor: pointer;
+        ">Apply now</h1> -->
+
+         <!-- <div class="box">
+            
+         </div>
+         <div class="box">
+            
+         </div> -->
+        
+    </div>
+
+        </div>
+
+    <script>
+        async function getuser(){
+            let table=document.getElementById("mytable");
+            try{
+                const  res= await fetch("http://localhost:8080/get/User");
+                if(!res.ok){
+                    throw new Error("data base error!! some thing went wrong!!")
+                }
+                
+                const data= await res.json();
+                // console.log(data);
+                data.basic_detail.forEach(user=>{
+                    let div=document.createElement("div");
+                    div.setAttribute("class",'box');
+                    div.setAttribute("onclick",`window.location.href='/login?id=${user.basic_detail_id}'`)
+                    div.innerHTML=`<h1  >${user.first_name}</h1>`
+                    table.appendChild(div);
+                })
+                
+                
+                
+            }catch(err){
+                throw new Error("some thing went wrong!!")
+            }
+        }
+        getuser();
+    </script>
+</body>
+</html>

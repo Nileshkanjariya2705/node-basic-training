@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clock</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        table {
+            text-align: center;
+            width: 60%;
+        }
+        td{
+            width: 100px;
+        }
+
+        select {
+            width: 50%;
+            height: 50px;
+           
+        }
+        select,option{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">world clock</h1>
+    <div class="container">
+        <table>
+           
+            <tr>
+                 <input onkeypress="search(this)"  type="search" id="search" placeholder="search">
+                 <input onclick="remove()"  type="button"  value="clear">
+                <td>
+                    <select   name="city" onchange="set_time_zone(this.value)" id="city">
+                  
+                      
+                    </select>
+                </td>
+                <td id="time">
+                    TIME
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+
+        const city=document.getElementById('city')
+        let time_zone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+        function time() {
+            document.getElementById('time').innerHTML = `<h1>${get_time()}</h1>`
+        }
+        function get_time() {
+            const current_date = new Date();
+            const date = current_date.toLocaleString("en-US", { timeZone: `${time_zone}` });
+            const time = date.split(',')
+            return time[1];
+        }
+
+
+
+        setInterval(() => {
+            time()
+        }, 1000);
+        time()
+onkeypress="search(this)" 
+
+        function set_time_zone(id){
+                time_zone=id;
+                time();
+        }
+
+
+        let timezones=Intl.supportedValuesOf('timeZone');
+        function getoption(){
+            // city.option.length=0
+             timezones.forEach(time=>{
+            let option=document.createElement("option");
+            option.setAttribute('value',time);
+            option.innerHTML=time
+            if(time==time_zone){
+                option.setAttribute('selected','')
+            }
+            city.appendChild(option)
+        })
+        }
+       getoption()
+
+        
+        function search(value){
+        
+
+            const filter=value.value.toLowerCase();
+            console.log(filter);
+            
+            
+            let option=city.options;
+            
+            for(let i=0; i<option.length; i++){
+                
+                const option_value=option[i].text.toLowerCase();
+                console.log(option_value);
+                
+                option[i].style.display=option_value.includes(filter)?'':'none'
+            }
+       
+        }
+
+        function remove(){
+            console.log("-----------------------");
+            
+            document.getElementById('search').value=''
+            // console.log('------------------------------------');
+            city.options.length=0
+            
+            getoption();
+        }
+        
+    </script>
+</body>
+
+</html>

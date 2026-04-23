@@ -1,0 +1,22 @@
+{
+  "name": "file_hendling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "csv-parser": "^3.2.0",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "fs": "^0.0.1-security",
+    "multer": "^2.1.1",
+    "path": "^0.12.7",
+    "winston": "^3.19.0"
+  }
+}

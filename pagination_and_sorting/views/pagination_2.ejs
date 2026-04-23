@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pagination_2</title>
+    <style>
+        .pagination-dark {
+            background-color: #0f172a;
+            /* Deep dark navy */
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #94a3b8;
+            /* Slate gray text */
+        }
+
+        .pagination-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #1e293b;
+            /* Subtle separator line */
+            padding-top: 16px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #94a3b8;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-btn:hover {
+            color: #f8fafc;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 4px;
+        }
+
+        .page-link,
+        .dots {
+            padding: 8px 12px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #94a3b8;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        /* The blue line indicator above the active number */
+        .page-link.active {
+            color: #6366f1;
+            /* Indigo color from image */
+        }
+
+        .page-link.active::before {
+            content: "";
+            position: absolute;
+            top: -17px;
+            /* Matches the parent padding-top */
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #6366f1;
+        }
+
+        .page-link:hover:not(.active) {
+            color: #f8fafc;
+        }
+
+        .dots {
+            cursor: default;
+        }
+
+        .arrow {
+            font-size: 18px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: sans-serif;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .custom-table thead {
+            background-color: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .custom-table th {
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 12px;
+        }
+
+        .custom-table td {
+            padding: 12px 16px;
+            color: #4b5563;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f3f4f6;
+        }
+
+        .font-bold {
+            font-weight: 600;
+            color: #111827;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="table-container">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="font-bold">John Doe</td>
+                    <td>Software Engineer</td>
+                    <td>john@example.com</td>
+                    <td>Admin</td>
+                </tr>
+                <tr>
+                    <td class="font-bold">Jane Smith</td>
+                    <td>Product Designer</td>
+                    <td>jane@example.com</td>
+                    <td>Member</td>
+                </tr>
+                <tr>
+                    <td class="font-bold">Whitney Francis</td>
+                    <td>Copywriter</td>
+                    <td>whitney@example.com</td>
+                    <td>Admin</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="pagination-dark" aria-label="Pagination">
+        <div class="pagination-inner">
+            <!-- Previous Link -->
+            <a href="#" class="nav-btn">
+                <span class="arrow">←</span> Previous
+            </a>
+
+            <!-- Page Numbers -->
+            <div class="page-numbers">
+                <a href="#" class="page-link">1</a>
+                <a href="#" class="page-link active">2</a>
+                <a href="#" class="page-link">3</a>
+                <span class="dots">...</span>
+                <a href="#" class="page-link">8</a>
+                <a href="#" class="page-link">9</a>
+                <a href="#" class="page-link">10</a>
+            </div>
+
+            <!-- Next Link -->
+            <a href="#" class="nav-btn">
+                Next <span class="arrow">→</span>
+            </a>
+        </div>
+    </nav>
+
+</body>
+
+</html>

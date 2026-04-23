@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit address</title>
+  <style>
+    input,
+    select {
+      width: 100%;
+    }
+
+    p {
+      color: red;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    fieldset,
+    .footer {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+    <div class="main">
+      <h1 style="text-align: center;">Edit address detail</h1>
+      <fieldset>
+        <legend>address detail:</legend>
+        <div class="container">
+          <!-- left -->
+          <form id="myform">
+            <div class="left">
+
+
+            </div>
+            <!-- right -->
+            <div class="right">
+
+              <div class="form-group">
+                <!-- address 1 -->
+                <label for="address1">Adderess 1:</label>
+                <input id="address1" name="address1" type="text">
+                <p id="eaddress1"></p>
+                <% if (errors && errors.address1) { %>
+                  <p class="error">
+                    <%=errors.address1%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div class="form-group">
+                <!-- address 2 -->
+                <label for="address2">Adderess 2:</label>
+                <input id="address2" name="address2" type="text">
+                <p id="eaddress2"></p>
+                <% if (errors && errors.address2) { %>
+                  <p class="error">
+                    <%=errors.address2%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div id="city" class="form-group">
+                <label for="city">city:</label>
+
+              </div>
+              <div id="state" class="form-group">
+                <label for="state">state:</label>
+
+              </div>
+              <div class="form-group">
+                <!-- zip code -->
+                <label for="zip">ZIP code:</label>
+                <input id="zip" name="zip" type="text">
+                <p id="ezipcode"></p>
+                <% if (errors && errors.zip) { %>
+                  <p class="error">
+                    <%=errors.zip%>
+                  </p>
+                  <% } %>
+              </div>
+            </div>
+        </div>
+        <input type="submit"  onclick="next_page()" style="width: 100px; float: right;" value="next">
+        <input type="submit" style="width: 100px; float: right;" value="save">
+        <input type="button" onclick="window.history.back()" style="width: 100px; float: right; margin-right: 10px;"
+          value="back">
+
+      </fieldset>
+      </form>
+
+
+    </div>
+    <script>
+      const url = new URLSearchParams(window.location.search);
+      const id = url.get('id');
+      var updateUrl = '';
+      let address_city = '';
+      let state = '';
+      async function getdata() {
+        try {
+          const res = await fetch(`http://localhost:8080/edit/address/${id}`)
+          if (!res.ok) {
+            throw new Error("some thing went wrong")
+          }
+          const data = await res.json();
+          console.log(data);
+          document.getElementsByName("address1")[0].value = data[0].address_1
+          document.getElementsByName("address2")[0].value = data[0].address_2
+          document.getElementsByName("zip")[0].value = data[0].zip_code
+          state = data[0].state;
+          address_city = data[0].city;
+          updateUrl = `/update_address/${data[0].address_id}`
+        } catch (err) {
+          console.error("connection fail:", err.message);
+
+        }
+      }
+      getdata();
+
+      async function getoption(id, tech) {
+        let data = await fetch(`http://localhost:8080/get/option/${id}`)
+        let ans = await data.json();
+        return ans;
+      }
+
+
+      async function getselect(val) {
+        let city = document.getElementById(`${val}`);
+        let data = await fetch(`http://localhost:8080/get/select?name=${val}`);
+        let ans = await data.json();
+
+        // console.log(ans[0]);
+
+
+        let select = document.createElement("select");
+        select.setAttribute("id", ans[0].html_id)
+        select.setAttribute("name", ans[0].unique_name)
+        if (val == 'preferred') {
+          select.setAttribute('multiple', '')
+        }
+
+        let option = getoption(ans[0].select_master_id, val);
+
+
+        option
+          .then(d => {
+            d.forEach(op => {
+              let options = document.createElement("option");
+              options.setAttribute("value", op.option_html_value)
+              options.innerText = op.option_html_name
+              if (val == 'state') {
+
+                if (op.option_html_value == state) {
+                  console.log("true");
+
+                  options.setAttribute('selected', '')
+
+                }
+              } else if (val == 'city') {
+
+                if (op.option_html_value == address_city) {
+                  options.setAttribute('selected', '')
+
+                }
+              }
+              select.appendChild(options);
+            })
+          }).catch(() => {
+            console.log("data not found");
+          })
+
+        city.appendChild(select)
+      }
+
+      getselect("city")
+      getselect("state")
+
+
+
+      let form = document.getElementById('myform')
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        if (!error()) {
+          return false;
+        }
+
+
+        const formdata = new URLSearchParams(new FormData(form));
+        console.log(formdata);
+
+        try {
+          const res = await fetch(updateUrl, {
+            method: 'POST',
+            body:formdata
+          })
+
+          if (!res.ok) {
+            throw new Error(`Server error: ${res.status}`);
+          }
+
+          const data = await res.json();
+          console.log('Response:', data);
+
+
+
+          // Redirect after success
+          window.location.href = '/address';
+        } catch (err) {
+          throw new Error("some thing went wrong");
+        }
+      })
+
+      function error() {
+        let invalid = true;
+
+        let address1 = document.getElementById('address1').value.trim();
+        let address2 = document.getElementById('address2').value.trim();
+        // let state = document.getElementById('state').value.trim();
+        let zip = document.getElementById('zip').value.trim();
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        const phoneRegex = /^[6-9]\d{9}$/;
+
+        const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+        const zipRegex = /^[1-9][0-9]{5}$/;
+
+
+
+        const addressRegex = /^[\w\s\#\-\,\/\.\(\)\&]+$/;
+
+        if (address1 === "") {
+          document.getElementById('eaddress1').innerHTML = 'address is required';
+          invalid = false;
+        } else if (!addressRegex.test(address1)) {
+          document.getElementById('eaddress1').innerHTML = ' please enter valid address ';
+          invalid = false;
+        }
+        if (address2 === "") {
+          document.getElementById('eaddress2').innerHTML = 'address is required';
+          invalid = false;
+        }
+        else if (!addressRegex.test(address2)) {
+          document.getElementById('eaddress2').innerHTML = ' please enter valid address ';
+          invalid = false;
+        }
+
+
+        if (zip === "") {
+          document.getElementById('ezipcode').innerHTML = 'zip code is required';
+          invalid = false;
+        } else if (!zipRegex.test(zip)) {
+          document.getElementById('ezipcode').innerHTML = 'Enter a valid 6-digit PIN code (cannot start with 0)';
+          invalid = false;
+        }
+        return invalid;
+      }
+    </script>
+</body>
+
+</html>

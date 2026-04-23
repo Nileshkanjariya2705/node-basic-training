@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination</title>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    /* Container & Layout */
+    .pagination-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #e5e7eb;
+      background-color: #ffffff;
+      padding: 12px 16px;
+      font-family: sans-serif;
+    }
+
+    /* Mobile Styling */
+    .pagination-mobile {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .btn-secondary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background-color: #ffffff;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f9fafb;
+    }
+
+    /* Desktop Styling */
+    .pagination-desktop {
+      display: none;
+      /* Hidden on mobile */
+    }
+
+    .results-text {
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .font-bold {
+      font-weight: 600;
+    }
+
+    /* Nav Wrapper */
+    .pagination-nav {
+      display: inline-flex;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 0;
+    }
+
+    /* Shared Link Styles */
+    .nav-link,
+    .nav-arrow {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      text-decoration: none;
+      border: 1px solid #d1d5db;
+      margin-left: -1px;
+      /* Overlap borders */
+    }
+
+    .nav-link:hover,
+    .nav-arrow:hover {
+      background-color: #f9fafb;
+    }
+
+    /* Active State */
+    .nav-link.active {
+      z-index: 10;
+      background-color: #4f46e5;
+      color: #ffffff;
+      border-color: #4f46e5;
+    }
+
+    /* Arrows & Icons */
+    .nav-arrow {
+      color: #9ca3af;
+      padding: 8px 8px;
+    }
+
+    .nav-left {
+      border-radius: 6px 0 0 6px;
+    }
+
+    .nav-right {
+      border-radius: 0 6px 6px 0;
+    }
+
+    .icon {
+      height: 20px;
+      width: 20px;
+    }
+
+    .nav-dots {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      font-size: 14px;
+      color: #374151;
+      border: 1px solid #d1d5db;
+      margin-left: -1px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* Responsive Breakpoint (640px) */
+    @media (min-width: 640px) {
+      .pagination-mobile {
+        display: none;
+      }
+
+      .pagination-desktop {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    /* Hide specific numbers on small tablets */
+    @media (max-width: 768px) {
+      .hide-mobile {
+        display: none;
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: sans-serif;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .custom-table thead {
+      background-color: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .custom-table th {
+      padding: 12px 16px;
+      font-weight: 600;
+      color: #111827;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 12px;
+    }
+
+    .custom-table td {
+      padding: 12px 16px;
+      color: #4b5563;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table tr:hover {
+      background-color: #f3f4f6;
+    }
+
+    .font-bold {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    h1{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+     .btn{
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Hover effect */
+      btn:hover {
+            background-color: #f9fafb;
+            border-color: #c1c5cb;
+        }
+
+        /* Focus state for accessibility */
+        btn:focus{
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        .search-container {
+  position: relative;
+  display: inline-block;
+  width: 400px; /* Increased Width */
+}
+
+.big-search {
+  width: 100%;
+  height: 50px; /* Increased Height */
+  padding: 10px 45px 10px 20px; /* Extra padding on right for the 'X' */
+  font-size: 18px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+}
+
+.big-search:focus {
+  border-color: #007bff;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #999;
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  color: #333;
+  
+}
+
+  </style>
+</head>
+
+<body>
+  <h1>student data</h1>
+
+  <div class="search-container">
+  <input  type="text" id="searchInput" placeholder="Search students..." class="big-search">
+  <button type="button" onclick="clearSearch()" class="clear-btn">&times;</button>
+</div>
+<div class="search-container">
+
+  <input style="cursor: pointer; width: 50px; height: 50px;" onclick="GO()" type="submit" id="go"  value="GO" ></input>
+  <input id="andor" style="cursor: pointer; margin-left: 30px; width: 50px; height: 50px;" onclick="change(this)"  type="submit" value="AND"></input>
+</div>
+
+
+    <div class="table-container">
+      <input type="hidden" name="page" value="<%=page%>" id="page">
+    <table id="mytable" class="custom-table">
+      <thead>
+        <tr>
+           <th>
+            ID 
+            <a href="/pagination_1?page=1&&sortby=student_id&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=student_id&&order=DESC"  class="btn">↓</a>
+            </th>
+
+          <th >
+            first_Name 
+            <a href="/pagination_1?page=1&&sortby=first_name&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=first_name&&order=DESC" class="btn">↓</a>
+            </th>
+
+          <th >
+            Last_Name 
+            <a href="/pagination_1?page=1&&sortby=last_name&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=last_name&&order=DESC" class="btn">↓</a>
+            </th>
+
+          <th>
+            email 
+            <a  href="/pagination_1?page=1&&sortby=email&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=email&&order=DESC" class="btn">↓</a>
+            </th>
+           <th>
+            contect_number 
+            <a  href="/pagination_1?page=1&&sortby=contect_number&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=contect_number&&order=DESC" class="btn">↓</a>
+            </th>
+           <th>
+            city 
+            <a  href="/pagination_1?page=1&&sortby=city&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=city &&order=DESC" class="btn">↓</a>
+            </th>
+          <th>
+            gender 
+            
+            </th>
+           <th>
+            date of birth 
+            <a  href="/pagination_1?page=1&&sortby=dob&&order=ASC" class="btn">↑</a> 
+            <a  href="/pagination_1?page=1&&sortby=dob&&order=DESC" class="btn">↓</a>
+            </th>
+
+        </tr>
+      </thead>
+       <tbody>
+        <% if(students.length>0){%>
+            <% students.forEach(user=>{%>
+            <tr>
+              <td><%=user.student_id%></td>
+              <td id="student_name" ><%=user.first_name%></td>
+              <td> <%=user.last_name%> </td>
+              <td><%=user.email%> </td>
+              <td><%=user.contect_number%> </td>
+              <td><%=user.city%> </td>
+              <td><%=user.gender%> </td>
+              <td><%=new Date(user.dob).toLocaleDateString()%></td>
+            </tr>
+
+          <%});%>
+        
+        <%}else{%>
+            <td colspan="7" style="text-align: center;"> data not found</td>
+            <%}%>
+           
+        </tbody>
+    </table>
+  </div>
+
+ <div class="pagination-container">
+  <!-- Mobile View -->
+  <div class="pagination-mobile">
+    
+      <a href="/students?page=<%= currentPage - 1 %>" class="btn-secondary">Previous</a>
+  
+      <span class="btn-secondary" style="opacity: 0.5; cursor: not-allowed;">Previous</span>
+  
+
+      <a href="/students?page=<%= currentPage + 1 %>" class="btn-secondary">Next</a>
+  
+      <span class="btn-secondary" style="opacity: 0.5; cursor: not-allowed;">Next</span>
+   
+  </div>
+
+  <!-- Desktop View -->
+  <div class="pagination-desktop">
+    <div>
+      <p class="results-text">
+        Showing Page <span class="font-bold"> <%= currentPage %></span> of <span class="font-bold"><%=totalPages%></span>
+      </p>
+    </div>
+    <div>
+     <!-- pagination logic -->
+      <nav class="pagination-nav" aria-label="Pagination">
+  <!-- Previous Arrow -->
+   <%if(currentPage>1){%>
+  <a href="/pagination_1?page=<%=currentPage - 1%>" class="nav-arrow nav-left">
+    <svg viewBox="0 0 20 20" fill="currentColor" class="icon">
+      <path d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" fill-rule="evenodd" />
+    </svg>
+  </a>
+  <%}else{%>
+      <button style="cursor: not-allowed;" aria-disabled="false"  href="/pagination_1?page=<%=currentPage - 1%>"  class="nav-arrow nav-left">
+    <svg viewBox="0 0 20 20" fill="currentColor" class="icon">
+      <path d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" fill-rule="evenodd" />
+    </svg>
+      </button>
+
+    <%}%>
+
+
+    <!-- logic for pagination -->
+     <%
+     let startpage = Math.max(1,currentPage-2);
+     let endpage = Math.min(totalPages,startpage+4);
+     if(endpage- startpage < 4 ){
+      startpage = Math.max(1,endpage-4);
+     }
+     %>
+
+  <!-- Page Numbers -->
+   <% if(startpage>1){%>
+
+   <a href="/pagination_1?page=1" class="nav-link ">1</a>
+   <% if(startpage > 2) { %> <span class="nav-dots">...</span> <%}%>
+  <%}%>
+
+   <% for(let i = startpage; i <= endpage; i++) { %>
+          <a href="/pagination_1?page=<%= i %>" class="nav-link <%= i==currentPage ? 'active' : '' %>">
+            <%= i %>
+          </a>
+        <% } %>
+      
+
+
+  <% if(endpage < totalPages){ %>
+      <% if(endpage < totalPages -1){ %> <span class="nav-dots">...</span> <%}%>
+  <a href="/pagination_1?page=<%=totalPages%>" class="nav-link"><%=totalPages%></a>
+
+    <%} %>
+  
+
+  <!-- Next Arrow -->
+   <% if(currentPage < totalPages){%>
+  <a style="cursor: pointer;" href="/pagination_1?page=<%= ++currentPage %>" class="nav-arrow nav-right">
+    <svg viewBox="0 0 20 20" fill="currentColor" class="icon">
+      <path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+    </svg>
+  </a>
+  <%}else{%>
+     <button style="cursor: not-allowed;" disabled href="/pagination_1?page=<%= ++currentPage %>" class="nav-arrow nav-right">
+    <svg viewBox="0 0 20 20" fill="currentColor" class="icon">
+      <path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+    </svg>
+  </button>
+    <%}%>
+</nav>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Table remains the same as before -->
+
+
+
+
+    <script>
+      let page=document.getElementById('page').value;
+      
+      
+      function change(value){
+        if(value.value==='AND'){
+            value.value='OR'
+        }else{
+          value.value='AND'
+        }
+        
+      }
+      function GO(){
+        let map=new Map();
+        let oparator_map=new Map();
+        oparator_map.set('$','first_name')
+        oparator_map.set('^','last_name')
+        oparator_map.set('_','contect_number')
+        oparator_map.set('[','email')
+        oparator_map.set(']','city')
+
+
+        let str=document.getElementById('searchInput').value.trim();
+        let oparator=['$','^','_','[',']'];
+        let arr=new Array(...str);
+        
+        
+
+        let input='';
+        let sing='';
+        
+        arr.forEach(ele=>{
+          if(ele=='$' || ele=='^' || ele=='_' || ele==']' || ele=='['){
+            map.set(sing,input);
+            sing=ele;
+            input='';
+          }else{
+            input+=ele;
+
+          }
+        })
+
+
+        map.set(sing,input)
+        console.log(map);
+        
+       let ans='';
+        
+        map.forEach((key,value)=>{
+          if(key!='' && value!='')
+           ans= ans+oparator_map.get(value)+"="+key+'&'
+        })
+        
+       
+
+        
+            let andor=document.getElementById('andor').value;
+        
+        // console.log(window.location.href);
+        
+         window.location.href= `/pagination_1?page=${page}&`+ans+"andor="+andor;
+        
+
+        
+        
+
+
+        
+      }
+
+      // search function
+      function search(value) {
+    let filter = value.toUpperCase(); // Case-insensitive search
+    let mytable = document.getElementById("mytable");
+    let rows = mytable.getElementsByTagName("tr"); // Get all rows
+
+    // Start loop from 1 to skip the <th> header row
+    for (let i = 1; i < rows.length; i++) {
+        // Assume column 1 is the Name column
+        let nameColumn = rows[i].getElementsByTagName("td")[1]; 
+        
+        if (nameColumn) {
+            let textValue = nameColumn.textContent || nameColumn.innerText;
+            
+            // Check if the name contains the search value
+            if (textValue.toUpperCase().indexOf(filter) > -1) {
+                rows[i].style.display = ""; // Show row
+            } else {
+                rows[i].style.display = "none"; // Hide row
+            }
+        }
+    }
+}
+
+      function clearSearch(){
+        window.location.href=window.location.pathname;
+      }
+      
+
+    
+      
+     </script>
+</body>
+
+</html>

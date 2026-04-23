@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>job_application_form</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+
+        fieldset {
+            margin-top: 30px;
+            /* width: 800px; */
+        }
+
+
+        .references_contect,
+        .preferences {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr 1fr;
+
+            grid-template-areas: "left middel right";
+
+        }
+
+        .Eduction,
+        .work_experience,
+        .language_known {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+
+            grid-template-areas: "1 2 3 4";
+
+        }
+
+        .container {
+            display: grid;
+            grid-template-areas: "left left" "right right";
+            width: 100%;
+
+            gap: 30px;
+        }
+
+        table,
+        td,
+        tr,
+        th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .table_container,
+        .eduction_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .table_container th {
+            width: 200px;
+            border: 1px solid black;
+        }
+
+        .eduction_container th {
+            width: 200px;
+            border: 1px solid black;
+        }
+
+
+        .form-group {
+            margin-top: 8px;
+        }
+
+        p {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Job_application_form</h1>
+    <form id="myFormId" action="/ task2.html" onsubmit="return error()">
+        <!-- basic information -->
+        <fieldset>
+            <legend>Basic detail:</legend>
+            <div class="container">
+                <!-- left -->
+                <div class="left">
+                    <div class="form-group">
+                        <!-- first name -->
+                        <label for="fname">First Name:</label>
+                        <input id="fname" name="fname" type="text">
+                        <p id="efname"></p>
+                    </div>
+                    <div class="form-group">
+
+                        <!-- designation -->
+                        <label for="designation">designation:</label>
+                        <input id="designation" name="designation" type="text">
+                        <p id="edesignation"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- email -->
+                        <label for="email">email:</label>
+                        <input id="email" name="email" type="text">
+                        <p id="eemail"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- phone number -->
+                        <label for="phoneNumber">phoneNumber:</label>
+                        <input id="phoneNumber" name="phoneNumber" type="text">
+                        <p id="ephonenumber"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- Gender -->
+                        <label for="gender">Gender:</label>
+                        <input id="male" name="gender" value="male" type="radio"> <label for="male">male</label>
+                        <input id="female" name="gender" value="female" type="radio"> <label for="female">female</label>
+                        <!-- Error message paragraph -->
+                        <p id="egender"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- Relation ship status -->
+                        <label for="RelationShip">RelationShip status:</label>
+                        <select name="RelationShip" id="RelationShip">
+                            <option value="single">single</option>
+                            <option value="Marride">Marride</option>
+
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- date of birth -->
+                        <label for="dob">date of birth:</label>
+                        <input id="dob" name="dob" type="date">
+                        <p id="edob"></p>
+
+                    </div>
+
+                </div>
+                <!-- right -->
+                <div class="right">
+                    <div class="form-group">
+                        <!-- last name -->
+                        <label for="lname">Last Name:</label>
+                        <input id="lname" name="lname" type="text">
+                        <p id="elname"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- address 1 -->
+                        <label for="address1">Adderess 1:</label>
+                        <input id="address1" name="address1" type="text">
+                        <p id="eaddress1"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- address 2 -->
+                        <label for="address2">Adderess 2:</label>
+                        <input id="address2" name="address2" type="text">
+                        <p id="eaddress2"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- city -->
+                        <label for="city">City:</label>
+                        <input id="city" name="city" type="text">
+                        <p id="ecity"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- state -->
+                        <label for="state">state:</label>
+                        <select name="state" id="state">
+                            <option value="gujarat" selected>Gujarat</option>
+                            <option value="keral">keral</option>
+                            <option value="himachal">himachal</option>
+                            <option value="maharastra">maharastra</option>
+                            <option value="UP">UP</option>
+                            <option value="MP">MP</option>
+                            <option value="J&K">J&K</option>
+
+                        </select>
+                        <p id="estate"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <!-- zip code -->
+                        <label for="zip">ZIP code:</label>
+                        <input id="zip" name="zip" type="text">
+                        <p id="ezipcode"></p>
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+
+
+        <!-- Eduction detail -->
+        <fieldset>
+            <legend>Eduction detail:</legend>
+            <div class="Eduction">
+                <div class="1">
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <input id="course" name="course" type="text">
+                        <p id="e_course"></p>
+                    </div>
+                </div>
+                <div class="2">
+                    <div class="form-group">
+                        <label for="Passing_Year">Passing_Year:</label>
+                        <input id="Passing_Year" name="Passing_Year" type="text">
+                        <p id="e_Passing_Year"></p>
+
+                    </div>
+                </div>
+                <div class="3">
+                    <div class="form-group">
+                        <label for="Uni_Board">Uni/Board:</label>
+                        <input id="Uni_Board" name="Uni_Board" type="text">
+                        <p id="e_Uni_Board"></p>
+
+                        <br>
+                        <div class="form-group">
+
+                            <input onclick="  add_eduction()" type="button" value="ADD">
+
+                            <input onclick="remove_last_eduction()" type="button" value="Remove">
+                        </div>
+                    </div>
+                </div>
+                <div class="4">
+                    <div class="form-group">
+                        <label for="Result">Result:</label>
+                        <input id="Result" name="Result" type="text">
+                        <p id="e_Result"></p>
+
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <!-- table for eduction -->
+        <fieldset id="eduction_fieldset" style="display: none;">
+            <legend>Data of Eduction</legend>
+            <div class="eduction_container">
+
+            </div>
+        </fieldset>
+
+
+        <!-- work experience -->
+        <fieldset>
+            <legend>Work Experience</legend>
+            <div class="work_experience">
+                <div class="1">
+                    <div class="form-group">
+                        <label for="company_name">company_name:</label>
+                        <input id="company_name" name="company_name" type="text">
+                        <p id="e_company_name"> </p>
+
+                    </div>
+
+                </div>
+                <div class="2">
+                    <div class="form-group">
+                        <label for="Work_designation">designation:</label>
+                        <input id="Work_designation" name="Work_designation" type="text">
+                        <p id="e_Work_designation"> </p>
+
+                    </div>
+
+                </div>
+                <div class="3">
+                    <div class="form-group">
+                        <label for="from">From:</label>
+                        <input id="from" name="from" type="date">
+                        <p id="e_from"> </p>
+
+                        <input onclick="  add()" type="button" value="ADD">
+
+                        <input onclick="removeLastRow()" type="button" value="Remove">
+                    </div>
+
+
+
+
+                </div>
+                <div class="4">
+                    <div class="form-group">
+                        <label for="to">To:</label>
+                        <input id="to" name="to" type="date">
+                        <p id="e_to"> </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <!-- <input style="text-align: center;" type="submit"> -->
+        </fieldset>
+        <!-- table for  work experience -->
+        <fieldset id="fieldset" style="display: none;">
+            <legend>DATA:</legend>
+            <div class="table_container">
+
+            </div>
+        </fieldset>
+
+
+        <!-- language know -->
+        <!-- language known -->
+        <fieldset id="language_known">
+            <legend>Language Known</legend>
+
+            <!-- Row 1: Gujarati -->
+            <div class="form-group">
+                <label><input onclick="document.getElementById('gujarati_container').style.display='block'"
+                        type="checkbox" name="gujarati" value="gujarati"> Gujarati</label>
+                <div id="gujarati_container" style="display: none; margin-top: 10px;">
+                    <label><input type="checkbox" name="guj_read"> Read</label>
+                    <label><input type="checkbox" name="guj_write"> Write</label>
+                    <label><input type="checkbox" name="guj_speak"> Speak</label>
+                </div>
+
+                <p id="e_gujarati" class="error-msg"></p>
+            </div>
+
+            <!-- Row 2: Hindi -->
+            <div class="form-group">
+                <label><input onclick="document.getElementById('hindi_container').style.display='block'" type="checkbox"
+                        name="hindi" value="hindi"> Hindi</label>
+                <div id="hindi_container" style="display: none; margin-top: 10px;">
+                    <label><input type="checkbox" name="hin_read"> Read</label>
+                    <label><input type="checkbox" name="hin_write"> Write</label>
+                    <label><input type="checkbox" name="hin_speak"> Speak</label>
+                </div>
+                <p id="e_hindi" class="error-msg"></p>
+            </div>
+
+            <!-- Row 3: English -->
+            <div class="form-group">
+                <label><input onclick="document.getElementById('eng_container').style.display='block'" type="checkbox"
+                        name="english" value="english"> English</label>
+                <div id="eng_container" style="display: none; margin-top: 10px;">
+                    <label><input type="checkbox" name="eng_read"> Read</label>
+                    <label><input type="checkbox" name="eng_write"> Write</label>
+                    <label><input type="checkbox" name="eng_speak"> Speak</label>
+                </div>
+                <p id="e_english" class="error-msg"></p>
+            </div>
+        </fieldset>
+
+
+        <!-- tachnology know -->
+        <fieldset id="technology_know" autocomplete="off">
+            <legend>Technology you Know</legend>
+
+            <!-- Java Group -->
+            <div class="form-group">
+                <label><input name="java" type="checkbox" value="java"
+                        onclick="document.getElementById('java_container').style.display='block'"> Java</label>
+                <div id="java_container" style="display: none; margin-top: 10px;">
+                    <label><input name="java_level" type="radio" value="beginer"> Beginner</label>
+                    <label><input name="java_level" type="radio" value="mideator"> Mediator</label>
+                    <label><input name="java_level" type="radio" value="expert"> Expert</label>
+                </div>
+                <p id="e_java" class="error"></p>
+            </div>
+
+            <!-- PHP Group -->
+            <div class="form-group">
+                <label><input name="php" type="checkbox" value="php"
+                        onclick="document.getElementsByClassName('php_container')[0].style.display='block'"> PHP</label>
+                <div class="php_container" style="display: none; margin-top: 10px;">
+                    <label><input name="php_level" type="radio" value="beginer"> Beginner</label>
+                    <label><input name="php_level" type="radio" value="mideator"> Mediator</label>
+                    <label><input name="php_level" type="radio" value="expert"> Expert</label>
+                </div>
+                <p id="e_php" class="error"></p>
+            </div>
+
+            <!-- MySQL Group -->
+            <div class="form-group">
+                <label><input onclick="document.getElementById('mysql_container').style.display='block'" name="mysql"
+                        type="checkbox" value="mysql"> MySQL</label>
+                <div id="mysql_container" style="display: none; margin-top: 10px;">
+                    <label><input name="mysql_level" type="radio" value="beginer"> Beginner</label>
+                    <label><input name="mysql_level" type="radio" value="mideator"> Mediator</label>
+                    <label><input name="mysql_level" type="radio" value="expert"> Expert</label>
+                </div>
+                <p id="e_mysql" class="error"></p>
+            </div>
+
+            <!-- Laravel Group -->
+            <div class="form-group">
+                <label><input onclick="document.getElementById('larava_container').style.display='block'" name="larava"
+                        type="checkbox" value="larava"> Laravel</label>
+                <div id="larava_container" style="display: none; margin-top: 10px;">
+                    <label><input name="larava_level" type="radio" value="beginner"> Beginner</label>
+                    <label><input name="larava_level" type="radio" value="mediator"> Mediator</label>
+                    <label><input name="larava_level" type="radio" value="expert"> Expert</label>
+                </div>
+
+                <!-- Fixed ID to match your JS variables -->
+                <p id="e_larava" class="error"></p>
+            </div>
+
+        </fieldset>
+
+        <!-- references contect -->
+        <fieldset>
+            <legend>References contect:</legend>
+            <div class="references_contect">
+                <div class="left">
+                    <!-- left -->
+                    <div class="form-group">
+                        <label for="rname">Name:</label>
+                        <input style="width: 80px;" name="rname" id="rname" type="text">
+                        <p id="e_rname"> </p>
+
+                    </div>
+
+                </div>
+                <div class="middel">
+                    <!-- middel -->
+                    <div class="form-group">
+                        <label for="contect_number">contect number:</label>
+                        <input style="width: 80px;" name="contect_number" id="contect_number" type="text">
+                        <p id="e_contect_number"> </p>
+
+                    </div>
+
+
+                </div>
+                <div class="right">
+                    <!-- right -->
+                    <div class="form-group">
+                        <label for="relation">relation:</label>
+                        <input style="width: 80px;" name="relation" id="relation" type="text">
+                        <p id="e_relation"></p>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- preferences -->
+        <fieldset>
+            <legend>
+                Preferences:
+            </legend>
+            <div class="preferences">
+                <div class="left">
+                    <div class="form-group">
+                        <label for="preferd_location">preferd location:</label>
+                        <select id="preferd_location" style="vertical-align: top;" name="preferd_location"
+                            id="preferd_location" multiple>
+                            <!-- left -->
+                            <option value="ahmedabad">ahmedabad</option>
+                            <option value="surat">surat</option>
+                            <option value="bhavanagar">bhavanagar</option>
+                            <option value="gandhinagar">gandhinagar</option>
+                            <option value="rajkot">rajkot</option>
+
+                        </select>
+
+                    </div>
+                    <p id="e_prefered_location"></p>
+
+                </div>
+                <div class="middel">
+                    <!-- middel -->
+                    <div class="form-group">
+                        <label for="notice_period">Notice period:</label>
+                        <input style="width: 80px;" name="notice_period" id="notice_period" type="text">
+                        <p id="e_notice_period"> </p>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expected_ctc">Expected CTC:</label>
+                        <input style="width: 80px;" name="expected_ctc" id="expected_ctc" type="text">
+                        <p id="e_expected_ctc"> </p>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="current_ctc">Current CTC:</label>
+                        <input style="width: 80px;" name="current_ctc" id="current_ctc" type="text">
+                        <p id="e_current_ctc"></p>
+
+                    </div>
+                </div>
+                <div class="right">
+                    <!-- right -->
+                    <div class="form-group">
+                        <label for="department">Department:</label>
+                        <select name="department" id="department">
+                            <option value="development">development</option>
+                            <option value="marketing">marketing</option>
+                            <option value="design">desing</option>
+                            <option value="testing">testing</option>
+                            <option value="QA">QA</option>
+
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <div style="text-align: center; margin-top: 10px;" class="btn">
+            <input type="submit">
+            <input type="reset">
+
+        </div>
+    </form>
+    <script>
+
+
+        window.onload = function () {
+            // Replace 'myFormId' with your actual form ID
+            document.getElementById("myFormId").reset();
+        };
+
+        let is_work_ex_added = false;
+        let is_eduction_added = false;
+
+        function error() {
+
+
+
+            // reser all mesages
+            document.getElementById('efname').innerHTML = '';
+            document.getElementById('elname').innerHTML = '';
+            document.getElementById('eemail').innerHTML = '';
+            document.getElementById('edesignation').innerHTML = '';
+            document.getElementById('eaddress1').innerHTML = '';
+            document.getElementById('eaddress2').innerHTML = '';
+            document.getElementById('ephonenumber').innerHTML = '';
+            document.getElementById('ecity').innerHTML = '';
+            document.getElementById('egender').innerHTML = '';
+            document.getElementById('estate').innerHTML = '';
+            document.getElementById('ezipcode').innerHTML = '';
+            document.getElementById('edob').innerHTML = '';
+            document.getElementById('e_gujarati').innerHTML = '';
+            document.getElementById('e_java').innerHTML = '';
+            document.getElementById('e_rname').innerHTML = '';
+            document.getElementById('e_contect_number').innerHTML = '';
+            document.getElementById('e_relation').innerHTML = '';
+            document.getElementById('e_notice_period').innerHTML = '';
+            document.getElementById('e_expected_ctc').innerHTML = '';
+            document.getElementById('e_current_ctc').innerHTML = '';
+            document.getElementById("e_gujarati").innerHTML = "";
+            document.getElementById("e_hindi").innerHTML = "";
+            document.getElementById("e_english").innerHTML = "";
+            // 1. Reset all error messages at the start
+            document.getElementById("e_java").innerHTML = "";
+            document.getElementById("e_php").innerHTML = "";
+            document.getElementById("e_mysql").innerHTML = "";
+            document.getElementById("e_larava").innerHTML = "";
+
+
+
+
+
+            let invalid = true;
+
+
+            let fname = document.getElementById('fname').value.trim();
+            let lname = document.getElementById('lname').value.trim();
+            let designation = document.getElementById('designation').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let phonenumber = document.getElementById('phoneNumber').value.trim();
+            let male = document.getElementById('male').checked;
+            let female = document.getElementById('female').checked;
+
+            let dob = document.getElementById('dob').value;
+            let address1 = document.getElementById('address1').value.trim();
+            let address2 = document.getElementById('address2').value.trim();
+            let state = document.getElementById('state').value.trim();
+            let zip = document.getElementById('zip').value.trim();
+            let city = document.getElementById('city').value.trim();
+
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const zipRegex = /^[1-9][0-9]{5}$/;
+
+            const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+
+            if (fname === "") {
+                document.getElementById('efname').innerHTML = 'First name is required';
+                invalid = false;
+
+            } else if (!nameRegex.test(fname)) {
+                document.getElementById('efname').innerHTML = 'please enter valid first name';
+                invalid = false;
+            }
+            if (lname === "") {
+                document.getElementById('elname').innerHTML = 'First name is required';
+                invalid = false;
+
+            }
+            else if (!nameRegex.test(lname)) {
+                document.getElementById('elname').innerHTML = 'please enter valid last name ';
+                invalid = false;
+            }
+            if (email === "") {
+                document.getElementById('eemail').innerHTML = "email id required";
+                invalid = false;
+
+            }
+            else if (!emailRegex.test(email)) {
+                document.getElementById('eemail').innerHTML = 'Invalid email format (e.g. name@domain.com)';
+                invalid = false;
+            }
+            if (designation === "") {
+                document.getElementById("edesignation").innerHTML = "designtion required"
+                invalid = false;
+
+            } else if (!nameRegex.test(designation)) {
+                document.getElementById("edesignation").innerHTML = "please enter valid designtion"
+                invalid = false;
+            }
+
+            const addressRegex = /^[\w\s\#\-\,\/\.\(\)\&]+$/;
+
+            if (address1 === "") {
+                document.getElementById('eaddress1').innerHTML = 'address is required';
+                invalid = false;
+            } else if (!addressRegex.test(address1)) {
+                document.getElementById('eaddress1').innerHTML = ' please enter valid address ';
+                invalid = false;
+            }
+            if (address2 === "") {
+                document.getElementById('eaddress2').innerHTML = 'address is required';
+                invalid = false;
+            }
+            else if (!addressRegex.test(address2)) {
+                document.getElementById('eaddress2').innerHTML = ' please enter valid address ';
+                invalid = false;
+            }
+            if (phonenumber === "") {
+                document.getElementById('ephonenumber').innerHTML = 'phone number is required';
+                invalid = false;
+            } else if (!phoneRegex.test(phonenumber)) {
+                document.getElementById('ephonenumber').innerHTML = 'Enter a valid 10-digit number (starting with 6-9)';
+                invalid = false;
+            }
+
+            // City Validation
+            if (city === "") {
+                document.getElementById('ecity').innerHTML = 'Please enter your city';
+                invalid = false;
+            } else if (!nameRegex.test(city)) {
+                document.getElementById('ecity').innerHTML = 'City name should only contain letters';
+                invalid = false;
+            }
+            if (!male && !female) {
+                document.getElementById('egender').innerHTML = 'please select your gender';
+                invalid = false;
+            }
+
+            if (zip === "") {
+                document.getElementById('ezipcode').innerHTML = 'zip code is required';
+                invalid = false;
+            } else if (!zipRegex.test(zip)) {
+                document.getElementById('ezipcode').innerHTML = 'Enter a valid 6-digit PIN code (cannot start with 0)';
+                invalid = false;
+            }
+            if (dob == "") {
+                document.getElementById('edob').innerHTML = 'please select your date of birth';
+                invalid = false;
+            }
+
+
+            // now validation for eduction detail ---------------------------------
+
+            //  validation for masters and becherols
+
+
+            // now validatioin for language known
+            let gujarati = document.getElementsByName("gujarati")[0].checked
+            let hindi = document.getElementsByName("hindi")[0].checked
+            let english = document.getElementsByName('english')[0].checked;
+
+            let guj_read = document.getElementsByName('guj_read')[0].checked;
+            let guj_write = document.getElementsByName("guj_write")[0].checked;
+            let guj_speak = document.getElementsByName('guj_speak')[0].checked;
+
+            let hin_read = document.getElementsByName('hin_read')[0].checked;
+            let hin_write = document.getElementsByName('hin_write')[0].checked;
+            let hin_speak = document.getElementsByName('hin_speak')[0].checked;
+
+            let eng_read = document.getElementsByName('eng_read')[0].checked;
+            let eng_write = document.getElementsByName('eng_write')[0].checked;
+            let eng_speak = document.getElementsByName('eng_speak')[0].checked;
+
+
+
+
+            // 1. Check if ANY language is selected at all
+            if (!gujarati && !hindi && !english) {
+                document.getElementById("e_gujarati").innerHTML = "Select at least one language";
+                invalid = false;
+            }
+            // 2. Check if a specific language is picked but has NO skills checked
+            else {
+                // Check Gujarati
+                if (gujarati && !guj_read && !guj_write && !guj_speak) {
+                    document.getElementById("e_gujarati").innerHTML = "Select at least one skill for Gujarati";
+                    invalid = false;
+                }
+                // Check Hindi
+                if (hindi && !hin_read && !hin_write && !hin_speak) {
+                    document.getElementById("e_hindi").innerHTML = "Select at least one skill for Hindi";
+                    invalid = false;
+                }
+                // Check English
+                if (english && !eng_read && !eng_write && !eng_speak) {
+                    document.getElementById("e_english").innerHTML = "Select at least one skill for English";
+                    invalid = false;
+                }
+            }
+
+
+            // now validatioin for tecnology known
+            let java = document.getElementsByName("java")[0].checked;
+            let php = document.getElementsByName("php")[0].checked;
+            let mysql = document.getElementsByName("mysql")[0].checked;
+            let laraval = document.getElementsByName("larava")[0].checked;
+
+            let java_beginer = document.getElementsByName("java_level")[0].checked;
+            let java_intermidiate = document.getElementsByName("java_level")[1].checked;
+            let java_expert = document.getElementsByName("java_level")[2].checked;
+
+            let php_beginer = document.getElementsByName("php_level")[0].checked;
+            let php_intermidiate = document.getElementsByName("php_level")[1].checked;
+            let php_expert = document.getElementsByName("php_level")[2].checked;
+
+            let mysql_beginer = document.getElementsByName("mysql_level")[0].checked;
+            let mysql_intermidiate = document.getElementsByName("mysql_level")[1].checked;
+            let mysql_expert = document.getElementsByName("mysql_level")[2].checked;
+
+            let laravel_beginer = document.getElementsByName("larava_level")[0].checked;
+            let laravel_intermidiate = document.getElementsByName("larava_level")[1].checked;
+            let laravel_expert = document.getElementsByName("larava_level")[2].checked;
+
+
+
+            if (!java && !php && !mysql && !laraval) {
+                document.getElementById("e_java").innerHTML = "Select at least one technology";
+                invalid = false;
+            } else {
+
+                if (java && !java_beginer && !java_intermidiate && !java_expert) {
+                    document.getElementById("e_java").innerHTML = "Select at least one skill level";
+
+                    invalid = false;
+                }
+                if (php && !php_beginer && !php_intermidiate && !php_expert) {
+                    document.getElementById("e_php").innerHTML = "Select at least one skill level";
+
+                    invalid = false;
+                }
+                if (mysql && !mysql_beginer && !mysql_intermidiate && !mysql_expert) {
+                    document.getElementById("e_mysql").innerHTML = "Select at least one skill level";
+
+                    invalid = false;
+                }
+                if (laraval && !laravel_beginer && !laravel_intermidiate && !laravel_expert) {
+                    document.getElementById("e_laravel").innerHTML = "Select at least one skill level";
+
+                    invalid = false;
+                }
+
+            }
+
+            // now for Reference Contact Validation
+            let rname = document.getElementById("rname").value.trim();
+            let rcontact = document.getElementById("contect_number").value.trim();
+            let relation = document.getElementById("relation").value.trim();
+
+            if (rname === "") {
+                document.getElementById("e_rname").innerHTML = " reference name requires";
+                invalid = false;
+            } else if (!nameRegex.test(rname)) {
+                document.getElementById("e_rname").innerHTML = " please enter valid reference name";
+                invalid = false;
+            }
+
+            if (rcontact === "") {
+                document.getElementById("e_contect_number").innerHTML = " contact number required";
+                invalid = false;
+            } else if (!phoneRegex.test(rcontact)) {
+                document.getElementById("e_contect_number").innerHTML = " please enter valid contect number";
+                invalid = false;
+            }
+
+            if (relation === "") {
+                document.getElementById("e_relation").innerHTML = "Enter relation";
+                invalid = false;
+            } else if (!nameRegex.test(relation)) {
+                document.getElementById("e_relation").innerHTML = "please enter valid relation";
+                invalid = false;
+            }
+
+
+
+            // now for Preferences Validation
+            let notice = document.getElementById("notice_period").value.trim();
+            let expected = document.getElementById("expected_ctc").value.trim();
+            let current = document.getElementById("current_ctc").value.trim();
+
+            if (notice === "") {
+                document.getElementById("e_notice_period").innerHTML = "Enter notice period";
+                invalid = false;
+            } else if (isNaN(notice) || Number(notice) < 0) {
+                document.getElementById("e_notice_period").innerHTML = "Enter a valid number of days";
+                invalid = false;
+            }
+
+            if (expected === "") {
+                document.getElementById("e_expected_ctc").innerHTML = "Enter expected CTC";
+                invalid = false;
+            } else if (isNaN(expected) || Number(expected) <= 0) {
+                document.getElementById("e_expected_ctc").innerHTML = "Enter a valid positive amount";
+                invalid = false;
+            }
+
+            if (current === "") {
+                document.getElementById("e_current_ctc").innerHTML = "Enter current CTC";
+                invalid = false;
+            } else if (isNaN(current) || Number(current) < 0) {
+                // Current can be 0 (for freshers), but not negative
+                document.getElementById("e_current_ctc").innerHTML = "Enter a valid amount (0 if Fresher)";
+                invalid = false;
+            }
+
+            // prefered location validartion
+            let select = document.getElementById('preferd_location');
+            let result = [];
+            let options = select.options;
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].selected) {
+                    result.push(options[i].value);
+                }
+            }
+            console.log(result.length)
+
+            if (result.length === 0) {
+                document.getElementById('e_prefered_location').innerHTML = "please select at least one location"
+                invalid = false;
+            }
+
+
+            // now validation for language known
+            const selectedLanguages = Array.from(document.querySelectorAll('input[name="languages[]"]:checked'))
+                .map(cb => cb.value);
+
+            console.log(selectedLanguages);
+
+            if (is_eduction_added == false) {
+                alert("please enter eduction detail at lease one...")
+                invalid = false;
+            }
+            if (is_work_ex_added == false) {
+                alert("please enter work expericen detail at lease one...")
+                invalid = false;
+            }
+
+
+
+
+            return invalid;
+        }
+
+
+        let flag = false;
+        //  add work experience
+        let table;
+
+        function add() {
+
+
+            let compny_name = document.getElementById('company_name');
+            let work_designatioin = document.getElementById("Work_designation");
+            let start = document.getElementById('from');
+            let end = document.getElementById('to');
+
+            if (valid_work_experience(compny_name, work_designatioin, start, end)) {
+                return;
+            }
+
+
+
+
+
+
+            if (compny_name.value == "" || work_designatioin.value == "" || start.value == "" || end.value == "") {
+                alert("please full all detail of work experience...")
+                return;
+            }
+
+
+
+            const data = ['Company Name', 'Designation', 'From', 'To'];
+
+
+
+
+
+            let table_container = document.getElementsByClassName("table_container")[0];
+            let fieldset = document.getElementById('fieldset');
+            fieldset.style.display = 'block'
+
+            let tbody;
+
+            if (!flag) {
+
+                table = document.createElement("table");
+                table.style.border = "1px solid black";
+                table.style.borderCollapse = "collapse";
+
+                // create thead
+                let thead = document.createElement("thead");
+                let tr = document.createElement("tr");
+
+                for (let i = 0; i < data.length; i++) {
+
+                    let th = document.createElement("th");
+                    th.textContent = data[i];
+                    th.style.border = "1px solid black";
+                    th.style.padding = "5px";
+
+                    tr.appendChild(th);
+                    console.log('add new col........')
+                }
+                thead.appendChild(tr);
+                table.appendChild(thead);
+
+
+                let arr = new Array(compny_name.value, work_designatioin.value, start.value, end.value);
+
+                tbody = document.createElement('tbody')
+                let ttr = document.createElement('tr');
+                for (let i = 0; i < 4; i++) {
+                    let td = document.createElement('td');
+                    td.textContent = arr[i];
+                    ttr.appendChild(td);
+                }
+                tbody.appendChild(ttr);
+
+                table.appendChild(tbody);
+
+
+
+                table_container.appendChild(table);
+                flag = true;
+            } else {
+
+
+                let arr = new Array(compny_name.value, work_designatioin.value, start.value, end.value);
+
+                // let tbody=document.createElement('tbody')
+                let tr = document.createElement('tr');
+                for (let i = 0; i < 4; i++) {
+                    let td = document.createElement('td');
+                    td.textContent = arr[i];
+                    tr.appendChild(td);
+                }
+                // tbody.appendChild(tr);
+                table.appendChild(tr);
+                // table_container.appendChild(table);
+
+
+
+            }
+
+            compny_name.value = '';
+            work_designatioin.value = '';
+            from.value = '';
+            to.value = '';
+
+
+
+
+            // create table
+            is_work_ex_added = true;
+            return true;
+
+        }
+
+        function removeLastRow() {
+            if (flag == false) {
+                alert("please enter experinece");
+                return;
+            }
+            let table_container = document.getElementsByClassName('table_container')[0];
+            console.log(table_container.children[0].children[1].children[table_container.children[0].children[1].children.length - 1]);
+
+            table.removeChild(table.children[1])
+            console.log()
+        }
+
+        let eduction_table;
+        let flag_for_eduction = false;
+
+        let tbody_for_eduction;
+        function add_eduction() {
+
+            let course = document.getElementById('course');
+            let passing_year = document.getElementById('Passing_Year');
+            let uni_bord = document.getElementById('Uni_Board');
+            let result = document.getElementById('Result');
+
+
+            if (!valid_eduction(course, passing_year, uni_bord, result)) {
+                return;
+            }
+
+
+            if (course.value == '' || passing_year.value == '' || uni_bord.value == '' || result.value == '') {
+                alert('please fill out all detail of eduction')
+                return false;
+            }
+
+            let arr = new Array(course.value, passing_year.value, uni_bord.value, result.value);
+
+
+            if (!flag_for_eduction) {
+                let eduction_fieldset = document.getElementById('eduction_fieldset');
+                eduction_fieldset.style.display = 'block';
+
+                const data = ['course', 'passing_year', 'uni/board', 'result'];
+
+                let eduction_container = document.getElementsByClassName('eduction_container')[0];
+                eduction_table = document.createElement('table');
+                let thead = document.createElement('thead');
+                let tr = document.createElement('tr');
+                for (let i = 0; i < data.length; i++) {
+                    let th = document.createElement('th');
+                    th.textContent = data[i];
+                    tr.appendChild(th);
+                }
+                thead.appendChild(tr);
+                eduction_table.appendChild(thead);
+
+
+
+                tbody_for_eduction = document.createElement('tbody');
+                let b_tr = document.createElement('tr');
+                for (let j = 0; j < arr.length; j++) {
+                    let td = document.createElement('td');
+                    td.textContent = arr[j];
+                    b_tr.appendChild(td);
+                }
+                tbody_for_eduction.append(b_tr);
+                eduction_table.appendChild(tbody_for_eduction)
+
+                eduction_container.appendChild(eduction_table);
+                flag_for_eduction = true;
+            } else {
+                let tr = document.createElement('tr');
+                for (let i = 0; i < arr.length; i++) {
+                    let td = document.createElement('td');
+                    td.textContent = arr[i];
+                    tr.appendChild(td);
+                }
+                tbody_for_eduction.appendChild(tr);
+
+
+            }
+
+
+            course.value = '';
+            uni_bord.value = '';
+            passing_year.value = '';
+            result.value = '';
+
+            is_eduction_added = true;
+
+
+        }
+
+        function remove_last_eduction() {
+
+            if (flag_for_eduction == false) {
+                alert('please enter eduction detail..')
+                return;
+            }
+            tbody_for_eduction.removeChild(tbody_for_eduction.children[0]);
+        }
+
+
+
+        // accessfin element form selct option 
+
+
+        // valid function
+        function valid_work_experience(company_name, work_designatioin, start, end) {
+            document.getElementById('e_company_name').innerHTML = ""
+            document.getElementById('e_Work_designation').innerHTML = "";
+            document.getElementById('e_from').innerHTML = "";
+            document.getElementById('e_to').innerHTML = "";
+
+
+
+            let invalid = false;
+            const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+
+            console.log('function call...........')
+            if (company_name.value === "") {
+                document.getElementById('e_company_name').innerHTML = "company name is required"
+                invalid = true;
+            } else if (!nameRegex.test(company_name.value)) {
+                document.getElementById('e_company_name').innerHTML = "please enter valid compny name"
+                invalid = true;
+            }
+            if (work_designatioin.value === "") {
+                document.getElementById('e_Work_designation').innerHTML = "designation is required";
+                invalid = true;
+            } else if (!nameRegex.test(work_designatioin.value)) {
+                document.getElementById('e_Work_designation').innerHTML = "please enter valid designation";
+                invalid = true;
+            }
+            if (start.value === "") {
+                document.getElementById('e_from').innerHTML = "starting date is required";
+                invalid = true;
+            }
+            if (end.value === "") {
+                document.getElementById('e_to').innerHTML = "starting date is required";
+                invalid = true;
+            }
+
+            return invalid;
+        }
+
+        function valid_eduction(course, passing_year, uni_bord, result) {
+            let invalid = true;
+
+            document.getElementById('e_course').innerHTML = '';
+            document.getElementById('e_Passing_Year').innerHTML = '';
+            document.getElementById('e_Uni_Board').innerHTML = '';
+            document.getElementById('e_Result').innerHTML = '';
+
+
+
+            // 2. Course Validation (Letters/Numbers allowed)
+            if (course.value === "") {
+                document.getElementById('e_course').innerHTML = 'Enter course name (e.g., BCA, B.Tech)';
+                invalid = false;
+            }
+
+            // 3. Passing Year Validation (4 digits)
+            const yearRegex = /^(19|20)\d{2}$/; // Allows years from 1900 to 2099
+            if (passing_year.value === "") {
+                document.getElementById('e_Passing_Year').innerHTML = 'Enter passing year';
+                invalid = false;
+            } else if (!yearRegex.test(passing_year.value)) {
+                document.getElementById('e_Passing_Year').innerHTML = 'Enter a valid 4-digit year';
+                invalid = false;
+            }
+
+            // 4. University/Board Validation
+            if (uni_bord.value === "") {
+                document.getElementById('e_Uni_Board').innerHTML = 'Enter University or Board name';
+                invalid = false;
+            }
+
+            // 5. Result Validation (Percentage or CGPA)
+            if (result.value === "") {
+                document.getElementById('e_Result').innerHTML = 'Enter your result';
+                invalid = false;
+            } else if (isNaN(result.value) || Number(result.value) < 0 || Number(result.value) > 100) {
+                document.getElementById('e_Result').innerHTML = 'Enter a valid percentage (0-100)';
+                invalid = false;
+            }
+
+            return invalid;
+        }
+    </script>
+</body>
+
+</html>

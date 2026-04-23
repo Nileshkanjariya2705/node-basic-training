@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit references</title>
+    <style>
+        table{
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+    <div class="main">
+        <h1>Edit language</h1>
+        <form method="post" id="myform">
+         <fieldset>
+      <legend>langauge :</legend>
+      <div  class="references_contect">
+            <table>
+                <thead>
+                    <tr>
+                        <th>language_name</th>
+                        <th>read</th>
+                        <th>write</th>
+                        <th>speak</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="language_name">
+
+                        </td>
+                        <td id="read">
+                            
+                        </td>
+                        <td id="write"></td>
+                        <td id="speak"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <input id="go" style="width: 100px; float: right;"  type="submit" value="save">
+      <input style="width: 100px; float: right;" onclick="window.history.back()" type="button" value="back">
+    </fieldset>
+    </form>
+    </div>
+    <script>
+        var updateUrl='';
+        const url=new URLSearchParams(window.location.search);
+        const id=url.get('id');
+        async function getdata(){
+            try{
+                  const res=await  fetch(`/edit/language/${id}`)
+                  if(!res.ok){
+                    throw new Error("data not found")
+                  }
+                  const data=await res.json();
+                  document.getElementById('language_name').innerHTML=data[0].language_name
+                  document.getElementById('read').innerHTML=`
+                               <select name="read" id="lan_read">
+                                <option ${(data[0].can_read)?'selected':''} value="YES">YES</option>
+                                <option ${(data[0].can_read)?'selected':''} value="NO">NO</option>
+                            </select>
+                  `   
+                  
+                  document.getElementById('write').innerHTML=`
+                               <select name="write" id="lan_write">
+                                <option ${(data[0].can_write)?'selected':''} value="YES">YES</option>
+                                <option ${(data[0].can_write)?'selected':''} value="NO">NO</option>
+                            </select>
+                  `       
+
+                  document.getElementById('speak').innerHTML=`
+                               <select name="speak" id="lan_speak">
+                                <option ${(data[0].can_speak)?'selected':''} value="YES">YES</option>
+                                <option ${(data[0].can_speak)?'selected':''} value="NO">NO</option>
+                            </select>
+                  `       
+                  updateUrl=`/update_language/${data[0].language_known_id}`
+            }catch(err){
+                console.error("data not found");
+                
+            }
+        }
+        getdata()
+        
+        let form = document.getElementById('myform');
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Collect form values
+    let can_read = document.getElementById('lan_read').value;
+    let can_write = document.getElementById('lan_write').value;
+    let can_speak = document.getElementById('lan_speak').value;
+
+    // Create data object
+    const obj = {
+        can_read: can_read,
+        can_write: can_write,
+        can_speak: can_speak
+    };
+
+    // Define your endpoint
+    // const updateUrl = '/your-update-endpoint'; // Replace with actual URL
+
+    try {
+        const res = await fetch(updateUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Tell server it's JSON
+            },
+            body: JSON.stringify(obj) // Convert object to JSON string
+        });
+
+        if (!res.ok) {
+            throw new Error(`Server error: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log('Response:', data);
+
+        // Redirect after success
+        window.location.href = '/language';
+    } catch (err) {
+        console.error("Error:", err);
+        alert("Something went wrong. Please try again.");
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>success</title>
+</head>
+<body>
+        <!-- success.ejs -->
+
+  
+<!-- success.ejs -->
+<% if (typeof message !== 'undefined') { %>
+  <script>
+    const showAlert = () => {
+      const popup = document.createElement('div');
+      popup.className = 'custom-notification';
+      popup.innerHTML = `<span><%=message%></span> <button onclick="this.parentElement.remove()">×</button>`;
+      document.body.appendChild(popup);
+      
+      // Optional: Auto-remove after 3 seconds
+      setTimeout(() => popup.remove(), 3000);
+    };
+    showAlert();
+  </script>
+  <style>
+    .custom-notification {
+      position: fixed;
+      /* bottom: 20px; */
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      animation: slideIn 0.5s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+  </style>
+<% } %>   
+
+</body>
+</html>

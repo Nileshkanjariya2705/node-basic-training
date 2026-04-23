@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add experience</title>
+    <style>
+       
+    .work_experience {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      grid-template-areas: "1 2 3 4";
+
+    }
+    p{
+      color: red;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">ADD work_experience</h1>
+    <!-- work experience -->
+    <fieldset>
+         <form action="/experice/add/<%=id%>"  method="post" onsubmit="return error()">
+      <legend>Work Experience: </legend>
+      <div class="work_experience">
+        <div class="1">
+          <div class="form-group">
+            <label for="company_name">company_name:</label>
+            <input id="company_name" name="company_name" type="text">
+            <p id="e_company_name"> </p>
+
+          </div>
+
+        </div>
+        <div class="2">
+          <div class="form-group">
+            <label for="Work_designation">designation:</label>
+            <input id="Work_designation" name="designation"  type="text">
+            <p id="e_Work_designation"> </p>
+
+          </div>
+
+        </div>
+        <div class="3">
+          <div class="form-group">
+            <label for="from">From:</label>
+            <input id="from" name="from"   type="date">
+            <p id="e_from"> </p>
+
+            <input type="submit" value="ADD">
+
+          </div>
+
+
+
+
+        </div>
+        <div class="4">
+          <div class="form-group">
+            <label for="to">To:</label>
+            <input id="to" name="to"   type="date">
+            <p id="e_to"> </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+       </form>
+    </fieldset>
+
+    <script>
+      function error(){
+            document.getElementById('e_company_name').innerHTML = ""
+            document.getElementById('e_Work_designation').innerHTML = "";
+            document.getElementById('e_from').innerHTML = "";
+            document.getElementById('e_to').innerHTML = "";
+        let company_name=document.getElementById('company_name')
+        let work_designatioin=document.getElementById('Work_designation')
+        let start=document.getElementById('from')
+        let end=document.getElementById('to')
+
+
+
+
+    let invalid = true;
+    const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+
+    console.log('function call...........')
+    if (company_name.value === "") {
+        document.getElementById('e_company_name').innerHTML = "company name is required"
+        invalid = false;
+    } else if (!nameRegex.test(company_name.value)) {
+        document.getElementById('e_company_name').innerHTML = "please enter valid compny name"
+        invalid = false;
+    }
+    if (work_designatioin.value === "") {
+        document.getElementById('e_Work_designation').innerHTML = "designation is required";
+        invalid = false;
+    } else if (!nameRegex.test(work_designatioin.value)) {
+        document.getElementById('e_Work_designation').innerHTML = "please enter valid designation";
+        invalid = false;
+    }
+    if (start.value === "") {
+        document.getElementById('e_from').innerHTML = "starting date is required";
+        invalid = false;
+    }
+    if (end.value === "") {
+        document.getElementById('e_to').innerHTML = "starting date is required";
+        invalid = false;
+    }
+
+        return invalid;
+      }
+    </script>
+    
+</body>
+</html>

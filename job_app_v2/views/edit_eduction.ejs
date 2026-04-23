@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit eduction</title>
+    <style>
+        table{
+            text-align: center;
+        }
+        p{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+<div class="main">
+  <form id="myform" method="post">
+    <h1>edit eduction</h1>
+     <!-- Eduction detail -->
+    <fieldset>
+      <legend>Eduction detail:</legend>
+      <div class="Eduction">
+        <table id="eduction_table">
+            <tr >
+                <td>
+                    <label for="course_name">course_name:<input id="course_name" name="course_name[]" type="text"></label>
+                    <p id="e_course_name"></p>
+                </td>
+                <td>
+                    <label for="passing_year">passing year:<input id="passing_year" name="passing_year[]" type="text"></label>
+                    <p id="e_passing_year"></p>
+                    
+                </td>
+                <td>
+                    <label for="uni_board">uni_board:<input id="uni_board" name="uni_board[]" type="text"></label>
+                    <p id="e_uni_board"></p>
+                    
+                </td>
+                <td>
+                    <label for="result">result:<input id="result" name="result[]" type="text"></label>
+                    <p id="e_result"></p>
+                    
+                </td>
+               
+            </tr>
+            <tr>
+                <td colspan="2">
+
+                    <input onclick="window.history.back()" style="width: 100px;" type="button" value="back">
+                </td>
+                <td colspan="2">
+
+                    <input style="width: 100px;" type="submit" value="save">
+                </td>
+            </tr>
+        </table>
+      </div>
+    </fieldset>
+    </form>
+    </div>
+     
+    <script>
+        const url=new URLSearchParams(window.location.search)
+        const id= url.get('id');
+         var updateUrl='';
+        
+         async function getdata() {
+            try{
+                const res=await fetch(`http://localhost:8080/edit/eduction/${id}`)
+                if(!res.ok){
+                    throw  new Error("some thing went wrong")
+                }
+                const data=await res.json();
+                console.log(data);
+                document.getElementsByName('course_name[]')[0].value=data[0].course_name
+                document.getElementsByName('passing_year[]')[0].value=data[0].passing_year
+                document.getElementsByName('uni_board[]')[0].value=data[0].uni_board
+                document.getElementsByName('result[]')[0].value=data[0].result
+                updateUrl=`/update_eduction/${data[0].eduction_detail_id}`;
+            }catch(err){
+                console.error("connection fail:",err.message);
+                
+            }
+        }
+        getdata();
+
+      
+             let form=document.getElementById('myform')
+        form.addEventListener('submit',async function(e){
+          e.preventDefault();
+
+          if(!error()){
+            return false;
+          }
+            const formdata=new FormData(form);
+
+          console.log(updateUrl);
+          
+        try {
+            const res = await fetch(updateUrl, {
+                method: 'POST',
+                body: formdata
+            });
+
+            if (!res.ok) {
+                throw new Error(`Server error: ${res.status}`);
+            }
+
+            const data = await res.json();
+            console.log('Response:', data);
+
+            // Redirect after success
+            window.location.href = '/eduction';
+             }catch(err){
+               throw new Error("some thing went wrong");
+             }
+        })
+
+        function error(){
+            let invalid=true;
+            let course_name = document.getElementById("course_name");
+            let passing_year = document.getElementById("passing_year");
+            let uni_board = document.getElementById("uni_board");
+            let result = document.getElementById("result");
+            
+
+             if (course_name.value.trim() === '') {
+                document.getElementById('e_course_name').innerHTML= "enter course name"
+                   invalid = false;
+                }
+                if (passing_year.value.trim() === '') {
+                    document.getElementById("e_passing_year").innerHTML = "enter passing year"
+                    invalid = false;
+                }
+                if (uni_board.value.trim() === '') {
+                    document.getElementById('e_uni_board').innerHTML = "enter uni/board"
+                    invalid = false;
+                }
+                if (result.value.trim() === '') {
+                    document.getElementById('e_result').innerHTML = "enter result"
+                    invalid = false;
+                }
+
+            return invalid;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "job_app_v2",
+  "version": "1.0.0",
+  "description": "job application using fatch api",
+  "license": "ISC",
+  "author": "Nilesh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dot": "^1.1.3",
+    "dotenv": "^17.3.1",
+    "ejs": "^5.0.1",
+    "env": "^0.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "multer": "^2.1.1",
+    "mysql2": "^3.20.0"
+  }
+}

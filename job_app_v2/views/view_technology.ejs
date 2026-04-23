@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view user detail</title>
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table,th{
+           text-align: center;
+            border-collapse: collapse;
+           
+        }
+        tr:hover{
+             background-color: rgb(169, 183, 234);
+            color: white;
+        }
+        th,td{
+            border-bottom: 1px solid black;
+            height: 30px
+        }
+        table{
+            width: 100%;
+        }
+       
+        .sidenav{
+            height: 100%;
+            width: 200px;
+            background-color: rgb(169, 183, 234);
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-top: 100px;
+           
+
+        }
+        .main{
+            margin-left: 220px;
+            
+        }
+        a{
+            text-decoration: none;
+         
+            margin-top: 20px;
+        }
+        .btn{
+            margin-bottom: 20px;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+   
+    <div class="main">
+          <h1 style="text-align: center;">technology Data</h1>
+    <div class="container">
+        <table >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>BASIC DETAIL ID</th>
+                    <th>TECHNOLOGY NAME</th>
+                    <th>change</th>
+                    <th >LEVEL</th>
+                    <th>Action</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="body">
+                
+            </tbody>
+        </table>
+    </div>
+    </div>
+  
+   <script>
+    var update_id=''
+         async function getdata() {
+        try{
+            const response=await fetch("http://localhost:8080/get/technology")
+            const data=await response.json();
+            let tbody=document.getElementById("body");
+                
+            data.forEach(tech=>{
+                let tr=document.createElement("tr");
+                tr.innerHTML=`
+                     <td>${tech.technology_know_id}</td>
+                     <td>${tech.basic_detail_id}</td>
+                     <td>${tech.technology_name}</td>
+                     <td>
+                        <select  name="tech" id="tech">
+                        <option ${tech.skill_level=='Beginner'?'selected':''} value="Beginner" >Beginner</option>
+                        <option ${tech.skill_level=='Mediator'?'selected':''} value="Mediator">Mediator</option>
+                        <option ${tech.skill_level=='Expert'?'selected':''} value="Expert">Expert</option>
+                    </select>
+                        </td>
+                     <td>${tech.skill_level}</td>
+                    
+                    
+                        
+                        <td>
+                        
+                        <input type="button" class='yes'  value="Update">
+                        <input type="button" onclick="remove(${tech.technology_know_id})" value="delete">
+                            </td>
+                       
+                `
+                tbody.appendChild(tr);
+            })
+        }catch(err){
+            console.error(err.message);
+            
+        }
+    }
+
+    getdata()
+
+     async function remove(id){
+    let msg=document.getElementById('msg');
+       try{
+            const res=await fetch(`http://localhost:8080/delete/technology?id=${id}`)
+            if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            const data=await res.json();
+            
+            console.log(data.msg);
+            window.location.reload();
+            
+            
+       }catch(err){
+        console.error("somthing went wrong");
+        if (!msg) {
+            msg.innerHTML = 'Something went wrong, data not deleted';
+        }
+       } 
+    }
+
+    let skill_level='';
+
+    document.getElementById('body').addEventListener('change', (e) => {
+    let tr = e.target.closest("tr");
+    if (!tr) return;
+
+    // Get the 4th cell (index 3) in the same row
+    let cell = tr.cells[3]; // or tr.children[3]
+    if (!cell) return;
+
+    // Find the select element inside that cell
+    let select = cell.querySelector('select');
+    if (!select) return;
+
+    // Get the selected value
+       skill_level=select.value;
+    
+     });   
+
+
+     document.getElementById('body').addEventListener('click',(e)=>{
+        let tr=e.target.closest("tr");
+        if(tr){
+            let cell = tr.cells[5];
+            let id=tr.cells[0].innerHTML;
+           if(e.target.classList.contains('yes')){
+            console.log();
+            
+            if(id && skill_level){
+
+                window.location.href=`/update/tech?id=${id}&skill_level=${skill_level}`
+            }
+                
+                
+         }
+            
+            
+        }
+     })
+
+
+    
+    </script>
+</body>
+</html>

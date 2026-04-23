@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show data</title>
+    <style>
+        table,td{
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <a href="/">upload file</a>
+    <h1>show data</h1>
+    <% const ans=data.split("\n")%>
+    <table border="1px solid black">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>file name</th>
+                <th>path name</th>
+                <th>time</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% for(let i=0; i<ans.length-1; i++){  %>
+            <%let file=ans[i].split(",")%>
+        <tr>
+            <td><%=i+1%></td>
+            <td><%=file[0]%></td>
+            <td><%=file[1]%></td>
+            <td><%=file[3]%></td>
+            <td><input type="button" onclick="window.location.href='/view?path=<%=file[1]%>'" value="view">
+            <input  type="button" onclick="window.location.href='/update?fileName=<%=file[0]%>&id=<%=i+1%>'" value="update">
+            <input onclick="window.location.href='/delete/<%=i+1%>'" type="button" value="delete"></td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pagination_manual</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* background-color: antiquewhite; */
+        }
+
+        table,
+        th ,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            height: 600px;
+        }
+
+        .pagination {
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .pag-button {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Hover effect */
+        .pag-button:hover {
+            background-color: #f9fafb;
+            border-color: #c1c5cb;
+        }
+
+        /* Focus state for accessibility */
+        .pag-button:focus {
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Space between Previous and Next */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>email</th>
+                        <th>contect number</th>
+                        <th>city</th>
+                        <th>gender</th>
+                        <th>date of birth</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(studentList.length>0){%>
+                        <%studentList.forEach(student=>{%>
+                            <tr>
+                            <td>
+                                <%= student.student_id%>
+                            </td>
+                            <td><%= student.first_name%><%= student.last_name%></td>
+                            <td><%=student.email%></td>
+                            <td><%=student.contect_number%></td>
+                            <td><%=student.city%></td>
+                            <td><%=student.gender%></td>
+                            <td><%=student.dob%></td>
+
+
+
+                           
+                            <%})} else{%>
+                                    <td colspan="7">No data found</td>
+                                <%}%>
+                                <tr></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="button-group" style="margin-top: 10px; ">
+         <% if(currentPage>2){%>
+        <a href="/pagination_manual?page= <%= currentPage - 2%>" class="pag-button" style="text-decoration: nono;"><<</a>
+            <% }else{ %>
+        <button disabled  class="pag-button" style="opacity: 0.5; cursor: not-allowed;"><<</button>
+
+                <%}%>
+
+        <% if(currentPage>1){%>
+        <a href="/pagination_manual?page= <%= currentPage - 1%>" class="pag-button" style="text-decoration: nono;">Previous</a>
+            <% }else{ %>
+        <button disabled  class="pag-button" style="opacity: 0.5; cursor: not-allowed;">Previous</button>
+
+                <%}%>
+        <h1>
+            <%= currentPage%>
+        </h1>
+        <% if(currentPage<totalPages){%>
+        <a href="/pagination_manual?page= <%= ++currentPage%>"  class="pag-button" style="text-decoration: nono;">Next</a>
+            <%}else{%>
+        <button disabled  class="pag-button" style="opacity: 0.5; cursor: not-allowed;">Next</button>
+            <%}%>
+       
+             <% if(currentPage+1<totalPages){%>
+        <a href="/pagination_manual?page= <%= currentPage + 1%>"  class="pag-button" style="text-decoration: nono;">>></a>
+            <%}else{%>
+        <button disabled  class="pag-button" style="opacity: 0.5; cursor: not-allowed;">>></button>
+            <%}%>
+        <p style="margin-left: 20px;">total Page:<%=totalPages%></p>
+
+    </div>
+
+</body>
+
+</html>

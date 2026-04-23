@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>job_application_form</title>
+  <style>
+    /* body {
+      background-color: antiquewhite;
+    } */
+
+    fieldset {
+      margin-top: 30px;
+      width: 90vw;
+    }
+
+
+    .references_contect,
+    .preferences {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr;
+
+      grid-template-areas: "left middel right";
+
+    }
+
+    .Eduction,
+    .work_experience,
+    .language_known {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      grid-template-areas: "1 2 3 4";
+      
+
+    }
+
+    .container {
+      display: grid;
+      grid-template-areas: "left left" "right right";
+      width: 100%;
+
+      gap: 30px;
+    }
+
+    table,
+    td,
+    tr,
+    th {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    table{
+        width: 90vw;
+    }
+    td{
+        height: 50px;
+    }
+    label{
+        margin-left: 10px;
+        
+    }
+    
+
+    .table_container,
+    .eduction_container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .table_container th {
+      width: 200px;
+      border: 1px solid black;
+      
+    }
+
+    .eduction_container th {
+      width: 200px;
+      border: 1px solid black;
+    }
+
+
+    .form-group {
+      margin-top: 8px;
+    }
+    input::placeholder{
+      color: red;
+    }
+
+    p {
+      color: red;
+    }
+   
+  </style>
+</head>
+
+<body>
+    
+<div class="main">
+  <h1 style="text-align: center;">Job_application_form</h1>
+  <form id="myform" action="/add_data" method="post" onsubmit="return error()" >
+    <!-- basic information -->
+    <fieldset>
+      <legend>Basic detail:</legend>
+      <div class="container">
+        <!-- left -->
+        <div class="left">
+          <div class="form-group">
+            <!-- first name -->
+            <label for="fname">First Name:</label>
+            <input id="fname" name="fname"   type="text">
+            <p id="efname"></p>
+               <% if (errors && errors.fname) { %>
+              <p class="error"><%=errors.fname%></p>
+            <% } %>
+          </div>
+          <div class="form-group">
+
+            <!-- designation -->
+            <label for="designation">designation:</label>
+            <input id="designation" name="designation" type="text">
+            <p id="edesignation"></p>
+             <% if (errors && errors.lname) { %>
+              <p class="error"><%=errors.lname%></p>
+            <% } %>
+
+          </div>
+          <div class="form-group">
+            <!-- email -->
+            <label for="email">email:</label>
+            <input id="email" name="email" type="text">
+            <p id="eemail"></p>
+             <% if (errors && errors.email) { %>
+              <p class="error"><%=errors.email%></p>
+            <% } %>
+
+          </div>
+          <div class="form-group">
+            <!-- phone number -->
+            <label for="phoneNumber">phoneNumber:</label>
+            <input id="phoneNumber" name="phoneNumber" type="text">
+            <p id="ephonenumber"></p>
+             <% if (errors && errors.phoneNumber) { %>
+              <p class="error"><%=errors.phoneNumber%></p>
+            <% } %>
+
+          </div>
+          <div id="gender" class="form-group">
+          <label for="gender">gender:</label>
+            
+
+          </div>
+          <div id="relationship_status" class="form-group">
+            <label for="relationship_status"> relationship_status:</label>
+
+            </select>
+
+          </div>
+          <div class="form-group">
+            <!-- date of birth -->
+            <label for="dob">date of birth:</label>
+            <input id="dob" name="dob" type="date">
+            <p id="edob"></p>
+              <% if (errors && errors.dob) { %>
+              <p class="error"><%=errors.dob%></p>
+            <% } %>
+
+          </div>
+
+        </div>
+        <!-- right -->
+        <div class="right">
+          <div class="form-group">
+            <!-- last name -->
+            <label for="lname">Last Name:</label>
+            <input id="lname" name="lname" type="text">
+            <p id="elname"></p>
+              <% if (errors && errors.lname) { %>
+              <p class="error"><%=errors.lname%></p>
+            <% } %>
+
+          </div>
+          <div class="form-group">
+            <!-- address 1 -->
+            <label for="address1">Adderess 1:</label>
+            <input id="address1" name="address1" type="text">
+            <p id="eaddress1"></p>
+              <% if (errors && errors.address1) { %>
+              <p class="error"><%=errors.address1%></p>
+            <% } %>
+
+          </div>
+          <div class="form-group">
+            <!-- address 2 -->
+            <label for="address2">Adderess 2:</label>
+            <input id="address2" name="address2" type="text">
+            <p id="eaddress2"></p>
+              <% if (errors && errors.address2) { %>
+              <p class="error"><%=errors.address2%></p>
+            <% } %>
+
+          </div>
+          <div id="city" class="form-group">
+          <label for="city">city:</label>
+        
+          </div>
+          <div id="state" class="form-group">
+            <label for="state">state:</label>
+
+          </div>
+          <div class="form-group">
+            <!-- zip code -->
+            <label for="zip">ZIP code:</label>
+            <input id="zip" name="zip" type="text">
+            <p id="ezipcode"></p>
+              <% if (errors && errors.zip) { %>
+              <p class="error"><%=errors.zip%></p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+
+
+    <!-- Eduction detail -->
+    <fieldset>
+      <legend>Eduction detail:</legend>
+      <div class="Eduction">
+        <table id="eduction_table">
+            <tr >
+                <td  id="course_name[]">
+                    <label for="">Course_name</label>
+                    <p class="error"></p>
+                </td>
+                <td>
+                    <label for="passing_year">passing year:<input id="passing_year" name="passing_year[]" type="text"></label>
+                    <p class="error"></p>
+                    
+                </td>
+                <td>
+                    <label for="uni_board">uni_board:<input id="uni_board" name="uni_board[]" type="text"></label>
+                    <p class="error"></p>
+                    
+                </td>
+                <td>
+                    <label for="result">result:<input id="result" name="result[]" type="text"></label>
+                    <p class="error"></p>
+                    
+                </td>
+                <td>
+                    <input onclick="add_eduction()" type="button" value="+">
+                    
+                </td>
+            </tr>
+        </table>
+      </div>
+    </fieldset>
+    <!-- table for eduction -->
+  
+
+
+    <!-- work experience -->
+    <fieldset>
+      <legend>Work Experience</legend>
+      <div class="work_experience">
+       <table id="experience_table">
+        <tr>
+          <td>
+            <label for="compnay_name">compnay_name:<input name="compnay_name[]" id="compnay_name" type="text"></label>
+          </td>
+            <td>
+            <label for="work_designation">designation:<input name="work_designation[]" id="work_designation" type="text"></label>
+          </td>
+           <td>
+            <label for="start_date">start_date:<input name="start_date[]" id="start_date" type="date"></label>
+          </td>
+           <td>
+            <label for="end_date">End date:<input name="end_date[]" id="end_date" type="date"></label>
+          </td>
+          <td>
+            <input type="button" onclick="add_experience()" value="+">
+          </td>
+        </tr>
+       </table>
+
+      </div>
+    </fieldset>
+    <!-- table for  work experience -->
+
+    <!-- language known -->
+    <fieldset id="language_known">
+      <legend>Language Known</legend>
+        <div   id="language[]" class="language">
+
+        </div>
+        <p id="e_language"></p>
+    </fieldset>
+
+
+    <!-- tachnology know -->
+    <fieldset id="technology_know" autocomplete="off">
+      <legend>Technology you Know</legend>
+
+      <div  id="tech[]" class="tech">
+
+      </div>
+        <p id="e_tech"></p>
+    </fieldset>
+
+    <!-- references contect -->
+    <fieldset>
+      <legend>References contect:</legend>
+      <div class="references_contect">
+        <div class="left">
+          <!-- left -->
+          <div class="form-group">
+            <label for="rname">Name:</label>
+            <input style="width: 80px;" name="rname" id="rname" type="text">
+            <p id="e_rname"> </p>
+             <% if (errors && errors.rname) { %>
+              <p class="error"><%=errors.rname%></p>
+            <% } %>
+
+          </div>
+
+        </div>
+        <div class="middel">
+          <!-- middel -->
+          <div class="form-group">
+            <label for="contect_number">contect number:</label>
+            <input style="width: 80px;" name="contect_number" id="contect_number" type="text">
+            <p id="e_contect_number"> </p>
+             <% if (errors && errors.contact_number) { %>
+              <p class="error"><%=errors.contact_number%></p>
+            <% } %>
+
+          </div>
+
+
+        </div>
+        <div class="right">
+          <!-- right -->
+          <div class="form-group">
+            <label for="relation">relation:</label>
+            <input style="width: 80px;" name="relation" id="relation" type="text">
+            <p id="e_relation"></p>
+             <% if (errors && errors.relation) { %>
+              <p class="error"><%=errors.zip%></p>
+            <% } %>
+
+          </div>
+
+
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- preferences -->
+    <fieldset>
+      <legend>
+        Preferences:
+      </legend>
+      <div class="preferences">
+        <div class="left">
+          <div class="form-group">
+            <label for="preferd_location">Preferred Location (Select up to 3):</label>
+            <div style="margin-left: 200px;" id="preferred">
+
+            </div>
+
+          </div>
+          <p id="e_prefered_location"></p>
+
+        </div>
+        <div class="middel">
+          <!-- middel -->
+          <div class="form-group">
+            <label for="notice_period">Notice period:</label>
+            <input style="width: 80px;" name="notice_period" id="notice_period" type="text">
+            <p id="e_notice_period"> </p>
+             <% if (errors && errors.notice_period) { %>
+              <p class="error"><%=errors.notice_period%></p>
+            <% } %>
+          </div>
+
+          <div class="form-group">
+            <label for="expected_ctc">Expected CTC:</label>
+            <input style="width: 80px;" name="expected_ctc" id="expected_ctc" type="text">
+            <p id="e_expected_ctc"> </p>
+            <% if (errors && errors.expected_ctc) { %>
+              <p class="error"><%=errors.expected_ctc%></p>
+            <% } %>
+
+          </div>
+          <div class="form-group">
+            <label for="current_ctc">Current CTC:</label>
+            <input style="width: 80px;" name="current_ctc" id="current_ctc" type="text">
+            <p id="e_current_ctc"></p>
+            <% if (errors && errors.current_ctc) { %>
+              <p class="error"><%=errors.current_ctc%></p>
+            <% } %>
+          </div>
+        </div>
+        <div class="right">
+          <!-- right -->
+          <div id="department" class="form-group">
+           <label for="department">department:</label>
+          </div>
+        </div>
+           <% if (errors && errors.department) { %>
+              <p class="error"><%=errors.department%></p>
+            <% } %>
+      </div>
+    </fieldset>
+    <div style="text-align: center; margin-top: 10px;" class="btn">
+      <input type="button" onclick="window.history.back()" value="back">
+      <input  type="submit">
+      <input type="reset">
+
+    </div>
+  </form>
+</div>
+
+
+  <script src="/js/script.js">
+
+  </script>
+  <script>
+    function display(value,id){
+      
+      if(value.checked){
+        document.getElementById(`${id}`).style.display='block'
+      }else{
+        document.getElementById(`${id}`).style.display='none'
+
+      }
+      
+      
+      
+    }
+
+    function java_display(checked) {
+      if (checked) {
+        document.getElementById('java_container').style.display = 'block'
+      } else {
+        document.getElementById('java_container').style.display = 'none'
+
+      }
+    }
+    function php_display(checked) {
+      if (checked) {
+        document.getElementById('php_container').style.display = 'block'
+      } else {
+        document.getElementById('php_container').style.display = 'none'
+
+      }
+    }
+    function mysql_display(checked) {
+      if (checked) {
+        document.getElementById('mysql_container').style.display = 'block'
+      } else {
+        document.getElementById('mysql_container').style.display = 'none'
+
+      }
+    }
+    function larava_display(checked) {
+      if (checked) {
+        document.getElementById('larava_container').style.display = 'block'
+      } else {
+        document.getElementById('larava_container').style.display = 'none'
+
+      }
+    }
+
+     function remove_check(id){
+            if(id && id.wasChecked){
+              id.checked=false;
+              id.wasChecked=false;
+            }else{
+              id.wasChecked=true;
+
+            }
+            
+        }
+
+        // dynamic combo box
+         async function getdata(tech){
+            let container_top=document.getElementById(`${tech}`);
+            let data=await fetch(`http://localhost:8080/get/select?name=${tech}`);
+            let ans= await data.json();
+            ans.forEach(lan=>{
+                let container=document.createElement("div")
+                let input=document.createElement("input");
+                input.setAttribute("id",lan.html_id)
+                input.setAttribute("name",lan.unique_name)
+                input.setAttribute("type",lan.html_type)
+                input.setAttribute("value",lan.html_value)
+
+                let label1=document.createElement("label")
+                label1.innerHTML=lan.html_name
+                label1.appendChild(input)
+                container.appendChild(label1);
+
+                let option=getoption(lan.select_master_id,tech)
+                 option
+                 .then(data=>{
+                    data.forEach(op=>{
+                        
+                              let input=document.createElement("input");
+                        input.setAttribute("id",op.option_html_id)
+                        input.setAttribute("name",op.option_unique_name)
+                        input.setAttribute("type",op.option_html_type)
+                        input.setAttribute("value",op.option_html_value)
+                        let label=document.createElement("label")
+                        label.innerHTML=op.option_html_name
+                        label.appendChild(input)
+                        container.appendChild(label)
+                    })
+                    
+                  
+                 })
+                 .catch("data not found")
+                 let p=document.createElement("p");
+                 p.setAttribute("id","e_"+lan.html_id);
+                 container_top.appendChild(container)
+                 container_top.appendChild(p)
+                 
+                
+            })
+        }
+
+        async function getoption(id,tech){
+            let data=await fetch(`http://localhost:8080/get/option/${id}`)
+            let ans=await data.json();
+            return ans;
+        } 
+            getdata("language[]")
+            getdata("tech[]")
+
+        async function getselect(val,id) {
+            let city=document.getElementById(`${val}`);
+
+            if(id){
+              val='course_name[]'
+            }
+            let data = await fetch(`http://localhost:8080/get/select?name=${val}`);
+            let ans= await data.json();
+
+            // console.log(ans[0]);
+            
+            
+            let select=document.createElement("select");
+            select.setAttribute("id",ans[0].html_id)
+            select.setAttribute("name",ans[0].unique_name)
+            if(val=='preferred'){
+              select.setAttribute('multiple','')
+            }
+
+            let option=getoption(ans[0].select_master_id,val);
+            
+            
+            option
+            .then(d=>{
+                d.forEach(op=>{
+                    let options=document.createElement("option");
+                options.setAttribute("value",op.option_html_value)
+                options.innerText=op.option_html_name
+                select.appendChild(options);
+                })
+            }).catch(()=>{
+                console.log("data not found");    
+            })
+            
+            city.appendChild(select)
+        }
+        getselect("state")
+        getselect("department")
+        getselect("relationship_status")
+        getselect("city")
+        getselect("gender")
+        getselect("preferred")
+        getselect("course_name[]")
+
+        // function submit(){
+        // let form=document.querySelector("#myform");
+        // let data=new FormData(form);
+
+        // fetch("http://localhost:8080/add_data",{
+        //   method:post,
+        //   body:data
+        // }).then((response)=>{
+        //   if(!response.ok) throw new Error(`HTTP error! Status:${response.status}`)
+        //   return response.json();
+        // }).then(data=>console.log("success:",data)
+        // ).catch(err=>console.log(err)
+        // );
+
+        // }
+
+
+
+let id=0;
+function add_eduction() {
+    let table = document.getElementById('eduction_table');
+    let row = document.createElement("tr");
+
+    row.innerHTML = `
+     
+                <td id="course_name${id++}">
+                    
+                </td>
+                <td>
+                    <label for="passing_year">passing year:<input id="passing_year" name="passing_year[]" type="text"></label>
+                    
+                </td>
+                <td>
+                    <label for="uni_board">uni_board:<input id="uni_board" name="uni_board[]" type="text"></label>
+                    
+                </td>
+                <td>
+                    <label for="result">result:<input id="result" name="result[]" type="text"></label>
+                    
+                </td>
+                <td>
+                    <input  type="button" class="remove_eduction" value="-">
+                    
+                </td>
+            
+    `
+    table.appendChild(row);
+
+                getselect(`course_name${id-1}`,id)
+}
+       
+  </script>
+
+</body>
+
+</html>

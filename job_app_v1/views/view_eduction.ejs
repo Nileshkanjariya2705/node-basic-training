@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eduction detail</title>
+    <style>
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: sans-serif;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .custom-table thead {
+            background-color: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .custom-table th {
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 12px;
+        }
+
+        .custom-table td {
+            padding: 12px 16px;
+            color: #4b5563;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f3f4f6;
+        }
+
+        .font-bold {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Container to push content up so it doesn't hide behind the fixed bar */
+.outer-container {
+    height: 80px; /* Space for the fixed bar */
+    margin-top: 20px;
+}
+
+.pagination-card {
+    position: fixed;
+     bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb; /* Border on top since it's at the bottom */
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    z-index: 1000; /* Keeps it above the table */
+}
+
+
+        /* Text styling */
+        .results-info {
+            /* position: fixed; */
+            font-size: 14px;
+            color: #4b5563;
+            /* Muted gray text */
+        }
+
+        .text-bold {
+            font-weight: 600;
+            color: #111827;
+            /* Darker black for numbers */
+        }
+
+        /* Button container */
+        .button-group {
+            display: flex;
+            gap: 8px;
+            /* Space between Previous and Next */
+            
+        }
+
+        /* Individual button style */
+        .pag-button {
+            
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn{
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Hover effect */
+        .pag-button:hover,btn:hover {
+            background-color: #f9fafb;
+            border-color: #c1c5cb;
+        }
+
+        /* Focus state for accessibility */
+        .pag-button:focus ,btn:focus{
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        h1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .action-cell {
+        display: flex;
+        gap: 8px; /* Space between buttons */
+        align-items: center;
+    }
+
+    .btn-action {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+    }
+
+    /* Update Button: Using Blue/Indigo for "Action" */
+    .btn-update {
+        background-color: #3b82f6;
+        color: white;
+    }
+    .btn-update:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+    }
+
+    /* Delete Button: Using Ghost/Red style for "Danger" */
+    .btn-delete {
+        background-color: #fee2e2;
+        color: #dc2626;
+    }
+    .btn-delete:hover {
+        background-color: #dc2626;
+        color: white;
+    }
+     /*  this is for testin */
+     :root {
+        --primary: #2563eb;
+        --bg: #f8fafc;
+        --sidebar-bg: #ffffff;
+        --text: #1e293b;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg);
+        margin: 0;
+        display: flex;
+    }
+    nav {
+        width: 260px;
+        background: var(--sidebar-bg);
+        height: 100vh;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        padding: 20px 0;
+        position: fixed;
+    }
+    h1 {
+        font-size: 1.2rem;
+        padding: 0 24px;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .nav-links {
+        margin-top: 30px;
+    }
+    .nav-links a {
+        display: block;
+        padding: 12px 24px;
+        color: var(--text);
+        text-decoration: none;
+        transition: all 0.3s;
+        border-left: 4px solid transparent;
+    }
+    .nav-links a:hover {
+        background: #eff6ff;
+        color: var(--primary);
+        border-left-color: var(--primary);
+    }
+    main {
+        margin-left: 260px;
+        padding: 40px;
+        width: 100%;
+    }
+    a{
+        text-decoration: none;
+    }
+    </style>
+</head>
+
+<body>
+     <nav>
+    <h1>Applicant Data</h1>
+    <div class="nav-links">
+        <a href="/view/basic_detail">👤 Basic Details</a>
+        <a href="/view/eduction">🎓 Education</a>
+        <a href="/view/experience">💼 Experience</a>
+        <a href="/view/technology">💻 Technologies</a>
+                <a href="/view/language" >🌐 Language</a>
+
+        <a href="/view/address">📍 Address</a>
+        <a href="/view/preference">⚙️ Preferences</a>
+        <a href="/view/reference">📄 Reference</a>
+    </div>
+</nav>
+    <main>
+        
+    <h1>eduction details</h1>
+    <% if(message && message.length > 0) { %>
+            <h2 style="color: red;"><%= message %></h2>
+        <% } %>
+   
+     <div class="table-container">
+    <table class="custom-table">
+      <thead>
+        <tr>
+           <th>
+            ID 
+          
+            </th>
+            <th>basic_detali_id</th>
+
+          <th>
+            course Name 
+            
+            </th>
+
+          <th>
+            passing year 
+            
+            </th>
+                <th>
+            uni/board 
+   
+            </th>
+
+           <th>
+            result 
+        
+            </th>
+         
+         
+          <th>update/delete</th>
+
+        </tr>
+      </thead>
+       <tbody>
+           <% if(data.length>0){%>
+                <% data.forEach(user=>{%>
+                    <tr>
+                        <td><%=user.eduction_detail_id%></td>
+                        <td><%=user.basic_detail_id%></td>
+                        <td><%=user.course_name%> <%=user.last_name%></td>
+                        <td><%=user.passing_year%></td>
+                        <td><%=user.uni_board%></td>
+                        <td><%=user.result%></td>
+                        <td class="action-cell">
+                       
+                        <a href="/update/eduction?id=<%=user.eduction_detail_id%>" class="btn-action btn-update">
+                            <i class="fas fa-edit"></i> Update
+                        </a>
+                        <a href="/eduction/delete?id=<%=user.eduction_detail_id%>" class="btn-action btn-delete">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </td>
+                        
+                    </tr>
+                    <%});%>
+                <%}else{%>
+                    <td colspan="7">data not avalibale</td>
+                    <%}%>
+        </tbody>
+    </table>
+  </div>
+
+   <div class="outer-container">
+    <div class="pagination-card">
+    
+
+        <p>showing result</p>
+        <!-- Right Side Buttons -->
+        <div class="button-group">
+            <!-- Previous Button -->
+          
+                <a  class="pag-button" style="text-decoration: none;"><<</a>
+              
+                <a class="pag-button" style="text-decoration: none;">Previous</a>
+            
+             
+              
+                 
+            
+                <a class="pag-button" style="text-decoration: none;">Next</a>
+              
+            
+  
+              
+                <a  class="pag-button" style="text-decoration: none;">>></a>
+              
+                
+
+        </div>
+    </div>
+</div>
+  
+    </main>
+               <script>
+                    function sortby(sort){
+                        
+                      window.location.href=window.location.pathname+`?page=${1}&&sortby=`+sort;
+
+                    }
+                </script>
+</body>
+
+</html>

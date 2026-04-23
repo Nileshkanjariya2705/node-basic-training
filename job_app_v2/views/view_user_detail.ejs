@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view user detail</title>
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table,th{
+           text-align: center;
+            border-collapse: collapse;
+           
+        }
+        tr:hover{
+             background-color: rgb(169, 183, 234);
+            color: white;
+        }
+        th,td{
+            border-bottom: 1px solid black;
+            height: 30px
+        }
+        table{
+            width: 100%;
+        }
+       
+        .sidenav{
+            height: 100%;
+            width: 200px;
+            background-color: rgb(169, 183, 234);
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-top: 100px;
+           
+
+        }
+        .main{
+            margin-left: 220px;
+            
+        }
+        a{
+            text-decoration: none;
+         
+            margin-top: 20px;
+        }
+        .btn{
+            margin-bottom: 20px;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 10px;
+            /* cursor: pointer; */
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+    
+    <div class="main">
+          <h1 style="text-align: center;">USER Data</h1>
+          <div class="btn" style="margin-right: 20px;" >
+
+              <h1 style="float: top; text-align: end; "><a style="border: 1px solid black; background-color: #0354d6; color: white;" href="/form">Apply now</a></h1>
+          </div>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>desigantion</th>
+                    <th>Phone Number</th>
+                    <th>gender</th>
+                    <th>Date of birth</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+               
+            </tbody>
+        </table>
+    </div>
+    </div>
+  
+    <script>
+        async function getdata() {
+            try{
+                const res=await fetch("http://localhost:8080/get/allUser");
+                const data=await res.json();
+                console.log(data.basic_detail);
+                let tbody=document.getElementById('body')
+                data.basic_detail.forEach(user=>{
+                    let tr=document.createElement("tr");
+                    tr.innerHTML=`
+                      <td>${user.basic_detail_id}</td>
+                        <td>${user.first_name} ${user.last_name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.designation}</td>
+                        <td>${user.phone_number}</td>
+                        <td>${user.gender}</td>
+                        <td>${new Date(user.dob).toLocaleDateString()}</td>
+                        <td>
+                        <input style="cursor:pointer" type="button" onclick="window.location.href='/view?id=${user.basic_detail_id}'"  value="view">
+                        <input type="button" onclick='window.location.href="/edit_basic_detail?id=${user.basic_detail_id}"' value="edit">
+                        <input type="button" value="delete">
+                   </td>
+                    `
+                    tbody.appendChild(tr);
+                })
+            }catch(err){
+                console.log(err.message);
+                
+            }
+        }
+        getdata();
+    </script>
+</body>
+</html>

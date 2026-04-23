@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update language</title>
+
+</head>
+<body> 
+        <h1 style="text-align: center;" >edite language</h1>
+    <fieldset style="text-align: center;" id="language_known">
+      <legend>Language Known</legend>
+        <form action="/language/update/<%=data.language_known_id%>" onsubmit="return error()" method="post">
+      <!-- Row 1: Gujarati -->
+      <div class="form-group">
+        <label><input  type="checkbox" name="language_name"  value="<%=data.language_name%>"  checked  > <%=data.language_name%></label>
+          <div style="margin-top: 10px;" id="gujarati_container" >
+            <label><input type="checkbox" name="can_read" <%= data.can_read=='1'?'checked':'' %>   > Read</label>
+        <label><input type="checkbox" name="can_write" <%= data.can_write=='1'?'checked':'' %>   > Write</label>
+        <label><input type="checkbox" name="can_speak" <%= data.can_speak=='1'?'checked':'' %>   > Speak</label>
+          </div>
+
+        <p style="color: red;" id="e_skill" class="error-msg"></p>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Update">
+      </div>
+</form>
+      <!-- Row 2: Hindi -->
+      <!-- <div class="form-group">
+        <label><input onclick="document.getElementById('hindi_container').style.display='block'" type="checkbox" name="language[]" value="hindi"> Hindi</label>
+        <div id="hindi_container" style="display: none; margin-top: 10px;">
+          <label><input type="checkbox" name="hindi_skill[]"> Read</label>
+        <label><input type="checkbox" name="hindi_skill[]"> Write</label>
+        <label><input type="checkbox" name="hindi_skill[]"> Speak</label>
+        </div>
+        <p id="e_hindi" class="error-msg"></p>
+      </div> -->
+
+      <!-- Row 3: English -->
+      <!-- <div class="form-group">
+        <label><input onclick="document.getElementById('eng_container').style.display='block'" type="checkbox" name="language[]" value="english"> English</label>
+        <div id="eng_container" style="display: none; margin-top: 10px;">
+          <label><input type="checkbox" name="eng_skill[]"> Read</label>
+        <label><input type="checkbox" name="eng_skill[]"> Write</label>
+        <label><input type="checkbox" name="eng_skill[]"> Speak</label>
+        </div>
+        <p id="e_english" class="error-msg"></p>
+      </div> -->
+    </fieldset>
+    <script>
+        function error(){
+            let language=document.getElementsByName('language_name')[0].checked;
+            if(!language){
+            document.getElementById('e_skill').innerHTML='please select this language or else delete this '
+               return false;
+
+            }
+
+        let can_read=document.getElementsByName('can_read')[0].checked;
+        let can_write=document.getElementsByName('can_write')[0].checked;
+        let can_speak=document.getElementsByName('can_speak')[0].checked;
+
+        if(!can_read && !can_speak && !can_write){
+            document.getElementById('e_skill').innerHTML='please select at least on language level'
+            return false
+        }
+        return true;
+
+    }
+
+    </script>
+</body>
+</html>

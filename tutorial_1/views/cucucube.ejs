@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task</title>
+
+    <style>
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;    
+            /* height: 100vh; */
+            /* z-index: -1; */
+        }
+        table ,td{
+            /* border: 1px solid black; */
+            border-collapse: collapse;
+            align-items: center;
+            border-radius: 10px;
+           
+        }
+        td{
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+
+        #time{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1><a href="/home">second file</a></h1>
+
+      <h1 id="score">score</h1>
+      <h1  id="time">time left:10</h1>
+
+    <div style="cursor: pointer;" class="container">
+       
+  
+   
+    </div>
+      
+    <script>
+        let currentsize=2;
+        let container=document.getElementsByClassName('container')[0];
+        let id;
+        
+
+       function inc(currentsize){
+                    startInterval();
+
+                    removeTable();
+
+        document.getElementById('score').innerText="Score :"+(currentsize-2);
+
+                 
+                let table=document.createElement('table');
+        
+                // table.setAttribute('border','1px solid white');
+                table.style.borderCollapse='collapse';
+
+                let tbody=document.createElement('tbody');
+
+                     let r=Math.floor(Math.random()*200);
+                    let g=Math.floor(Math.random()*200);
+                    let b=Math.floor(Math.random()*200);
+
+                    let specialcolor=`rgb(${r+50},${g+50},${b+50})`;
+                     let baseColor=`rgb(${r},${g},${b})`;
+
+
+                     let totalBoxes=currentsize*currentsize;
+                     
+
+                     let row =Math.floor(Math.random()*currentsize)+1;
+                     let col =Math.floor(Math.random()*currentsize)+1;
+
+                     console.log(row+" "+col)
+
+                     console.log(currentsize);
+
+                for(let i=1; i<=currentsize; i++){
+                    let tr=document.createElement('tr');
+                    for(let j=1; j<=currentsize; j++){
+                        let td=document.createElement('td');
+
+                        td.style.backgroundColor=baseColor;
+                        if(row === i && col === j){
+                           td.classList.add('spacial') 
+                          td.style.backgroundColor=specialcolor;
+                        }
+                     
+
+                        td.addEventListener('click',function(){
+                            clearInterval(id);
+                            if(this.classList.contains('spacial')){
+                                if(currentsize<100){
+                               
+                                    inc(currentsize+1);
+                                }else{
+                                    alert('you won game')
+                                    inc(2)
+                                }
+
+                            }else{
+                                alert('GAME OVER!!')
+                                inc(2);
+                            }
+                        });
+                        tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+                table.appendChild(tbody);
+                container.appendChild(table);
+                       
+        };
+
+
+
+  
+
+        function removeTable(){
+        //   let container=  document.getElementsByClassName('container')[0];
+               container.replaceChildren();
+            //    container.textContent='';
+
+        }
+           let time=10;
+        function startInterval(){
+         clearInterval(id);
+         time=10;
+        document.getElementById('time').innerText='time left:'+time--;
+
+         id=setInterval(()=>{
+             if(time<0){
+                inc(2);
+                alert('Time out');
+            }
+            document.getElementById('time').innerText='time left:'+time--;
+           
+        },1000)
+        }
+
+        // function endInterval(){
+        //     time=10;
+        //     clearInterval(id);
+        // }
+        
+
+
+
+
+inc(2);
+
+
+
+
+    </script>
+</body>
+</html>

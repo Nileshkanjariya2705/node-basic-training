@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practice table</title>
+</head>
+<style>
+    table,
+    td,
+    tr {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        height: 100vh;
+       
+    }
+
+    td {
+        width: 50px;
+        cursor: pointer;
+        ;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td id="wheel">wheel</td>
+                <td ><input type="text" id="oninput" placeholder="oninput event"></td>
+
+                <td id="keydown"><input placeholder="keyodwn event" type="text"></td>
+                <td id="keypress"><input placeholder="key press event" type="text"></td>
+                <td><input type="text" id="onchange" placeholder="onchange event"></td>
+            </tr>
+            <tr>
+                <td id="onload">onload</td>
+                <td id="onkeyup"><input type="text" placeholder="onkeyup"></td>
+                <td id="drag_event">drag_events</td>
+                <td id="mouseleave">mouseleave</td>
+                <td id="contextmenu">contextmenu</td>
+            </tr>
+            <tr>
+                <td id="click">click</td>
+                <td id="dblclick" >dblclick</td>
+                <td id="mousedown">mousedown</td>
+                <td id="mouseup">mouseup</td>
+                <td id="mousemove">mousemove</td>
+            </tr>
+            <tr>
+                <td id="mouseenter">mouseenter</td>
+                <td>
+                    onabort<video id="onabort" width="10px" height="10px" src="video.mp4"></video>
+</td>
+                <td id="mouseover">mouseover</td>
+                <td id="mouseout">mouseout</td>
+                              <td id="DOMContentLoaded">DOMContentLoaded</td>
+
+            </tr>
+            
+            <tr>
+              
+                <td id="setTimeout">setTimeout()</td>
+                <td id="setInterval">setInterval()</td>
+                <td id="clearTimeout">clearTimeout()</td>
+                <td id="clearInterval">clearInterval()</td>
+                <td id="after_print">after print</td>
+            </tr>
+              <tr>
+              
+                <td id="befor_print">befor print</td>
+
+                <td id=""><div class="container">
+                    animation start
+                </div></td>
+                <td id="">animation iteration</td>
+                <td id="">animatrion end</td>
+                <td id="">befor unload</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="blur" placeholder="blur event"></td>
+                <td><input type="text"></td>
+                <td>canplay throw</td>
+                <td>change</td>
+                <td>copy</td>
+            </tr>
+          
+        </table>
+    </div>
+
+    <script>
+        // click event
+        document.getElementById('click').addEventListener('click', () => {
+            console.log('on click function call....')
+        })
+        document.getElementById('dblclick').addEventListener('dblclick', () => {
+            console.log('on dbclick function call....')
+        })
+        document.getElementById('keypress').addEventListener('keypress', (e) => {
+            console.log(e.key + ' :key ispress')
+        })
+        document.getElementById('keydown').addEventListener('keydown', (e) => {
+            console.log(e.key + ' :key is down')
+        })
+        document.getElementById('onkeyup').addEventListener('keyup', (e) => {
+            console.log(e.key + ' :key is down')
+        })
+
+        document.getElementById('onchange').addEventListener('change', function () {
+
+            console.log("onchange event happend:");
+            console.log(this.value)
+        })
+
+        document.getElementById('wheel').addEventListener('wheel', (event) => {
+            console.log(`Scroll Delta: ${event.deltaY}`);
+
+            if (event.deltaY > 0) {
+                alert("User scrolled down");
+            } else {
+                alert("User scrolled up");
+            }
+        })
+
+        document.getElementById('drag_event').addEventListener('drag', () => {
+            alert('drag event fire..')
+        })
+
+       // Change 'doucment' to 'document'
+        document.getElementById('mousedown').addEventListener('mousedown', (e) => {
+                console.log('mouse down event fire');
+                console.log(e.button);
+                
+            });
+
+        document.getElementById('mouseup').addEventListener('mouseup',(e)=>{
+            console.log('mouseup event fire...')
+            console.log(e.button);
+            
+        })    
+        document.getElementById('mousemove').addEventListener('mousemove',(e)=>{
+            // alert("mouse move event fire..")
+            console.log("x:"+e.clientX)
+            console.log("y:"+e.clientY)
+
+        })
+
+      document.getElementById('mouseenter').addEventListener('mouseenter',()=>{
+        console.log("mouseenter in this box..")
+      })
+
+      document.getElementById('mouseleave').addEventListener('mouseleave',()=>{
+        console.log('mouse leave from this box')
+      })
+
+      document.getElementById('oninput').addEventListener('input',(e)=>{
+        console.log('input event fire');
+        console.log(e.target.value);
+        
+      })
+
+       document.getElementById('mouseover').addEventListener('mouseover',()=>{
+        console.log("mouseover in this box..")
+      })
+
+      document.getElementById('mouseout').addEventListener('mouseout',()=>{
+        console.log('mouseout from this box')
+      })
+
+      document.getElementById('contextmenu').addEventListener('contextmenu',(e)=>{
+        console.log("right click in mouse")
+      })
+
+      let id=null;
+      document.getElementById('setInterval').addEventListener('click',()=>{
+        clearInterval(id)
+        id=setInterval(() => {
+             document.getElementById("setInterval").innerHTML="interval starting..."+(new Date().getSeconds());   
+        }, 1000);
+      })
+      document.getElementById('clearInterval').addEventListener('click',()=>{
+        clearInterval(id);
+        document.getElementById("setInterval").innerHTML='setInterval'   
+
+      })
+
+     let id1 = null;
+
+// Start Timeout Button
+document.getElementById('setTimeout').addEventListener('click', () => {
+    document.getElementById('setTimeout').innerHTML = 'Time out started...';
+    console.log('start.........');
+    
+    // Clear any existing timeout before starting a new one
+    clearTimeout(id1); 
+    
+    id1 = setTimeout(() => {
+        document.getElementById('setTimeout').innerHTML = 'Time out end...';
+        console.log('time out end...');
+    }, 10000);
+});
+
+// Clear Timeout Button
+document.getElementById('clearTimeout').addEventListener('click', () => {
+    console.log('fun call.');
+    clearTimeout(id1); // Correctly use clearTimeout
+    document.getElementById('setTimeout').innerHTML = 'Set Timeout'; // Fixed capitalization
+}); 
+
+document.getElementById('onabort').addEventListener('abort',()=>{
+    console.log("on abort function call...")
+})
+
+document.getElementById('after_print').addEventListener('click',()=>{
+
+window.addEventListener('afterprint',()=>{
+    console.log('page started to print....')
+})
+})
+
+document.getElementById('befor_print').addEventListener('click',()=>{
+
+window.addEventListener('beforprint',()=>{
+    console.log('befor print funciton call....')
+})
+})
+
+
+document.getElementsByClassName('container')[0].style.animation = "mymove 4s 2";
+
+
+// before unload
+
+window.addEventListener('beforeunload', (event) => {
+  // Cancel the event as stated by the standard
+  event.preventDefault();
+  // Chrome requires returnValue to be set
+  event.returnValue = '';
+});
+
+document.getElementById('blur').addEventListener('blur',()=>{
+    console.log("blure event fire..")
+})
+
+
+
+
+
+
+      
+
+       
+
+        
+        window.addEventListener('load',function(){
+
+              console.log('load event fire..')
+            document.getElementById('onload').innerHTML="load event fire.."; 
+
+          
+        })
+         window.addEventListener('DOMContentLoaded',()=>{
+            console.log('dOM content is load.....')
+            document.getElementById('DOMContentLoaded').innerHTML="DOMContentLoaded event fire..."
+        })
+
+
+
+
+
+    </script>
+</body>
+
+</html>

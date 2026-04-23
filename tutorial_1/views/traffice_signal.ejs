@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>traffic signal</title>
+
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 50%;
+
+        }
+
+        .containar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="containar">
+        <table>
+            <!-- 1 -->
+            <tr>
+                <td colspan="3" rowspan="3"></td>
+
+                <td colspan="3" rowspan="2" id="n">N</td>
+
+
+                <td colspan="3" rowspan="3"></td>
+            </tr>
+            <!-- 2 -->
+            <tr>
+
+            </tr>
+            <!-- 3 -->
+            <tr>
+                <td id="1">1</td>
+                <td id="2">2</td>
+                <td id="3">3</td>
+
+            </tr>
+            <!-- 4 -->
+
+            <tr>
+                <td colspan="2" rowspan="3" id="e">E</td>
+                <td id="12">12</td>
+                <td colspan="3" rowspan="3" id="time">Time</td>
+                <td id="4">4</td>
+                <td colspan="2" rowspan="3" id="w">W</td>
+
+            </tr>
+            <!-- 5 -->
+            <tr>
+
+                <td id="11">11</td>
+
+
+                <td id="5">5</td>
+            </tr>
+            <!-- 6 -->
+            <tr>
+
+                <td id="10">10</td>
+
+
+                <td id="6">6</td>
+            </tr>
+            <!-- 7 -->
+            <tr>
+                <td colspan="3" rowspan="3"></td>
+
+                <td id="9">9</td>
+                <td id="8">8</td>
+                <td id="7">7</td>
+
+                <td colspan="3" rowspan="3"></td>
+            </tr>
+            <!-- 8 -->
+            <tr>
+                <td colspan="3" rowspan="2" id="s">S</td>
+
+
+            </tr>
+            <!-- 9 -->
+            <tr>
+
+
+            </tr>
+
+
+
+
+        </table>
+    </div>
+
+    <script>
+
+        let num2 = document.getElementById('2');
+        num2.style.backgroundColor = 'red'
+        num2.style.opacity='1'
+
+        let num5 = document.getElementById('5');
+        num5.style.backgroundColor = 'red'
+        num5.style.opacity='1'
+        
+
+        let num8 = document.getElementById('8');
+        num8.style.backgroundColor = 'red'
+        num8.style.opacity='1'
+
+        
+        
+        let num11 = document.getElementById('11');
+        num11.style.backgroundColor = 'red'
+        num11.style.opacity='1';
+
+
+        let num1 = document.getElementById('1');
+        num1.style.backgroundColor = 'green'
+        num1.style.opacity='0.3';
+
+        let num4 = document.getElementById('4');
+        num4.style.backgroundColor = 'green'
+        num4.style.opacity='0.3';
+
+        let num7 = document.getElementById('7');
+        num7.style.backgroundColor = 'green'
+        num7.style.opacity='0.3';
+
+
+
+        let num10 = document.getElementById('10');
+        num10.style.backgroundColor = 'green'
+        num10.style.opacity='0.3';
+        
+
+        let num3 = document.getElementById('3');
+        num3.style.backgroundColor = 'yellow'
+        num3.style.opacity='0.3';
+
+
+        let num6 = document.getElementById('6');
+        num6.style.backgroundColor = 'yellow'
+        num6.style.opacity='0.3';
+        
+
+
+        let num9 = document.getElementById('9');
+        num9.style.backgroundColor = 'yellow'
+        num9.style.opacity='0.3';
+
+        let num12 = document.getElementById('12');
+        num12.style.backgroundColor = 'yellow'
+        num12.style.opacity='0.3';
+
+
+
+
+        let northTimeId=null;
+        let southTimeId=null;
+        let eastTimeId=null;
+        let wastTimeId=null;
+
+       
+
+        north();
+
+     
+        function east() {
+            
+            southTime();
+            clearInterval(eastTimeId);
+            let id=eastGreenTime();
+            
+            num10.style.opacity = '1';
+            num11.style.opacity='0.3'
+           
+            setTimeout(() => {
+                num12.style.opacity='1';
+            }, 5000);
+            setTimeout(() => {
+                console.log('east');
+                num11.style.opacity = '1'
+                num10.style.opacity = '0.3';
+                num12.style.opacity='0.3';
+                clearInterval(id);
+                north();
+            }, 10000)
+
+        }
+        function wast() {
+            northTime();
+            clearInterval(wastTimeId)
+            let id=wastGreenTime();
+            num5.style.opacity = '0.3';
+            num4.style.opacity = '1';
+
+            setTimeout(() => {
+                num6.style.opacity='1';
+            }, 5000);
+            setTimeout(() => {
+                console.log('wast');
+                num5.style.opacity = '1';
+                num4.style.opacity = '0.3';
+                num6.style.opacity='0.3';
+                clearInterval(id);
+                south();
+            }, 10000)
+
+        }
+
+
+        function north() {
+            console.log('north');
+            
+            eastTime();
+            clearInterval(northTimeId)
+            let id=northGreenTime();
+            num2.style.opacity = '0.3';
+            num1.style.opacity = '1';
+
+
+            setTimeout(()=>{
+                 num3.style.opacity='1';
+            },5000)
+
+            setTimeout(() => {
+                console.log('north');
+                num2.style.opacity = '1';
+                num1.style.opacity = '0.3';
+                 num3.style.opacity='0.3';
+                 clearInterval(id);
+                wast();
+            }, 10000)
+
+
+
+        }
+        function south() {
+             wastTime()
+             clearInterval(southTimeId);
+             let id=southGreenTime();
+            num8.style.opacity = '0.3';
+            num7.style.opacity = '1';
+
+
+            setTimeout(() => {
+                num9.style.opacity='1';
+            }, 5000);
+
+            setTimeout(() => {
+                console.log('south');
+                num8.style.opacity = '1';
+                num7.style.opacity = '0.3';
+                num9.style.opacity='0.3';
+                clearInterval(id);
+              
+                east();
+            }, 10000)
+
+
+        }
+
+
+       // time management
+
+       function northTime(){
+        let northtime=30;
+         northTimeId=setInterval(()=>{
+            document.getElementById('n').innerHTML="wait:"+(--northtime)+"s";
+        },1000)
+        
+       }
+       function southTime(){
+         let southtime=30;
+        southTimeId= setInterval(()=>{
+            document.getElementById('s').innerHTML="wait:"+( --southtime)+"s";
+        },1000 )
+       
+       }
+       function eastTime(){
+         let easttime=30;
+        eastTimeId=setInterval(()=>{
+            document.getElementById('e').innerHTML="wait:"+(--easttime)+"s";
+        },1000 )
+       }
+       function wastTime(){
+         let wasttime=30;
+        wastTimeId=setInterval(()=>{
+            document.getElementById('w').innerHTML="wait:"+(--wasttime)+"s";
+        },1000 )
+       }
+
+       // green signla time
+
+       function eastGreenTime(){
+        let time=10;
+         return  setInterval(()=>{
+            
+            document.getElementById('e').innerHTML=--time;
+           },1000)
+       }
+
+       function wastGreenTime(){
+                let time=10;
+          return setInterval(()=>{
+            
+            document.getElementById('w').innerHTML=--time;
+           },1000)
+       }
+       function northGreenTime(){
+                let time=10;
+        return   setInterval(()=>{
+            
+            document.getElementById('n').innerHTML=--time;
+           },1000)
+       }
+       function southGreenTime(){
+                let time=10;
+         return  setInterval(()=>{
+            
+            document.getElementById('s').innerHTML=--time;
+           },1000)
+       }
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

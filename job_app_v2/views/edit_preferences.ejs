@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit preferences</title>
+  <style>
+    input,
+    select {
+      width: 100%;
+    }
+
+    p {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+    <div class="main">
+      <!-- preferences -->
+      <form method="post" id="myform">
+        <h1>Edit preferences</h1>
+        <fieldset>
+          <legend>
+            Preferences:
+          </legend>
+          <div class="preferences">
+            <div class="left">
+              <div class="form-group">
+                <label for="preferd_location">Preferred Location (Select up to 3):</label>
+                <div style="margin-left: 200px;" id="preferred">
+
+                </div>
+
+              </div>
+              <p id="e_prefered_location"></p>
+
+            </div>
+            <div class="middel">
+              <!-- middel -->
+              <div class="form-group">
+                <label for="notice_period">Notice period:</label>
+                <input name="notice_period" id="notice_period" type="text">
+                <p id="e_notice_period"> </p>
+                <% if (errors && errors.notice_period) { %>
+                  <p class="error">
+                    <%=errors.notice_period%>
+                  </p>
+                  <% } %>
+              </div>
+
+              <div class="form-group">
+                <label for="expected_ctc">Expected CTC:</label>
+                <input name="expected_ctc" id="expected_ctc" type="text">
+                <p id="e_expected_ctc"> </p>
+                <% if (errors && errors.expected_ctc) { %>
+                  <p class="error">
+                    <%=errors.expected_ctc%>
+                  </p>
+                  <% } %>
+
+              </div>
+              <div class="form-group">
+                <label for="current_ctc">Current CTC:</label>
+                <input name="current_ctc" id="current_ctc" type="text">
+                <p id="e_current_ctc"></p>
+                <% if (errors && errors.current_ctc) { %>
+                  <p class="error">
+                    <%=errors.current_ctc%>
+                  </p>
+                  <% } %>
+              </div>
+            </div>
+            <div class="right">
+              <!-- right -->
+              <div id="department" class="form-group">
+                <label for="department">department:</label>
+              </div>
+            </div>
+            <% if (errors && errors.department) { %>
+              <p class="error">
+                <%=errors.department%>
+              </p>
+              <% } %>
+          </div>
+          <input type="submit" style="float: right; width: 100px; margin-top: 20px;" value="save">
+          <input type="button" onclick="window.history.back()" style="float: right; width: 100px; margin-top: 20px;"
+            value="back">
+        </fieldset>
+      </form>
+    </div>
+    <script>
+      let department = ''
+      async function getoption(id, tech) {
+        let data = await fetch(`http://localhost:8080/get/option/${id}`)
+        let ans = await data.json();
+        return ans;
+      }
+
+      const arr = [];
+
+      async function getselect(val) {
+        let city = document.getElementById(`${val}`);
+        let data = await fetch(`http://localhost:8080/get/select?name=${val}`);
+        let ans = await data.json();
+
+        // console.log(ans[0]);
+
+
+        let select = document.createElement("select");
+        select.setAttribute("id", ans[0].html_id)
+        select.setAttribute("name", ans[0].unique_name)
+        if (val == 'preferred') {
+          select.setAttribute('multiple', '')
+        }
+
+        let option = getoption(ans[0].select_master_id, val);
+
+
+        option
+          .then(d => {
+            d.forEach(op => {
+              let options = document.createElement("option");
+              options.setAttribute("value", op.option_html_value)
+              options.innerText = op.option_html_name
+              if (department == op.option_html_value) {
+                options.setAttribute('selected', '');
+              }
+              if (val == 'preferred') {
+                if (arr.includes(op.option_html_value)) {
+                  options.setAttribute('selected', '');
+
+                }
+              }
+              select.appendChild(options);
+            })
+          }).catch(() => {
+            console.log("data not found");
+          })
+
+        city.appendChild(select)
+      }
+      getselect('preferred')
+      getselect('department')
+
+
+
+
+
+      const url = new URLSearchParams(window.location.search)
+      const id = url.get('id');
+      var updateUrl = '';
+
+      console.log(id);
+
+      async function getdata() {
+        try {
+          const res = await fetch(`http://localhost:8080/edit/preferences/${id}`)
+          if (!res.ok) {
+            throw new Error("some thing went wrong")
+          }
+          const data = await res.json();
+          console.log(data);
+          document.getElementsByName('notice_period')[0].value = data[0].notice_period
+          document.getElementsByName('current_ctc')[0].value = data[0].current_ctc
+          document.getElementsByName('expected_ctc')[0].value = data[0].expected_ctc
+          department = data[0].department;
+          arr.push(data[0].prefered_location_1)
+          arr.push(data[0].prefered_location_2)
+          arr.push(data[0].prefered_location_3)
+          updateUrl = `/update_preferences/${data[0].preferences_id}`;
+
+
+        } catch (err) {
+          console.error("connection fail:", err.message);
+
+        }
+      }
+      getdata();
+
+      let form = document.getElementById('myform')
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (!error()) {
+          return false;
+        }
+        const formData = new FormData(form);
+
+
+        try {
+          const res = await fetch(updateUrl, {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!res.ok) {
+            throw new Error(`Server error: ${res.status}`);
+          }
+
+          const data = await res.json();
+          console.log('Response:', data);
+
+          // Redirect after success
+          window.location.href = '/preferences';
+        } catch (err) {
+          throw new Error("some thing went wrong");
+        }
+      })
+
+
+      function error() {
+        let invalid = true;
+         let notice = document.getElementById("notice_period").value.trim();
+    let expected = document.getElementById("expected_ctc").value.trim();
+    let current = document.getElementById("current_ctc").value.trim();
+
+    if (notice === "") {
+        document.getElementById("e_notice_period").innerHTML = "Enter notice period";
+        invalid = false;
+    } else if (isNaN(notice) || Number(notice) < 0) {
+        document.getElementById("e_notice_period").innerHTML = "Enter a valid number of days";
+        invalid = false;
+    }
+
+    if (expected === "") {
+        document.getElementById("e_expected_ctc").innerHTML = "Enter expected CTC";
+        invalid = false;
+    } else if (isNaN(expected) || Number(expected) <= 0) {
+        document.getElementById("e_expected_ctc").innerHTML = "Enter a valid positive amount";
+        invalid = false;
+    }
+
+    if (current === "") {
+        document.getElementById("e_current_ctc").innerHTML = "Enter current CTC";
+        invalid = false;
+    } else if (isNaN(current) || Number(current) < 0) {
+        // Current can be 0 (for freshers), but not negative
+        document.getElementById("e_current_ctc").innerHTML = "Enter a valid amount (0 if Fresher)";
+        invalid = false;
+    }
+
+    // prefered location validartion
+    let select = document.getElementsByName('preferred')[0];
+    let result1 = [];
+    let options = select.options;
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].selected) {
+            result1.push(options[i].value);
+        }
+    }
+    console.log(result1.length)
+
+    if (result1.length === 0) {
+        document.getElementById('e_prefered_location').innerHTML = "please select at least one location"
+        invalid = false;
+    }
+        return invalid;
+      }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add technology</title>
+
+</head>
+<body> 
+        <h1 style="text-align: center;" >add technology</h1>
+    <fieldset style="text-align: center;" id="technology_known">
+      <legend>Add technology</legend>
+        <form action="/technology/add/<%=id%>" onsubmit="return error()" method="post">
+      <!-- Row 1: Gujarati -->
+      <div class="form-group">
+        <label for="technology_name" >technology_name: </label>
+        <input  name="technology_name" id="technology_name" type="text" >
+                <p style="color: red;" id="e_technology_name" class="error-msg"></p>
+
+          <div class="form-group">
+       <div id="mysql_container" style="margin-top: 10px;">
+          <label><input onclick='remove_check(this)' name="technology" type="radio" value="Beginner"> Beginner</label>
+          <label><input onclick='remove_check(this)' name="technology" type="radio" value="Mediator"> Mediator</label>
+          <label><input onclick='remove_check(this)' name="technology" type="radio" value="Expert"> Expert</label>
+        </div>
+      
+      </div>
+
+        <p style="color: red;" id="e_skill" class="error-msg"></p>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="ADD">
+      </div>
+</form>
+    
+    </fieldset>
+    <script>
+
+        function error(){
+            let invalid=true;
+                document.getElementById('e_technology_name').innerHTML=''
+                document.getElementById('e_skill').innerHTML=''
+                
+
+
+            let tech=document.getElementById('technology_name').value.trim();
+
+            if(tech==''){
+                document.getElementById('e_technology_name').innerHTML='technology name require'
+                invalid =false;
+            }
+            let skill=document.getElementsByName('technology');
+            
+            let Beginner=skill[0];
+            let Mediator=skill[1];
+            let Expert=skill[2];
+
+            if(!Beginner.checked && !Mediator.checked && !Expert.checked){
+                document.getElementById('e_skill').innerHTML='please select at lease one skill level'
+                invalid=false;
+            }
+            return invalid;
+        }
+       
+     function remove_check(id){
+            if(id && id.wasChecked){
+              id.checked=false;
+              id.wasChecked=false;
+            }else{
+              id.wasChecked=true;
+
+            }
+            
+        }
+
+    </script>
+</body>
+</html>

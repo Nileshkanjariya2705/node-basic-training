@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit references</title>
+    <style>
+        input{
+            width: 100%;
+        }
+        p{
+          color: red;
+        }
+        
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+    <div class="main">
+        <h1>Edit reference</h1>
+        <form method="post" id="myform">
+         <fieldset>
+      <legend>References contect:</legend>
+      <div class="references_contect">
+        <div class="left">
+          <!-- left -->
+          <div class="form-group">
+            <label for="rname">Name:</label>
+            <input  name="rname" id="rname" type="text">
+            <p id="e_rname"> </p>
+             <% if (errors && errors.rname) { %>
+              <p class="error"><%=errors.rname%></p>
+            <% } %>
+
+          </div>
+
+        </div>
+        <div class="middel">
+          <!-- middel -->
+          <div class="form-group">
+            <label for="contect_number">contect number:</label>
+            <input  name="contect_number" id="contect_number" type="text">
+            <p id="e_contect_number"> </p>
+             <% if (errors && errors.contact_number) { %>
+              <p class="error"><%=errors.contact_number%></p>
+            <% } %>
+
+          </div>
+
+
+        </div>
+        <div class="right">
+          <!-- right -->
+          <div class="form-group">
+            <label for="relation">relation:</label>
+            <input name="relation" id="relation" type="text">
+            <p id="e_relation"></p>
+             <% if (errors && errors.relation) { %>
+              <p class="error"><%=errors.zip%></p>
+            <% } %>
+
+          </div>
+
+
+        </div>
+      </div>
+      <input style="width: 100px; float: right;"  type="submit" value="save">
+      <input style="width: 100px; float: right;" onclick="window.history.back()" type="button" value="back">
+    </fieldset>
+    </form>
+    </div>
+   <script>
+
+        const url=new URLSearchParams(window.location.search)
+        const id= url.get('id');
+        var updateUrl=''
+        console.log(id);
+        
+         async function getdata() {
+            try{
+                const res=await fetch(`http://localhost:8080/edit/references/${id}`)
+                if(!res.ok){
+                    throw  new Error("some thing went wrong")
+                }
+                const data=await res.json();
+                console.log(data);
+                document.getElementById('rname').value=data[0].name
+                document.getElementById('contect_number').value=data[0].contact_number
+                document.getElementById('relation').value=data[0].relation
+               updateUrl=`/update_references/${data[0].reference_detail_id}`
+                       
+            }catch(err){
+                console.error("connection fail:",err.message);
+                
+            }
+        }
+        getdata();
+
+
+          let form=document.getElementById('myform')
+        form.addEventListener('submit',async function(e){
+          e.preventDefault();
+              if(!error()){
+                return false;
+              }
+             const formData = new FormData(form);
+
+
+        try {
+            const res = await fetch(updateUrl, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                throw new Error(`Server error: ${res.status}`);
+            }
+
+            const data = await res.json();
+            console.log('Response:', data);
+
+            // Redirect after success
+            window.location.href = '/references';
+             }catch(err){
+               throw new Error("some thing went wrong");
+             }
+        })
+
+
+        function error() {
+        let invalid = true;
+        document.getElementById('e_rname').innerHTML = '';
+        document.getElementById('e_contect_number').innerHTML = '';
+        document.getElementById('e_relation').innerHTML = '';
+
+         let rname = document.getElementById("rname").value.trim();
+        let rcontact = document.getElementById("contect_number").value.trim();
+        let relation = document.getElementById("relation").value.trim();
+
+
+        const phoneRegex = /^[6-9]\d{9}$/;
+
+        const nameRegex = /^[a-zA-Z\u00C0-\u01FF\s\-\']+$/;
+        if (rname === "") {
+          document.getElementById("e_rname").innerHTML = " reference name requires";
+          invalid = false;
+        } else if (!nameRegex.test(rname)) {
+          document.getElementById("e_rname").innerHTML = " please enter valid reference name";
+          invalid = false;
+        }
+
+        if (rcontact === "") {
+          document.getElementById("e_contect_number").innerHTML = " contact number required";
+          invalid = false;
+        } else if (!phoneRegex.test(rcontact)) {
+          document.getElementById("e_contect_number").innerHTML = " please enter valid contect number";
+          invalid = false;
+        }
+
+        if (relation === "") {
+          document.getElementById("e_relation").innerHTML = "Enter relation";
+          invalid = false;
+        } else if (!nameRegex.test(relation)) {
+          document.getElementById("e_relation").innerHTML = "please enter valid relation";
+          invalid = false;
+        }
+        return invalid;
+      }
+    </script>
+</body>
+</html>

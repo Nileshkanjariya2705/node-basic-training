@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update eduction</title>
+    <style>
+         .Eduction {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      grid-template-areas: "1 2 3 4";
+
+    }
+    p{
+      color: red;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;"> add eduction details</h1>
+    <!-- Eduction detail -->
+     
+<fieldset>
+           <form action="/eduction/add/<%=id%>" method="post" onsubmit="return error()">
+
+   
+      <legend>Eduction detail:</legend>
+      <div class="Eduction">
+        <div class="1">
+        
+          <div class="form-group">
+            <label for="course">Course:</label>
+            <input name="course_name" id="course"  type="text">
+            <p id="e_course"></p>
+        
+          </div>
+       
+        </div>
+        <div class="2">
+         
+          <div class="form-group">
+            <label for="Passing_Year">Passing_Year:</label>
+            <input name="passing_year" id="Passing_Year"    type="text">
+            <p id="e_Passing_Year"></p>
+
+          </div>
+         
+        </div>
+        <div class="3">
+         
+          <div class="form-group">
+            <label for="Uni_Board">Uni/Board:</label>
+            <input name="uni_board" id="Uni_Board"    type="text">
+            <p id="e_Uni_Board"></p>
+
+            <br>
+           
+           
+          </div>
+        </div>
+        <div class="4">
+           
+          <div class="form-group">
+            <label for="Result">Result:</label>
+            <input name="result" id="Result"  type="text">
+            <p id="e_Result"></p>
+
+          </div>
+   
+        </div>
+
+      </div>
+     <div style="text-align: center;" class="form-group">
+
+              <input  type="submit" value="ADD">
+
+              
+            </div>
+    </form>
+    
+    </fieldset>
+
+    <script>
+      function error(){
+         let invalid = true;
+
+    let course = document.getElementById('course');
+    let passing_year = document.getElementById('Passing_Year');
+    let uni_bord = document.getElementById('Uni_Board');
+    let result = document.getElementById('Result');
+
+    document.getElementById('e_course').innerHTML = '';
+    document.getElementById('e_Passing_Year').innerHTML = '';
+    document.getElementById('e_Uni_Board').innerHTML = '';
+    document.getElementById('e_Result').innerHTML = '';
+
+
+
+    // 2. Course Validation (Letters/Numbers allowed)
+    if (course.value === "") {
+        document.getElementById('e_course').innerHTML = 'Enter course name (e.g., BCA, B.Tech)';
+        invalid = false;
+    }
+
+    // 3. Passing Year Validation (4 digits)
+    const yearRegex = /^(19|20)\d{2}$/; // Allows years from 1900 to 2099
+    if (passing_year.value === "") {
+        document.getElementById('e_Passing_Year').innerHTML = 'Enter passing year';
+        invalid = false;
+    } else if (!yearRegex.test(passing_year.value)) {
+        document.getElementById('e_Passing_Year').innerHTML = 'Enter a valid 4-digit year';
+        invalid = false;
+    }
+
+    // 4. University/Board Validation
+    if (uni_bord.value === "") {
+        document.getElementById('e_Uni_Board').innerHTML = 'Enter University or Board name';
+        invalid = false;
+    }
+
+    // 5. Result Validation (Percentage or CGPA)
+    if (result.value === "") {
+        document.getElementById('e_Result').innerHTML = 'Enter your result';
+        invalid = false;
+    } else if (isNaN(result.value) || Number(result.value) < 0 || Number(result.value) > 100) {
+        document.getElementById('e_Result').innerHTML = 'Enter a valid percentage (0-100)';
+        invalid = false;
+    }
+
+
+    return invalid;
+      }
+    </script>
+      
+</body>
+</html>

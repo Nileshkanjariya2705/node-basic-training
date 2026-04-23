@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view data</title>
+    <style>
+        .container{
+            display: inline;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid black; */
+            width: 100%;
+            
+        }
+       
+        table{
+            text-align: center;
+            width: 100%;
+        }
+        td,th{
+            border-bottom: 1px solid black;
+            height: 30px;
+        }
+        fieldset{
+            margin-bottom: 20px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+           
+        }
+        .sidenav{
+            height: 100%;
+            width: 200px;
+            background-color: rgb(169, 183, 234);
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            padding-top: 100px;
+           
+
+        }
+        .main{
+            margin-left: 220px;
+            
+        }
+        a{
+            text-decoration: none;
+         
+            margin-top: 20px;
+        }
+
+        .btn{
+            margin-bottom: 20px;
+            border: 1px solid white;
+            background-color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('/home/nilesh-kanjariya/node js/job_app_v2/views/partials/head.ejs') %>
+      
+    <div class="main">
+
+        <h1 style="text-align: center;">view</h1>
+
+        <!-- <h1 style="float: right; " ><button
+            onclick="update_user()"            style="width: 100px; height: 50px; cursor: pointer;">UPDATE USER</button></h1>
+     -->
+   <div class="container">
+    <fieldset>
+        <div id="basic_detail" class="basic_detail">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="2">basic detail</th>
+                </tr>
+              </thead>
+               <tbody id="basic_detail_body">
+                
+               </tbody>
+            </table>
+        </div>
+</fieldset>
+<fieldset>
+         <div id="address" class="address">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="2">Address detail</th>
+                </tr>
+              </thead>
+               <tbody id="address_body">
+                
+               </tbody>
+            </table>
+        </div>
+
+</fieldset>
+<fieldset>
+        <div id="eduction" class="eduction">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="5">eduction detail</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>course Name</th>
+                    <th>passing year</th>
+                    <th>uni /board</th>
+                    <th>result</th>
+                </tr>
+              </thead>
+               <tbody id="eduction_body">
+
+               </tbody>
+            </table>
+        </div>
+</fieldset>
+
+<fieldset>
+
+            <div id="experience" class="experience">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="5">experience detail</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>company_name</th>
+                    <th>desingation</th>
+                    <th>start date</th>
+                    <th>End date</th>
+                </tr>
+              </thead>
+               <tbody id="experience_body">
+
+               </tbody>
+            </table>
+        </div>
+</fieldset>
+<fieldset>
+
+         <div id="language" class="language">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="5">language detail</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Language Name</th>
+                    <th>Read</th>
+                    <th>Write </th>
+                    <th>Speak</th>
+                </tr>
+              </thead>
+               <tbody id="language_body">
+
+               </tbody>
+            </table>
+        </div>
+        </fieldset>
+
+        <fieldset>
+
+         <div id="technology" class="technology">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="5">technology detail</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Technology Name</th>
+                    <th> Skill Level</th>
+                    
+                </tr>
+              </thead>
+               <tbody id="technology_body">
+
+               </tbody>
+            </table>
+        </div>
+        </fieldset>
+
+        <fieldset>
+
+         <div id="references" class="references">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="5">references detail</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th> Name</th>
+                    <th> Contect Number</th>
+                    <th>Relation</th>
+                    
+                </tr>
+              </thead>
+               <tbody id="reference_body">
+
+               </tbody>
+            </table>
+        </div>
+        </fieldset>
+
+<fieldset>
+         <div id="preferences" class="preferences">
+            <table>
+              <thead>
+                <tr>
+                    <th colspan="6">preferences detail</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th> Prefered Locations</th>
+                    <th> notice period</th>
+                    <th>current ctc</th>
+                    <th>expected ctc</th>
+                    <th>department</th>
+                    
+                </tr>
+
+              </thead>
+               <tbody id="preference_body">
+
+               </tbody>
+            </table>
+        </div>
+        </fieldset>
+   </div>
+    </div>
+
+    <script>
+        let params=new URLSearchParams(window.location.search);
+        const id=params.get('id');    
+      
+        async function getdata() {
+            try{
+                const res=await fetch(`http://localhost:8080/get/alldata/${id}`)
+                const data=await res.json();
+                let basic_detail_body=document.getElementById("basic_detail_body");
+                let address_body=document.getElementById("address_body");
+                
+           
+                
+                // console.log(data.work_experience[0]);
+                // console.log(data.language[0]);
+                // console.log(data.technology[0]);
+                // console.log(data.reference_detail[0]);
+                // console.log(data.preferences[0]);
+                
+                for (let key in data.basic_detail[0]){
+                    let tr=document.createElement("tr");
+                    tr.innerHTML  =`
+                    <td>${key}:</td>
+                    <td>${data.basic_detail[0][key]}</td>
+                    `
+                    basic_detail_body.appendChild(tr);
+                }
+
+                for (let key in data.address[0]){
+                    let tr=document.createElement("tr");
+                    tr.innerHTML  =`
+                    <td>${key}:</td>
+                    <td>${data.address[0][key]}</td>
+                    `
+                    address_body.appendChild(tr);
+                }
+               let eduction_body=document.getElementById("eduction_body");
+               data.eduction_detail.forEach(eduction=>{
+            
+            
+                let tr=document.createElement("tr");
+                  tr.innerHTML=`
+                    <td>${eduction.eduction_detail_id}</td>
+                    <td>${eduction.course_name}</td>
+                    <td>${eduction.passing_year}</td>
+                    <td>${eduction.uni_board}</td>
+                    <td>${eduction.result}</td>
+
+                  `
+                   eduction_body.appendChild(tr)
+               })
+
+               let experience_body=document.getElementById("experience_body");
+                data.work_experience.forEach(ex=>{
+            
+            
+                let tr=document.createElement("tr");
+                  tr.innerHTML=`
+                    <td>${ex.work_experience_id}</td>
+                    <td>${ex.company_name}</td>
+                    <td>${ex.designation}</td>
+                    <td>${new Date(ex.start_date).toLocaleDateString()}</td>
+                    <td>${new Date(ex.end_date).toLocaleDateString()}</td>
+                 
+
+                  `
+                   experience_body.appendChild(tr)
+               })
+
+               let language_body=document.getElementById("language_body");
+                data.language.forEach(language=>{
+            
+            
+                let tr=document.createElement("tr");
+                  tr.innerHTML=`
+                    <td>${language.language_known_id}</td>
+                    <td>${language.language_name}</td>
+                    <td>${language.can_read==1?'yes':'no'}</td>
+                    <td>${language.can_write==1?'yes':'no'}</td>
+                    <td>${language.can_speak==1?'yes':'no'}</td>
+                    
+                 
+
+                  `
+                   language_body.appendChild(tr)
+               })
+
+
+               let technology_body=document.getElementById("technology_body")
+                 data.technology.forEach(tech=>{
+            
+            
+                let tr=document.createElement("tr");
+                  tr.innerHTML=`
+                    <td>${tech.technology_know_id}</td>
+                    <td>${tech.technology_name}</td>
+                    <td>${tech.skill_level}</td>
+
+                  `
+                   technology_body.appendChild(tr)
+               })
+               let reference_body=document.getElementById("reference_body")
+                  
+            
+            
+                let tr=document.createElement("tr");
+                  tr.innerHTML=`
+                    <td>${data.reference_detail[0].reference_detail_id}</td>
+                    <td>${data.reference_detail[0].name}</td>
+                    <td>${data.reference_detail[0].contact_number}</td>
+                    <td>${data.reference_detail[0].relation}</td>
+
+                  `
+                   reference_body.appendChild(tr)
+
+               let preference_body=document.getElementById("preference_body")
+                let tr1=document.createElement("tr");
+                  tr1.innerHTML=`
+                    <td>${data.preferences[0].preferences_id}</td>
+                    <td>${data.preferences[0].prefered_location_1},${data.preferences[0].prefered_location_2},${data.preferences[0].prefered_location_3}</td>
+                    <td>${data.preferences[0].notice_period}</td>
+                    <td>${data.preferences[0].current_ctc}</td>
+                    <td>${data.preferences[0].expected_ctc}</td>
+                    <td>${data.preferences[0].department}</td>
+                    
+
+                  `
+                   preference_body.appendChild(tr1)
+
+           
+                
+                
+            }catch(err){
+                console.error(err.message);
+                
+            }
+        }
+        getdata()
+        
+        function update_user(){
+            window.location.href=`/update/form?id=${id}`
+        }
+        
+        
+    </script>
+</body>
+</html>

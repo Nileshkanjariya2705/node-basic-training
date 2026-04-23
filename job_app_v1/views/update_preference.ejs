@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update preference</title>
+    <style>
+        .preferences {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr;
+
+      grid-template-areas: "left middel right";
+
+    }
+    p{
+      color: red;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;"> Edite preferences</h1>
+    <!-- preferences -->
+    <fieldset>
+    <form action="/preference/update/<%=data.preferences_id %>" method="post" onsubmit="return error()">
+      <legend>
+        Preferences:
+      </legend>
+      <div class="preferences">
+        <div class="left">
+          <div class="form-group">
+            <label for="preferd_location">Preferred Location (Select up to 3):</label>
+            <select id="preferd_location" style="vertical-align: top;" name="preferd_location" id="preferd_location"
+              multiple=3 >
+              <!-- left -->
+              <option  value="ahmedabad">ahmedabad</option>
+              <option value="surat">surat</option>
+              <option value="bhavanagar">bhavanagar</option>
+              <option value="gandhinagar">gandhinagar</option>
+              <option value="rajkot">rajkot</option>
+
+            </select>
+
+          </div>
+          <p id="e_prefered_location"></p>
+
+        </div>
+        <div class="middel">
+          <!-- middel -->
+          <div class="form-group">
+            <label for="notice_period">Notice period:</label>
+            <input style="width: 80px;" value="<%=data.notice_period%>" name="notice_period" id="notice_period" type="text">
+            <p id="e_notice_period"> </p>
+             <% if (errors && errors.notice_period) { %>
+              <p class="error"><%=errors.notice_period%></p>
+            <% } %>
+
+          </div>
+
+          <div class="form-group">
+            <label for="expected_ctc">Expected CTC:</label>
+            <input style="width: 80px;" value="<%=data.expected_ctc%>" name="expected_ctc" id="expected_ctc" type="text">
+            <p id="e_expected_ctc"> </p>
+                <% if (errors && errors.expected_ctc) { %>
+              <p class="error"><%=errors.expected_ctc%></p>
+            <% } %>
+
+          </div>
+          <div class="form-group">
+            <label for="current_ctc">Current CTC:</label>
+            <input style="width: 80px;" value="<%=data.current_ctc%>" name="current_ctc" id="current_ctc" type="text">
+            <p id="e_current_ctc"></p>
+            <% if (errors && errors.current_ctc) { %>
+              <p class="error"><%=errors.current_ctc%></p>
+            <% } %>
+          </div>
+        </div>
+        <div class="right">
+          <!-- right -->
+          <div class="form-group">
+            <label for="department">Department:</label>
+            <select name="department" id="department">
+              <option value="development" <%= data.department=== 'development'?'selected':'' %> >development</option>
+              <option value="marketing" <%= data.department=== 'marketing'?'selected':'' %> >marketing</option>
+              <option value="design" <%= data.department=== 'design'?'selected':'' %> >desing</option>
+              <option value="testing" <%= data.department=== 'testing'?'selected':'' %> >testing</option>
+              <option value="QA" <%= data.department=== 'QA'?'selected':'' %> >QA</option>
+
+            </select>
+          </div>
+        </div>
+
+      </div>
+    <div style="text-align: center;"  class="form-group">
+        <input type="submit"  value="update">
+    </div>  
+    </form>
+
+    </fieldset>
+
+    <script>
+      window.addEventListener('load',(e)=>{
+        e.preventDefault();
+      })
+      function error(){
+        let invalid=true;
+          document.getElementById('e_notice_period').innerHTML = '';
+    document.getElementById('e_expected_ctc').innerHTML = '';
+    document.getElementById('e_current_ctc').innerHTML = '';
+
+
+         let notice = document.getElementById("notice_period").value.trim();
+    let expected = document.getElementById("expected_ctc").value.trim();
+    let current = document.getElementById("current_ctc").value.trim();
+
+    if (notice === "") {
+        document.getElementById("e_notice_period").innerHTML = "Enter notice period";
+        invalid = false;
+    } else if (isNaN(notice) || Number(notice) < 0) {
+        document.getElementById("e_notice_period").innerHTML = "Enter a valid number of days";
+        invalid = false;
+    }
+
+    if (expected === "") {
+        document.getElementById("e_expected_ctc").innerHTML = "Enter expected CTC";
+        invalid = false;
+    } else if (isNaN(expected) || Number(expected) <= 0) {
+        document.getElementById("e_expected_ctc").innerHTML = "Enter a valid positive amount";
+        invalid = false;
+    }
+
+    if (current === "") {
+        document.getElementById("e_current_ctc").innerHTML = "Enter current CTC";
+        invalid = false;
+    } else if (isNaN(current) || Number(current) < 0) {
+        // Current can be 0 (for freshers), but not negative
+        document.getElementById("e_current_ctc").innerHTML = "Enter a valid amount (0 if Fresher)";
+        invalid = false;
+    }
+      return invalid;
+      }      
+    </script>
+</body>
+</html>
